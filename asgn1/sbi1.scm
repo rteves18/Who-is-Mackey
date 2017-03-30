@@ -39,10 +39,7 @@
              (let ((program (read inputfile)))
                   (close-input-port inputfile)
                          program))))
-(define *symbol-table* (make-hash))
-(define (symbol-put! key value)
-	(hash-set! *symbol-table* key value))
-; print sbir file and commands
+
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
     (printf "~a: ~s~n" *run-file* filename)
@@ -51,40 +48,11 @@
     (map (lambda (line) (printf "~s~n" line)) program)
     (printf ")~n"))
 
-(define l-hash (make-hash)) ;command hash table
-
-(define (hash-labels program)
-	(printf "Hashing labels:~n")
- 	(printf "==================================================~n")
-	(map (lambda (line)
-		(when (not (null? line))
-			(when (or (= 3 (length line))
-				(and (= 2 (length line))
-					(not (list? (cadr line)))))
-			(printf "~a: ~s~n" (- (car line) 1) (cadr line))
-			(printf "    ~s~n" (list-ref program (- (car line) 1)))
-			(hash-set! l-hash (cadr line) (- (car line) 1 ))
-			))) program)
-	(printf "==================================================~n")
- 	(printf "Dumping label table...~n")
-	(map (lambda (el) (printf "~s~n" el))(hash->list l-hash))
-)
-
-; start of program
 (define (main arglist)
-	; no file passed in or file passed in
     (if (or (null? arglist) (not (null? (cdr arglist))))
-	; no file => print usage
         (usage-exit)
-	; file => sbprogfile = sbir file
         (let* ((sbprogfile (car arglist))
-		; program = commands in sbir file
                (program (readlist-from-inputfile sbprogfile)))
-		; print filename and commands in sbir file
-              (write-program-by-line sbprogfile program)
-		; get program commands
-		(hash-labels program)
-
-)))
+              (write-program-by-line sbprogfile program))))
 
 (main (vector->list (current-command-line-arguments)))
