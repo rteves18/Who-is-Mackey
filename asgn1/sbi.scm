@@ -39,11 +39,13 @@
              (let ((program (read inputfile)))
                   (close-input-port inputfile)
                          program))))
+; === symbol tables ===
 (define *symbol-table* (make-hash))
 (define *function-table* (make-hash))
 (define *label-table* (make-hash)) ; label hash table
 (define (symbol-put! key value)
 	(hash-set! *symbol-table* key value))
+
 ; print sbir file and commands
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
@@ -53,31 +55,58 @@
     (map (lambda (line) (printf "~s~n" line)) program)
     (printf ")~n"))
 
-(define (h_eval expr)
-	(printf "~s~n" expr))
+(define (h_eval expr) ; Evaluates expressions.
+  (printf "DEBUG: h_Evaluating...~n")
+  (printf "       ~s~n" expr)
+	(cond
+		((string? expr)
+		(printf "       is a string~n") expr)
+		((number? expr)
+		(printf "       is a number~n") expr)
+		((hash-has-key? *symbol-table* expr)
+		(printf "       is a hash key~n")
+		(hash-ref *symbol-table* expr))
+		((list? expr)
+		(printf "       is a list~n")
+		(if (hash-has-key? *symbol-table* (car expr))
+			(let((head (hash-ref *symbol-table*  (car expr))))
+			(cond 
+				((procedure? head)
+				(apply head (map (lambda (x) (h_eval x)) (cdr expr))))
+				((vector? head)
+				(printf "It's a vector.")
+				(vector-ref head (cadr expr)))
+				((number? head)
+				(printf "It's a number.~n") head)
+		(else
+			(die "Fatal: Broken symbol table."))))
+			(die (list "Fatal error: " 
+			(car expr) " not in symbol table!\n"))))))
 
 (define (sb_print expr)
 	(map (lambda (x) (display (h_eval x))) expr)
 	(newline))
 
 (define (exe-line instr program line-num)
-	(when (not (hash-has-key? *function-hash* (car instr)))
-		(die "~s is not a valid instruction." (car instr)))
+	(when (not (hash-has-key? *function-table* (car instr)))
+		(display (car instr)) (display " is not a valid instruction.")
+		(newline)
+		(usage-exit))
 	(cond
 		((eq? (car instr) 'goto)
-		(read-cmd program (hash-ref *label-hash* (cadr instr))))
+		(read-cmd program (hash-ref *label-table* (cadr instr))))
 		((eq? (car instr) 'if)
 		(if (h_eval (car (cdr instr)))
 			(read-cmd program (hash-ref *label-table* (cadr (cdr instr))))
-			(read-cmd program (+ line-num 1))))
+			(read-cmd program (add1 line-num))))
 		((eq? (car instr) 'print)
 		(if (null? (cdr instr))
 			(newline)
 			(sb_print (cdr instr))) ; Bad ident
-			(read-cmd program (+ line-num 1)))
+			(read-cmd program (add1 line-num)))
 		(else
 			((hash-ref *function-table* (car instr)) (cdr instr))
-			(read-cmd program (+ line-num 1)))))
+			(read-cmd program (add1 line-num)))))
 
 (define (read-cmd program line-num) ; line number
 	(when (> (length program) line-num)
@@ -95,7 +124,7 @@
 		;(printf "test 2~n")
 		(exe-line (car line) program line-num))
 		(else
-			(read-cmd program (+ line-num 1)))
+			(read-cmd program (add1 line-num)))
 		))))
 
 
@@ -107,9 +136,9 @@
 			(when (or (= 3 (length line))
 				(and (= 2 (length line))
 					(not (list? (cadr line)))))
-			(printf "~a: ~s~n" (- (car line) 1) (cadr line))
-			(printf "    ~s~n" (list-ref program (- (car line) 1)))
-			(hash-set! *label-table* (cadr line) (- (car line) 1 ))
+			(printf "~a: ~s~n" (sub1 (car line)) (cadr line))
+			(printf "    ~s~n" (list-ref program (sub1 (car line))))
+			(hash-set! *label-table* (cadr line) (sub1 (car line)))
 			))) program)
 	(printf "==================================================~n")
  	(printf "Dumping label table...~n")
@@ -133,5 +162,12 @@
 		; read commands
 		(read-cmd program 0)
 )))
+
+(for-each
+	(lambda (pair)
+		(hash-set! *function-table* (car pair) (cadr pair)))
+	`(
+		(print ,sb_print)
+	))
 
 (main (vector->list (current-command-line-arguments)))
