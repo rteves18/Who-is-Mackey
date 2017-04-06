@@ -46,6 +46,33 @@
 (define (symbol-put! key value)
 	(hash-set! *symbol-table* key value))
 
+(for-each
+    (lambda (pair)
+            (symbol-put! (car pair) (cadr pair)))
+    `(
+
+        (log10_2 0.301029995663981195213738894724493026768189881)
+        (sqrt_2  1.414213562373095048801688724209698078569671875)
+        (e       2.718281828459045235360287471352662497757247093)
+        (pi      3.141592653589793238462643383279502884197169399)
+        (div     ,(lambda (x y) (floor (/ x y))))
+        (log10   ,(lambda (x) (/ (log x) (log 10.0))))
+        (mod     ,(lambda (x y) (- x (* (div x y) y))))
+        (quot    ,(lambda (x y) (truncate (/ x y))))
+        (rem     ,(lambda (x y) (- x (* (quot x y) y))))
+        (+       ,+)
+        (-       ,-)
+        (*       ,*)
+        (/       ,/)
+        (^       ,expt)
+        (ceil    ,ceiling)
+        (exp     ,exp)
+        (floor   ,floor)
+        (log     ,log)
+        (sqrt    ,sqrt)
+
+     ))
+
 ; print sbir file and commands
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
@@ -86,6 +113,11 @@
 (define (sb_print expr)
 	(map (lambda (x) (display (h_eval x))) expr)
 	(newline))
+
+(define (sb_dim expr)
+	(set! expr (car expr))
+	(let((arr (make-vector (h_eval (cadr expr)) (car expr))))
+		(symbol-put! (car expr) (add1 (h_eval (cadr expr))))))
 
 (define (exe-line instr program line-num)
 	(when (not (hash-has-key? *function-table* (car instr)))
@@ -154,9 +186,9 @@
 	; file => sbprogfile = sbir file
         (let* ((sbprogfile (car arglist))
 		; program = commands in sbir file
-               (program (readlist-from-inputfile sbprogfile)))
+		(program (readlist-from-inputfile sbprogfile)))
 		; print filename and commands in sbir file
-              (write-program-by-line sbprogfile program)
+		(write-program-by-line sbprogfile program)
 		; get labels of program 
 		(label-hash program)
 		; read commands
@@ -168,6 +200,7 @@
 		(hash-set! *function-table* (car pair) (cadr pair)))
 	`(
 		(print ,sb_print)
+		(dim ,sb_dim)
 	))
 
 (main (vector->list (current-command-line-arguments)))
