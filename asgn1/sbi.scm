@@ -40,38 +40,9 @@
                   (close-input-port inputfile)
                          program))))
 ; === symbol tables ===
-(define *symbol-table* (make-hash))
-(define *function-table* (make-hash))
+(define *function-table* (make-hash)) ; functions to be interpreted
 (define *label-table* (make-hash)) ; label hash table
-(define (symbol-put! key value)
-	(hash-set! *symbol-table* key value))
-
-(for-each
-    (lambda (pair)
-            (symbol-put! (car pair) (cadr pair)))
-    `(
-
-        (log10_2 0.301029995663981195213738894724493026768189881)
-        (sqrt_2  1.414213562373095048801688724209698078569671875)
-        (e       2.718281828459045235360287471352662497757247093)
-        (pi      3.141592653589793238462643383279502884197169399)
-        (div     ,(lambda (x y) (floor (/ x y))))
-        (log10   ,(lambda (x) (/ (log x) (log 10.0))))
-        (mod     ,(lambda (x y) (- x (* (div x y) y))))
-        (quot    ,(lambda (x y) (truncate (/ x y))))
-        (rem     ,(lambda (x y) (- x (* (quot x y) y))))
-        (+       ,+)
-        (-       ,-)
-        (*       ,*)
-        (/       ,/)
-        (^       ,expt)
-        (ceil    ,ceiling)
-        (exp     ,exp)
-        (floor   ,floor)
-        (log     ,log)
-        (sqrt    ,sqrt)
-
-     ))
+(define *variable-table* (make-hash))
 
 ; print sbir file and commands
 (define (write-program-by-line filename program)
@@ -90,13 +61,16 @@
 		(printf "       is a string~n") expr)
 		((number? expr)
 		(printf "       is a number~n") expr)
-		((hash-has-key? *symbol-table* expr)
-		(printf "       is a hash key~n")
-		(hash-ref *symbol-table* expr))
+		((hash-has-key? *function-table* expr)
+		(printf "       is a hash key in function table~n")
+		(hash-ref *function-table* expr))
+		((hash-has-key? *variable-table* expr)
+		(printf "       is a hash key variable table~n")
+		(hash-ref *variable-table* expr))
 		((list? expr)
 		(printf "       is a list~n")
-		(if (hash-has-key? *symbol-table* (car expr))
-			(let((head (hash-ref *symbol-table*  (car expr))))
+		(if (hash-has-key? *function-table* (car expr))
+			(let((head (hash-ref *function-table*  (car expr))))
 			(cond 
 				((procedure? head)
 				(apply head (map (lambda (x) (h_eval x)) (cdr expr))))
@@ -110,11 +84,11 @@
 			(die (list "Fatal error: " 
 			(car expr) " not in symbol table!\n"))))))
 
-(define (sb_print expr)
+(define (basic_print expr)
 	(map (lambda (x) (display (h_eval x))) expr)
 	(newline))
 
-(define (sb_dim expr)
+(define (basic_dim expr)
 	(set! expr (car expr))
 	(let((arr (make-vector (h_eval (cadr expr)) (car expr))))
 		(symbol-put! (car expr) (add1 (h_eval (cadr expr))))))
@@ -134,7 +108,7 @@
 		((eq? (car instr) 'print)
 		(if (null? (cdr instr))
 			(newline)
-			(sb_print (cdr instr))) ; Bad ident
+			(basic_print (cdr instr))) ; Bad ident
 			(read-cmd program (add1 line-num)))
 		(else
 			((hash-ref *function-table* (car instr)) (cdr instr))
@@ -197,10 +171,49 @@
 
 (for-each
 	(lambda (pair)
+		(hash-set! *variable-table* (car pair) (cadr pair)))
+	`(
+		(e       2.718281828459045235360287471352662497757247093)
+        	(pi      3.141592653589793238462643383279502884197169399)
+))
+	
+(for-each
+	(lambda (pair)
 		(hash-set! *function-table* (car pair) (cadr pair)))
 	`(
-		(print ,sb_print)
-		(dim ,sb_dim)
+	        (log10_2 0.301029995663981195213738894724493026768189881)
+        	(sqrt_2  1.414213562373095048801688724209698078569671875)
+               	(div     ,(lambda (x y) (floor (/ x y))))
+        	(log10   ,(lambda (x) (/ (log x) (log 10.0))))
+        	(mod     ,(lambda (x y) (- x (* (div x y) y))))
+        	(quot    ,(lambda (x y) (truncate (/ x y))))
+        	(rem     ,(lambda (x y) (- x (* (quot x y) y))))
+		(%	 ,(lambda (x y) (- x (* (div x y) y))))
+        	(+       ,+)
+        	(-       ,-)
+        	(*       ,*)
+        	(/       ,(lambda (x y)  (/ x (if (equal? y 0) 0.0 y))))
+        	(>=      ,(lambda (x y) (>= x y)))
+        	(<=      ,(lambda (x y) (<= x y)))
+        	(>       ,(lambda (x y) (> x y)))
+        	(<       ,(lambda (x y) (< x y)))
+        	(=       ,(lambda (x y) (eqv? x y)))
+        	(<>      ,(lambda (x y) (not (equal? x y))))
+        	(^       ,expt)
+        	(ceil    ,ceiling)
+        	(exp     ,exp)
+        	(floor   ,floor)
+        	(log     ,log)
+        	(sqrt    ,sqrt)
+		(sin	 ,sin)
+		(cos	 ,cos)
+		(tan	 ,tan)
+        	(asin 	 ,asin) 
+		(acos 	 ,acos) 
+		(round 	 ,round)
+        	(atan    ,(lambda(x)(atan (if (equal? x 0) 0.0 x))))
+		(print ,basic_print)
+		(dim ,basic_dim)
 	))
 
 (main (vector->list (current-command-line-arguments)))
