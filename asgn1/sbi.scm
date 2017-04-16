@@ -39,10 +39,11 @@
              (let ((program (read inputfile)))
                   (close-input-port inputfile)
                          program))))
-; === symbol tables ===
+
+; === symbol tables creation and initilization ===
 (define *function-table* (make-hash)) ; functions to be interpreted
 (define *label-table* (make-hash)) ; label hash table
-(define *variable-table* (make-hash))
+(define *variable-table* (make-hash)) ; variable hash table
 (define (variable-put! key value)
 	(hash-set! *variable-table* key value))
 ; print sbir file and commands
@@ -86,10 +87,13 @@
 			(car expr) " not in symbol table!\n"))))
 ))
 
+; print statement
 (define (basic_print expr)
 	(map (lambda (x) (display (h_eval x))) expr)
 	(newline))
 
+; dim creates an arr[] given by the var name & insert it into the Symbol table
+; the dimension of the arr[] is given by the expression
 (define (basic_dim expr)
 	(variable-put! (caar expr) (make-vector (value (cadar expr))) )
 	(hash-set! *function-table* (caar expr) 
@@ -101,7 +105,10 @@
       (cond ((number? lenl) lenl)               
           (else (hash-ref *variable-table* lenl)))))
 
-(define (basic_let expr) ; Assign a variable.
+; let makes an assignment to a variable
+; value of Variable is stored into the Symbol table
+; store message of an Array is sent to the vector representing the array
+(define (basic_let expr)
 	  (if (pair? (car expr))
     (begin
      (vector-set! (hash-ref *variable-table* (caar expr)) 
@@ -213,42 +220,43 @@
 		(e       2.718281828459045235360287471352662497757247093)
         	(pi      3.141592653589793238462643383279502884197169399)
 ))
-	
+
+; Code based on ../examples/symbols.scm provided by Prof. Mackey
 (for-each
 	(lambda (pair)
 		(hash-set! *function-table* (car pair) (cadr pair)))
 	`(
-	        (log10_2 0.301029995663981195213738894724493026768189881)
-        	(sqrt_2  1.414213562373095048801688724209698078569671875)
-               	(div     ,(lambda (x y) (floor (/ x y))))
-        	(log10   ,(lambda (x) (/ (log x) (log 10.0))))
-        	(mod     ,(lambda (x y) (- x (* (div x y) y))))
-        	(quot    ,(lambda (x y) (truncate (/ x y))))
-        	(rem     ,(lambda (x y) (- x (* (quot x y) y))))
-		(%	 ,(lambda (x y) (- x (* (div x y) y))))
-        	(+       ,+)
-        	(-       ,-)
-        	(*       ,*)
-        	(/       ,(lambda (x y)  (/ x (if (equal? y 0) 0.0 y))))
-        	(>=      ,(lambda (x y) (>= x y)))
-        	(<=      ,(lambda (x y) (<= x y)))
-        	(>       ,(lambda (x y) (> x y)))
-        	(<       ,(lambda (x y) (< x y)))
-        	(=       ,(lambda (x y) (eqv? x y)))
-        	(<>      ,(lambda (x y) (not (equal? x y))))
-        	(^       ,expt)
-        	(ceil    ,ceiling)
-        	(exp     ,exp)
-        	(floor   ,floor)
+		(log10_2 0.301029995663981195213738894724493026768189881)
+    	(sqrt_2  1.414213562373095048801688724209698078569671875)
+       	(div     ,(lambda (x y) (floor (/ x y))))
+    	(log10   ,(lambda (x) (/ (log x) (log 10.0))))
+    	(mod     ,(lambda (x y) (- x (* (div x y) y))))
+    	(quot    ,(lambda (x y) (truncate (/ x y))))
+    	(rem     ,(lambda (x y) (- x (* (quot x y) y))))
+		(%	 	 ,(lambda (x y) (- x (* (div x y) y))))
+    	(+       ,+)
+    	(-       ,-)
+    	(*       ,*)
+    	(/       ,(lambda (x y) (/ x (if (equal? y 0) 0.0 y))))
+    	(>=      ,(lambda (x y) (>= x y)))
+    	(<=      ,(lambda (x y) (<= x y)))
+    	(>       ,(lambda (x y) (> x y)))
+    	(<       ,(lambda (x y) (< x y)))
+    	(=       ,(lambda (x y) (eqv? x y)))
+    	(<>      ,(lambda (x y) (not (equal? x y))))
+    	(^       ,expt)
+    	(ceil    ,ceiling)
+    	(exp     ,exp)
+    	(floor   ,floor)
 		(log     ,(lambda(x)(log (if (equal? x 0) 0.0 x))))
-        	(sqrt    ,sqrt)
+    	(sqrt    ,sqrt)
 		(sin	 ,sin)
 		(cos	 ,cos)
 		(tan	 ,tan)
-        	(asin 	 ,asin) 
+    	(asin 	 ,asin) 
 		(acos 	 ,acos) 
 		(round 	 ,round)
-        	(atan    ,(lambda(x)(atan (if (equal? x 0) 0.0 x))))
+    	(atan    ,(lambda(x)(atan (if (equal? x 0) 0.0 x))))
 		(print 	 ,basic_print)
 		(dim 	 ,basic_dim)
 		(let	 ,basic_let)
