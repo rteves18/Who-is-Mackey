@@ -43,7 +43,8 @@
 (define *function-table* (make-hash)) ; functions to be interpreted
 (define *label-table* (make-hash)) ; label hash table
 (define *variable-table* (make-hash))
-
+(define (variable-put! key value)
+	(hash-set! *variable-table* key value))
 ; print sbir file and commands
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
@@ -82,16 +83,52 @@
 		(else
 			(die "Fatal: Broken symbol table."))))
 			(die (list "Fatal error: " 
-			(car expr) " not in symbol table!\n"))))))
+			(car expr) " not in symbol table!\n"))))
+))
 
 (define (basic_print expr)
 	(map (lambda (x) (display (h_eval x))) expr)
 	(newline))
 
 (define (basic_dim expr)
-	(set! expr (car expr))
-	(let((arr (make-vector (h_eval (cadr expr)) (car expr))))
-		(symbol-put! (car expr) (add1 (h_eval (cadr expr))))))
+	(variable-put! (caar expr) (make-vector (value (cadar expr))) )
+	(hash-set! *function-table* (caar expr) 
+      	(lambda(x) (vector-ref (hash-ref *variable-table* (caar expr)) (sub1 x)))))
+
+(define (value lenl)
+  (if (pair? lenl)
+    (apply (hash-ref *function-table* (car lenl)) (map value (cdr lenl)))     
+      (cond ((number? lenl) lenl)               
+          (else (hash-ref *variable-table* lenl)))))
+
+(define (basic_let expr) ; Assign a variable.
+	  (if (pair? (car expr))
+    (begin
+     (vector-set! (hash-ref *variable-table* (caar expr)) 
+	(- (value (cadar expr)) 1) (value (cadr expr)))
+    )
+    (begin
+     (let ((result (value (cadr expr))))
+       (variable-put! (car expr) result)
+     ))))
+
+(define (basic_input expr)
+  (variable-put! 'inputcount 0)
+  (define (get-input expr)
+     (when (not (null? (car expr)))
+        (variable-put! (car expr) (void))
+        (let ((object (read)))
+      (cond [(eof-object? object)(variable-put! 'inputcount -1)]
+       [(number? object)(variable-put! (car expr) object)
+        (variable-put! 'inputcount (+ (hash-ref *variable-table* 'inputcount) 1))]
+          [else (begin (printf "invalid number: ~a~n" object)
+                                )] )) 
+         (when (not (null? (cdr expr)))
+     (get-input (cdr expr)))
+   )
+  )
+  (get-input expr)
+)
 
 (define (exe-line instr program line-num)
 	(when (not (hash-has-key? *function-table* (car instr)))
@@ -171,7 +208,7 @@
 
 (for-each
 	(lambda (pair)
-		(hash-set! *variable-table* (car pair) (cadr pair)))
+		(variable-put! (car pair) (cadr pair)))
 	`(
 		(e       2.718281828459045235360287471352662497757247093)
         	(pi      3.141592653589793238462643383279502884197169399)
@@ -203,7 +240,7 @@
         	(ceil    ,ceiling)
         	(exp     ,exp)
         	(floor   ,floor)
-        	(log     ,log)
+		(log     ,(lambda(x)(log (if (equal? x 0) 0.0 x))))
         	(sqrt    ,sqrt)
 		(sin	 ,sin)
 		(cos	 ,cos)
@@ -212,8 +249,12 @@
 		(acos 	 ,acos) 
 		(round 	 ,round)
         	(atan    ,(lambda(x)(atan (if (equal? x 0) 0.0 x))))
-		(print ,basic_print)
-		(dim ,basic_dim)
+		(print 	 ,basic_print)
+		(dim 	 ,basic_dim)
+		(let	 ,basic_let)
+		(input	 ,basic_input)
+		(if	 (void))
+		(goto	 (void))
 	))
 
 (main (vector->list (current-command-line-arguments)))
