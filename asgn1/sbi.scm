@@ -60,7 +60,7 @@
 	(hash-set! *line-table* key value))
 
 ; Evaluates expressions.
-(define (h_eval expr)
+(define (ident-expr expr)
     ;(printf "DEBUG: h_Evaluating...~n")
     ;(printf "       ~s~n" expr)
 	(cond
@@ -80,7 +80,7 @@
 			(let((head (hash-ref *function-table*  (car expr))))
 			(cond 
 				[(procedure? head)
-				(apply head (map (lambda (x) (h_eval x)) (cdr expr)))]
+				(apply head (map (lambda (x) (ident-expr x)) (cdr expr)))]
 				[(vector? head)
 				;(printf "It's a vector.")
 				(vector-ref head (cadr expr))]
@@ -88,23 +88,23 @@
 				;(printf "It's a number.~n") 
 				[else
 				  (die "Fatal: Broken function table.")]
-            ))
+            		))
 			(die (list "Fatal error: " 
 			(car expr) " not in symbol table!\n"))
 		)]
 ))
 
 ; print statement
-(define (basic_print expr)
-	(map (lambda (x) (display (h_eval x))) expr)
+(define (basic_print printable)
+	(map (lambda (return-value) (display (ident-expr return-value))) printable)
 	(newline))
 
 ; dim creates an arr[] given by the var name & insert it into the Symbol table
 ; the dimension of the arr[] is given by the expression
-(define (basic_dim expr)
-	(variable-put! (caar expr) (make-vector (type-check (cadar expr))) )
-	(hash-set! *function-table* (caar expr) 
-      	(lambda(x) (vector-ref (hash-ref *variable-table* (caar expr)) (sub1 x))))
+(define (basic_dim array)
+	(variable-put! (caar array) (make-vector (type-check (cadar array))) )
+	(hash-set! *function-table* (caar array) 
+      	(lambda(x) (vector-ref (hash-ref *variable-table* (caar array)) (sub1 x))))
 )
 
 ; checks the type of expr
@@ -119,74 +119,92 @@
 ; let makes an assignment to a variable
 ; value of Variable is stored into the Symbol table
 ; store message of an Array is sent to the vector representing the array
-(define (basic_let expr)
-	(if (pair? (car expr))
+(define (basic_let mem-expr)
+	(if (pair? (car mem-expr))
     	(begin
-		(vector-set! (hash-ref *variable-table* (caar expr)) 
-		(sub1 (type-check (cadar expr))) (type-check (cadr expr)))
+		(vector-set! (hash-ref *variable-table* (caar mem-expr)) 
+		(sub1 (type-check (cadar mem-expr))) (type-check (cadr mem-expr)))
 	)
     	(begin
-    		(let ((result (type-check (cadr expr))))
-       		(variable-put! (car expr) result))
+    		(let ((result (type-check (cadr mem-expr))))
+       		(variable-put! (car mem-expr) result))
 	))
 )
 
-(define (basic_input expr)
+(define (basic_input num-value)
 	(variable-put! 'inputcount 0)
-	(define (get-input expr)
-		(when (not (null? (car expr)))
-        	(variable-put! (car expr) (void))
-        	(let ((object (read)))
-		(cond ((eof-object? object)(variable-put! 'inputcount -1))
-       			((number? object)(variable-put! (car expr) object)
-        		(variable-put! 'inputcount (+ (hash-ref *variable-table* 'inputcount) 1)))
-          		(else (begin (printf "invalid number: ~a~n" object)
-                                )) )) 
-         	(when (not (null? (cdr expr)))
-     		(get-input (cdr expr)))
+	(define (listen-for-input num-value)
+		(when (not (null? (car num-value)))
+        	(variable-put! (car num-value) (void))
+        	(let ((input-value (read)))
+		(cond 
+			((number? input-value)(variable-put! (car num-value) input-value)
+        		(variable-put! 'inputcount (add1 (hash-ref *variable-table* 'inputcount))))
+			((eof-object? input-value)
+			(variable-put! 'inputcount -1))
+          		(else (printf "~nerror: ~a is not a number~n" input-value)
+                                ))) 
+         	(when (not (null? (cdr num-value)))
+     		(listen-for-input (cdr num-value)))
    		))
-  	(get-input expr)
+  	(listen-for-input num-value)
 )
 
-(define (exe-line instr program line-num)
+(define (check-exe-cmd instr program line-number)
 	(when (not (hash-has-key? *function-table* (car instr)))
 		(display (car instr)) (display " is not a valid instruction.")
 		(newline)
 		(usage-exit))
 	(cond
-		((eq? (car instr) 'goto)
-		(read-cmd program (hash-ref *label-table* (cadr instr))))
 		((eq? (car instr) 'if)
-		(if (h_eval (car (cdr instr)))
-			(read-cmd program (hash-ref *label-table* (cadr (cdr instr))))
-			(read-cmd program (add1 line-num))))
+		(if (ident-expr (car (cdr instr)))
+			(read-line-length program (hash-ref *label-table* (cadr (cdr instr))))
+			(read-line-length program (add1 line-number))))
+		((eq? (car instr) 'goto)
+		(read-line-length program (hash-ref *label-table* (cadr instr))))
 		((eq? (car instr) 'print)
 		(if (null? (cdr instr))
 			(newline)
 			(basic_print (cdr instr))) ; Bad ident
-			(read-cmd program (add1 line-num)))
+			(read-line-length program (add1 line-number)))
 		(else
 			((hash-ref *function-table* (car instr)) (cdr instr))
-			(read-cmd program (add1 line-num)))))
+			(read-line-length program (add1 line-number)))))
 
-(define (read-cmd program line-num) ; line number
-	(when (> (length program) line-num)
+(define (read-line-length program line-number) ; intial line number is 0
+	(when (> (length program) line-number)
 	;(printf "DEBUG: Executing line ~a of ~a.~n"
-	;	line-num (length program))
-	;(printf "	~s~n" (list-ref program line-num))
-	(let((line (list-ref program line-num)))
+	;	line-number (length program))
+	;(printf "	~s~n" (list-ref program line-number))
+	(let((line (list-ref program line-number)))
 	(cond
 		((= (length line) 3)
 		(line-put! (car line) (cddr line))
 		(let ((head(hash-ref *line-table* (car line))))
-		(exe-line (car head) program line-num)))
+		(check-exe-cmd (car head) program line-number)))
 		((and (= (length line) 2) (list? (cadr line)))
 		(line-put! (car line) (cdr line))
 		(let ((head(hash-ref *line-table* (car line))))
-		(exe-line (car head) program line-num)))
+		(check-exe-cmd (car head) program line-number)))
 		(else
-			(read-cmd program (add1 line-num)))
+			(read-line-length program (add1 line-number)))
 		))))
+
+; Label hash table holding the addresses of each line
+; Initilized by scanning the list retured by (read) at start of prog
+(define (hashing-labels program)
+    ;(printf "Hashing labels:~n")
+    ;(printf "==================================================~n")
+    (map (lambda (line)
+        (when (not (null? line))
+            (when (or (= 3 (length line))
+                (and (= 2 (length line))
+                    (not (list? (cadr line)))))
+            ;(printf "~a: ~s~n" (sub1 (car line)) (cadr line))
+            ;(printf "    ~s~n" (list-ref program (sub1 (car line))))
+            (hash-set! *label-table* (cadr line) (sub1 (car line)))
+            ))) program)
+)
 
 ; start of program
 (define (main arglist)
@@ -201,24 +219,10 @@
 		; print filename and commands in sbir file
 		;(write-program-by-line sbprogfile program)
 		; get labels of program 
-		(label-hash program)
+		(hashing-labels program)
 		; read commands
-		(read-cmd program 0)
+		(read-line-length program 0)
 )))
-
-; Label hash table holding the addresses of each line
-; Initilized by scanning the list retured by (read) at start of prog
-(define (label-hash program)
-    (map (lambda (line)
-        (when (not (null? line))
-            (when (or (= 3 (length line))
-                (and (= 2 (length line))
-                    (not (list? (cadr line)))))
-            ;(printf "~a: ~s~n" (sub1 (car line)) (cadr line))
-            ;(printf "    ~s~n" (list-ref program (sub1 (car line))))
-            (hash-set! *label-table* (cadr line) (sub1 (car line)))
-            ))) program)
-)
 
 ; Variable hash table containing the initialized values e and pi
 (for-each
