@@ -40,15 +40,6 @@
                   (close-input-port inputfile)
                          program))))
 
-; === symbol tables creation and initilization ===
-(define *function-table* (make-hash)) ; functions to be interpreted
-(define *label-table* (make-hash)) ; label hash table
-(define *variable-table* (make-hash)) ; variable hash table
-(define *line-table* (make-hash)) ; line hash table
-(define (variable-put! key value) ; put key and value into variable table
-	(hash-set! *variable-table* key value))
-(define (line-put! key value) ; put key and value into line table
-	(hash-set! *line-table* key value))
 ; print sbir file and commands
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
@@ -58,25 +49,32 @@
     (map (lambda (line) (printf "~s~n" line)) program)
     (printf ")~n"))
 
-(define (h_eval expr) ; Evaluates expressions.
-  ;(printf "DEBUG: h_Evaluating...~n")
-  ;(printf "       ~s~n" expr)
+; symbol tables creation and initilization
+(define *function-table* (make-hash)) ; functions to be interpreted
+(define *label-table* (make-hash)) ; label hash table
+(define *variable-table* (make-hash)) ; variable hash table
+(define *line-table* (make-hash)) ; line hash table
+(define (variable-put! key value) ; put key and value into var table
+	(hash-set! *variable-table* key value))
+(define (line-put! key value) ; put key and value into line table
+	(hash-set! *line-table* key value))
+
+; Evaluates expressions.
+(define (h_eval expr)
+    ;(printf "DEBUG: h_Evaluating...~n")
+    ;(printf "       ~s~n" expr)
 	(cond
-		((string? expr)
+		[(string? expr) expr]
 		;(printf "       is a string~n") 
-		expr
-		)
-		((number? expr)
+		[(number? expr) expr]
 		;(printf "       is a number~n") 
-		expr
-		)
-		((hash-has-key? *function-table* expr)
-		;(printf "       is a hash key in function table~n")
-		(hash-ref *function-table* expr))
-		((hash-has-key? *variable-table* expr)
+		[(hash-has-key? *function-table* expr)
+		  (hash-ref *function-table* expr)]
+        ;(printf "       is a hash key in function table~n")
+		[(hash-has-key? *variable-table* expr)
 		;(printf "       is a hash key variable table~n")
-		(hash-ref *variable-table* expr))
-		((list? expr)
+		  (hash-ref *variable-table* expr)]
+		[(list? expr)
 		;(printf "       is a list~n")
 		(if (hash-has-key? *function-table* (car expr))
 			(let((head (hash-ref *function-table*  (car expr))))
@@ -86,17 +84,14 @@
 				[(vector? head)
 				;(printf "It's a vector.")
 				(vector-ref head (cadr expr))]
-				[(number? head)
+				[(number? head) head]
 				;(printf "It's a number.~n") 
-				head
-				]
 				[else
-				(die "Fatal: Broken function table.")
-				]))
+				  (die "Fatal: Broken function table.")]
+            ))
 			(die (list "Fatal error: " 
 			(car expr) " not in symbol table!\n"))
-		)
-		)
+		)]
 ))
 
 ; print statement
@@ -197,24 +192,6 @@
 			(read-cmd program (add1 line-num)))
 		))))
 
-
-(define (label-hash program)
-	;(printf "Hashing labels:~n")
-	;(printf "==================================================~n")
-	(map (lambda (line)
-		(when (not (null? line))
-			(when (or (= 3 (length line))
-				(and (= 2 (length line))
-					(not (list? (cadr line)))))
-			;(printf "~a: ~s~n" (sub1 (car line)) (cadr line))
-			;(printf "    ~s~n" (list-ref program (sub1 (car line))))
-			(hash-set! *label-table* (cadr line) (sub1 (car line)))
-			))) program)
-	;(printf "==================================================~n")
- 	;(printf "Dumping label table...~n")
-	;(map (lambda (el) (printf "~s~n" el))(hash->list *label-table*))
-)
-
 ; start of program
 (define (main arglist)
 	; no file passed in or file passed in
@@ -233,27 +210,48 @@
 		(read-cmd program 0)
 )))
 
+; Label hash table holding the addresses of each line
+; Initilized by scanning the list retured by (read) at start of prog
+(define (label-hash program)
+    ;(printf "Hashing labels:~n")
+    ;(printf "==================================================~n")
+    (map (lambda (line)
+        (when (not (null? line))
+            (when (or (= 3 (length line))
+                (and (= 2 (length line))
+                    (not (list? (cadr line)))))
+            ;(printf "~a: ~s~n" (sub1 (car line)) (cadr line))
+            ;(printf "    ~s~n" (list-ref program (sub1 (car line))))
+            (hash-set! *label-table* (cadr line) (sub1 (car line)))
+            ))) program)
+    ;(printf "==================================================~n")
+    ;(printf "Dumping label table...~n")
+    ;(map (lambda (el) (printf "~s~n" el))(hash->list *label-table*))
+)
+
+; Variable hash table containing the initialized values e and pi
 (for-each
 	(lambda (pair)
 		(variable-put! (car pair) (cadr pair)))
 	`(
 		(e       2.718281828459045235360287471352662497757247093)
-        	(pi      3.141592653589793238462643383279502884197169399)
+    	(pi      3.141592653589793238462643383279502884197169399)
 ))
 
+; Function hash table holding all functions and operators
 ; Code based on ../examples/symbols.scm provided by Prof. Mackey
 (for-each
 	(lambda (pair)
 		(hash-set! *function-table* (car pair) (cadr pair)))
 	`(
-	(log10_2 0.301029995663981195213738894724493026768189881)
+        (log10_2 0.301029995663981195213738894724493026768189881)
     	(sqrt_2  1.414213562373095048801688724209698078569671875)
        	(div     ,(lambda (x y) (floor (/ x y))))
     	(log10   ,(lambda (x) (/ (log x) (log 10.0))))
     	(mod     ,(lambda (x y) (- x (* (div x y) y))))
     	(quot    ,(lambda (x y) (truncate (/ x y))))
     	(rem     ,(lambda (x y) (- x (* (quot x y) y))))
-	(% 	 ,(lambda (x y) (- x (* (div x y) y))))
+        (%       ,(lambda (x y) (- x (* (div x y) y))))
     	(+       ,+)
     	(-       ,-)
     	(*       ,*)
@@ -268,22 +266,22 @@
     	(ceil    ,ceiling)
     	(exp     ,exp)
     	(floor   ,floor)
-	(log     ,(lambda(x)(log (if (equal? x 0) 0.0 x))))
+        (log     ,(lambda(x)(log (if (equal? x 0) 0.0 x))))
     	(sqrt    ,sqrt)
-	(sin	 ,sin)
-	(cos	 ,cos)
-	(tan	 ,tan)
+        (sin	 ,sin)
+        (cos	 ,cos)
+        (tan	 ,tan)
     	(asin 	 ,asin) 
-	(acos 	 ,acos) 
-	(abs 	 ,abs) 
-	(round 	 ,round)
+        (acos 	 ,acos) 
+        (abs 	 ,abs) 
+        (round 	 ,round)
     	(atan    ,(lambda(x)(atan (if (equal? x 0) 0.0 x))))
-	(print 	 ,basic_print)
-	(dim 	 ,basic_dim)
-	(let	 ,basic_let)
-	(input	 ,basic_input)
-	(if	 (void))
-	(goto	 (void))
-	))
+        (print 	 ,basic_print)
+        (dim 	 ,basic_dim)
+        (let	 ,basic_let)
+        (input	 ,basic_input)
+        (if	     (void))
+        (goto	 (void))
+))
 
 (main (vector->list (current-command-line-arguments)))
