@@ -44,10 +44,10 @@
 (define *function-table* (make-hash)) ; functions to be interpreted
 (define *label-table* (make-hash)) ; label hash table
 (define *variable-table* (make-hash)) ; variable hash table
-(define *line-table* (make-hash)) ; variable hash table
-(define (variable-put! key value)
+(define *line-table* (make-hash)) ; line hash table
+(define (variable-put! key value) ; put key and value into variable table
 	(hash-set! *variable-table* key value))
-(define (line-put! key value)
+(define (line-put! key value) ; put key and value into line table
 	(hash-set! *line-table* key value))
 ; print sbir file and commands
 (define (write-program-by-line filename program)
@@ -110,7 +110,6 @@
 	(variable-put! (caar expr) (make-vector (value (cadar expr))) )
 	(hash-set! *function-table* (caar expr) 
       	(lambda(x) (vector-ref (hash-ref *variable-table* (caar expr)) (sub1 x))))
-	;(map (lambda (el) (printf "~s~n" el))(hash->list *variable-table*))
 )
 
 (define (value lenl)
