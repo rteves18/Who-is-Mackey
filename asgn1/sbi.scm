@@ -120,15 +120,15 @@
 ; value of Variable is stored into the Symbol table
 ; store message of an Array is sent to the vector representing the array
 (define (basic_let expr)
-	  (if (pair? (car expr))
-    (begin
-     (vector-set! (hash-ref *variable-table* (caar expr)) 
-	(- (type-check (cadar expr))1) (type-check (cadr expr)))
-    )
-    (begin
-    (let ((result (type-check (cadr expr))))
-       (variable-put! (car expr) result)
-     )))
+	(if (pair? (car expr))
+    	(begin
+		(vector-set! (hash-ref *variable-table* (caar expr)) 
+		(sub1 (type-check (cadar expr))) (type-check (cadr expr)))
+	)
+    	(begin
+    		(let ((result (type-check (cadr expr))))
+       		(variable-put! (car expr) result))
+	))
 )
 
 (define (basic_input expr)
@@ -177,16 +177,12 @@
 	(let((line (list-ref program line-num)))
 	(cond
 		((= (length line) 3)
-		;(set! line (cddr line))
 		(line-put! (car line) (cddr line))
 		(let ((head(hash-ref *line-table* (car line))))
-		;(printf "test 1~n")
 		(exe-line (car head) program line-num)))
 		((and (= (length line) 2) (list? (cadr line)))
-		;(set! line (cdr line))
 		(line-put! (car line) (cdr line))
 		(let ((head(hash-ref *line-table* (car line))))
-		;(printf "test 2~n")
 		(exe-line (car head) program line-num)))
 		(else
 			(read-cmd program (add1 line-num)))
@@ -203,7 +199,7 @@
 		; program = commands in sbir file
 		(program (readlist-from-inputfile sbprogfile)))
 		; print filename and commands in sbir file
-;		(write-program-by-line sbprogfile program)
+		;(write-program-by-line sbprogfile program)
 		; get labels of program 
 		(label-hash program)
 		; read commands
