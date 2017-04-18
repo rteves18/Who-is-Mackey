@@ -44,8 +44,11 @@
 (define *function-table* (make-hash)) ; functions to be interpreted
 (define *label-table* (make-hash)) ; label hash table
 (define *variable-table* (make-hash)) ; variable hash table
+(define *line-table* (make-hash)) ; variable hash table
 (define (variable-put! key value)
 	(hash-set! *variable-table* key value))
+(define (line-put! key value)
+	(hash-set! *line-table* key value))
 ; print sbir file and commands
 (define (write-program-by-line filename program)
     (printf "==================================================~n")
@@ -177,13 +180,17 @@
 	(let((line (list-ref program line-num)))
 	(cond
 		((= (length line) 3)
-		(set! line (cddr line))
+		;(set! line (cddr line))
+		(line-put! (car line) (cddr line))
+		(let ((head(hash-ref *line-table* (car line))))
 		;(printf "test 1~n")
-		(exe-line (car line) program line-num))
+		(exe-line (car head) program line-num)))
 		((and (= (length line) 2) (list? (cadr line)))
-		(set! line (cdr line))
+		;(set! line (cdr line))
+		(line-put! (car line) (cdr line))
+		(let ((head(hash-ref *line-table* (car line))))
 		;(printf "test 2~n")
-		(exe-line (car line) program line-num))
+		(exe-line (car head) program line-num)))
 		(else
 			(read-cmd program (add1 line-num)))
 		))))
