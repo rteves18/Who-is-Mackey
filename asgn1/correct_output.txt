@@ -1,0 +1,518 @@
+Hello, World!
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1+1      = 2
+2-2      = 0
+3*3      = 9
+
+4/9      = 4/9
+3*4+5*6  = 42
+1+1      = 2
+2-2      = 0
+3*3      = 9
+4/9      = 4/9
+2^10     = 1024
+3*4+5*6  = 42
+log(10)  = 2.302585092994046
+sqrt(2)  = 1.4142135623730951
+pi       = 3.141592653589793
+e        = 2.718281828459045
++1/+0    = +inf.0
+-1/+0    = -inf.0
++1/-0    = +inf.0
+-1/-0    = -inf.0
++0/+0    = 0
+-0/-0    = 0
+sqrt(-1) = 0+1i
+log(0)   = -inf.0
+6.02e23  = 6.019999999999999e+23
+(1+2)/7  = 3/7
+i=1
+j=4
+k=41/4
+6
+9
+3: four
+    (4 four (print "four"))
+5: one
+    (6 one (print "one"))
+7: three
+    (8 three (print "three"))
+9: two
+    (10 two (print "two"))
+11: zero
+    (12 zero (print "zero"))
+13: done
+    (14 done)
+zero
+one
+two
+three
+four
+3: loop
+    (4 loop (print i))
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11: loop
+    (12 loop (let fib (+ fib0 fib1)))
+fib(0)=0
+fib(1)=1
+fib(2)=1
+fib(3)=2
+fib(4)=3
+fib(5)=5
+fib(6)=8
+fib(7)=13
+fib(8)=21
+fib(9)=34
+fib(10)=55
+fib(11)=89
+fib(12)=144
+fib(13)=233
+fib(14)=377
+fib(15)=610
+fib(16)=987
+fib(17)=1597
+fib(18)=2584
+fib(19)=4181
+fib(20)=6765
+fib(21)=10946
+fib(22)=17711
+fib(23)=28657
+fib(24)=46368
+fib(25)=75025
+fib(26)=121393
+fib(27)=196418
+fib(28)=317811
+fib(29)=514229
+fib(30)=832040
+fib(31)=1346269
+3.1415926535897932.718281828459045
+pi = 3.141592653589793
+e = 2.718281828459045
+sqrt ( pi ) = 1.7724538509055159
+exp  ( pi ) = 23.140692632779267
+log  ( pi ) = 1.1447298858494002
+sin  ( pi ) = 1.2246467991473532e-16
+cos  ( pi ) = -1.0
+tan  ( pi ) = -1.2246467991473532e-16
+acos ( pi ) = 0+1.811526272460853i
+asin ( pi ) = 1.5707963267948966-1.811526272460853i
+atan ( pi ) = 1.2626272556789118
+abs  ( pi ) = 3.141592653589793
+ceil ( pi ) = 4.0
+floor( pi ) = 3.0
+round( pi ) = 3.0
+11: prt
+    (12 prt (print "pi = " pi))
+RE: House Bill 246, Indiana State Legislature, 1897
+Enter 1 if it has passed and 0 if not.
+pi = 3.141592653589793
+
+
+0.333333333333333
+6.02e+23
+11: prt
+    (12 prt (print "pi = " pi))
+RE: House Bill 246, Indiana State Legislature, 1897
+Enter 1 if it has passed and 0 if not.
+pi = 3
+
+
+0.333333333333333
+6.02e+23
+13: while
+    (14 while (if (<= n 1) done))
+19: odd
+    (20 odd (let n (+ (* n 3) 1)))
+21: done
+    (22 done (print N1 " loops " i " times."))
+4269 loops 64 times.
+4: read
+    (5 read (print "Factorial of:"))
+11: error
+    (12 error (print "Invalid input."))
+18: letfac
+    (19 letfac (let factorial 1))
+20: loop
+    (21 loop (if (> itor x) prt))
+24: prt
+    (25 prt (print "factorial(" x ") = " factorial))
+31: stop
+    (32 stop (print "Program stopping."))
+Factorial of:
+factorial(1) = 1
+Factorial of:
+factorial(42) = 1405006117752879898543142606244511569936384000000000
+Factorial of:
+factorial(69) = 171122452428141311372468338881272839092270544893520369393648040923257279754140647424000000000000000
+Factorial of:
+factorial(107) = 12265202031961379393517517010387338887131568154382945052653251412013535324922144249034658613287059061933743916719318560380966506520420000368175349760000000000000000000000000
+Factorial of:
+Program stopping.
+6: loop
+    (7 loop (print "Input a, b, c"))
+14: stop
+    (15 stop)
+Quadratic Equation solver.
+Input a, b, c
+Equation: 1 * x ^ 2 +0 * x +0
+root1 = 0
+root2 = 0
+Input a, b, c
+Equation: 1 * x ^ 2 +1 * x +0
+root1 = 0
+root2 = -1
+Input a, b, c
+Equation: 2 * x ^ 2 +2 * x +2
+root1 = -0.5+0.8660254037844386i
+root2 = -0.5-0.8660254037844386i
+Input a, b, c
+10: read
+    (11 read (input x))
+16: eof
+    (17 eof)
+20: prtlp
+    (21 prtlp (print "a(" i ")=" (a i)))
+24: outer
+    (25 outer (let j 1))
+25: inner
+    (26 inner (if (<= (a j) (a (+ j 1))) noswap))
+29: noswap
+    (30 noswap)
+37: sortlp
+    (38 sortlp (print "a(" i ")=" (a i)))
+41: error
+    (42 error (print "Invalid input"))
+42: stop
+    (43 stop)
+
+unsorted
+a(1)=5
+a(2)=1
+a(3)=4
+a(4)=2
+a(5)=3
+a(6)=10
+a(7)=1024
+a(8)=0
+
+sorted
+a(1)=0
+a(2)=1
+a(3)=2
+a(4)=3
+a(5)=4
+a(6)=5
+a(7)=10
+a(8)=1024
+8: init
+    (9 init (let (sieve i) 1))
+15: primes
+    (16 primes (if (= (sieve prime) 0) next))
+19: loop
+    (20 loop (let (sieve i) 0))
+21: punch
+    (22 punch (if (<= i n) loop))
+23: next
+    (24 next (let prime (+ prime 1)))
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
+Hello, World!
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1+1      = 2
+2-2      = 0
+3*3      = 9
+
+4/9      = 4/9
+3*4+5*6  = 42
+1+1      = 2
+2-2      = 0
+3*3      = 9
+4/9      = 4/9
+2^10     = 1024
+3*4+5*6  = 42
+log(10)  = 2.302585092994046
+sqrt(2)  = 1.4142135623730951
+pi       = 3.141592653589793
+e        = 2.718281828459045
++1/+0    = +inf.0
+-1/+0    = -inf.0
++1/-0    = +inf.0
+-1/-0    = -inf.0
++0/+0    = 0
+-0/-0    = 0
+sqrt(-1) = 0+1i
+log(0)   = -inf.0
+6.02e23  = 6.019999999999999e+23
+(1+2)/7  = 3/7
+i=1
+j=4
+k=41/4
+6
+9
+3: four
+    (4 four (print "four"))
+5: one
+    (6 one (print "one"))
+7: three
+    (8 three (print "three"))
+9: two
+    (10 two (print "two"))
+11: zero
+    (12 zero (print "zero"))
+13: done
+    (14 done)
+zero
+one
+two
+three
+four
+3: loop
+    (4 loop (print i))
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11: loop
+    (12 loop (let fib (+ fib0 fib1)))
+fib(0)=0
+fib(1)=1
+fib(2)=1
+fib(3)=2
+fib(4)=3
+fib(5)=5
+fib(6)=8
+fib(7)=13
+fib(8)=21
+fib(9)=34
+fib(10)=55
+fib(11)=89
+fib(12)=144
+fib(13)=233
+fib(14)=377
+fib(15)=610
+fib(16)=987
+fib(17)=1597
+fib(18)=2584
+fib(19)=4181
+fib(20)=6765
+fib(21)=10946
+fib(22)=17711
+fib(23)=28657
+fib(24)=46368
+fib(25)=75025
+fib(26)=121393
+fib(27)=196418
+fib(28)=317811
+fib(29)=514229
+fib(30)=832040
+fib(31)=1346269
+3.1415926535897932.718281828459045
+pi = 3.141592653589793
+e = 2.718281828459045
+sqrt ( pi ) = 1.7724538509055159
+exp  ( pi ) = 23.140692632779267
+log  ( pi ) = 1.1447298858494002
+sin  ( pi ) = 1.2246467991473532e-16
+cos  ( pi ) = -1.0
+tan  ( pi ) = -1.2246467991473532e-16
+acos ( pi ) = 0+1.811526272460853i
+asin ( pi ) = 1.5707963267948966-1.811526272460853i
+atan ( pi ) = 1.2626272556789118
+abs  ( pi ) = 3.141592653589793
+ceil ( pi ) = 4.0
+floor( pi ) = 3.0
+round( pi ) = 3.0
+11: prt
+    (12 prt (print "pi = " pi))
+RE: House Bill 246, Indiana State Legislature, 1897
+Enter 1 if it has passed and 0 if not.
+pi = 3.141592653589793
+
+
+0.333333333333333
+6.02e+23
+11: prt
+    (12 prt (print "pi = " pi))
+RE: House Bill 246, Indiana State Legislature, 1897
+Enter 1 if it has passed and 0 if not.
+pi = 3
+
+
+0.333333333333333
+6.02e+23
+13: while
+    (14 while (if (<= n 1) done))
+19: odd
+    (20 odd (let n (+ (* n 3) 1)))
+21: done
+    (22 done (print N1 " loops " i " times."))
+4269 loops 64 times.
+4: read
+    (5 read (print "Factorial of:"))
+11: error
+    (12 error (print "Invalid input."))
+18: letfac
+    (19 letfac (let factorial 1))
+20: loop
+    (21 loop (if (> itor x) prt))
+24: prt
+    (25 prt (print "factorial(" x ") = " factorial))
+31: stop
+    (32 stop (print "Program stopping."))
+Factorial of:
+factorial(1) = 1
+Factorial of:
+factorial(42) = 1405006117752879898543142606244511569936384000000000
+Factorial of:
+factorial(69) = 171122452428141311372468338881272839092270544893520369393648040923257279754140647424000000000000000
+Factorial of:
+factorial(107) = 12265202031961379393517517010387338887131568154382945052653251412013535324922144249034658613287059061933743916719318560380966506520420000368175349760000000000000000000000000
+Factorial of:
+Program stopping.
+6: loop
+    (7 loop (print "Input a, b, c"))
+14: stop
+    (15 stop)
+Quadratic Equation solver.
+Input a, b, c
+Equation: 1 * x ^ 2 +0 * x +0
+root1 = 0
+root2 = 0
+Input a, b, c
+Equation: 1 * x ^ 2 +1 * x +0
+root1 = 0
+root2 = -1
+Input a, b, c
+Equation: 2 * x ^ 2 +2 * x +2
+root1 = -0.5+0.8660254037844386i
+root2 = -0.5-0.8660254037844386i
+Input a, b, c
+10: read
+    (11 read (input x))
+16: eof
+    (17 eof)
+20: prtlp
+    (21 prtlp (print "a(" i ")=" (a i)))
+24: outer
+    (25 outer (let j 1))
+25: inner
+    (26 inner (if (<= (a j) (a (+ j 1))) noswap))
+29: noswap
+    (30 noswap)
+37: sortlp
+    (38 sortlp (print "a(" i ")=" (a i)))
+41: error
+    (42 error (print "Invalid input"))
+42: stop
+    (43 stop)
+
+unsorted
+a(1)=5
+a(2)=1
+a(3)=4
+a(4)=2
+a(5)=3
+a(6)=10
+a(7)=1024
+a(8)=0
+
+sorted
+a(1)=0
+a(2)=1
+a(3)=2
+a(4)=3
+a(5)=4
+a(6)=5
+a(7)=10
+a(8)=1024
+8: init
+    (9 init (let (sieve i) 1))
+15: primes
+    (16 primes (if (= (sieve prime) 0) next))
+19: loop
+    (20 loop (let (sieve i) 0))
+21: punch
+    (22 punch (if (<= i n) loop))
+23: next
+    (24 next (let prime (+ prime 1)))
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
