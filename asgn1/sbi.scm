@@ -56,34 +56,38 @@
     (printf ")~n"))
 
 (define (h_eval expr) ; Evaluates expressions.
-  (printf "DEBUG: h_Evaluating...~n")
-  (printf "       ~s~n" expr)
+  ;(printf "DEBUG: h_Evaluating...~n")
+  ;(printf "       ~s~n" expr)
 	(cond
 		((string? expr)
-		(printf "       is a string~n") expr)
+		;(printf "       is a string~n") 
+		expr
+		)
 		((number? expr)
-		(printf "       is a number~n") expr)
+		;(printf "       is a number~n") 
+		expr
+		)
 		((hash-has-key? *function-table* expr)
-		(printf "       is a hash key in function table~n")
+		;(printf "       is a hash key in function table~n")
 		(hash-ref *function-table* expr))
 		((hash-has-key? *variable-table* expr)
-		(printf "       is a hash key variable table~n")
+		;(printf "       is a hash key variable table~n")
 		(hash-ref *variable-table* expr))
 		((list? expr)
-		(printf "       is a list~n")
+		;(printf "       is a list~n")
 		(if (hash-has-key? *function-table* (car expr))
 			(let((head (hash-ref *function-table*  (car expr))))
 			(cond 
 				[(procedure? head)
 				(apply head (map (lambda (x) (h_eval x)) (cdr expr)))]
 				[(vector? head)
-				(printf "It's a vector.")
+				;(printf "It's a vector.")
 				(vector-ref head (cadr expr))]
 				[(number? head)
-				(printf "It's a number.~n") head
+				;(printf "It's a number.~n") 
+				head
 				]
 				[else
-				(continue)
 				(die "Fatal: Broken function table.")
 				]))
 			(die (list "Fatal error: " 
@@ -103,7 +107,7 @@
 	(variable-put! (caar expr) (make-vector (value (cadar expr))) )
 	(hash-set! *function-table* (caar expr) 
       	(lambda(x) (vector-ref (hash-ref *variable-table* (caar expr)) (sub1 x))))
-	(map (lambda (el) (printf "~s~n" el))(hash->list *variable-table*))
+	;(map (lambda (el) (printf "~s~n" el))(hash->list *variable-table*))
 )
 
 (define (value lenl)
@@ -186,8 +190,8 @@
 
 
 (define (label-hash program)
-	(printf "Hashing labels:~n")
- 	(printf "==================================================~n")
+	;(printf "Hashing labels:~n")
+	;(printf "==================================================~n")
 	(map (lambda (line)
 		(when (not (null? line))
 			(when (or (= 3 (length line))
@@ -197,9 +201,9 @@
 			(printf "    ~s~n" (list-ref program (sub1 (car line))))
 			(hash-set! *label-table* (cadr line) (sub1 (car line)))
 			))) program)
-	(printf "==================================================~n")
- 	(printf "Dumping label table...~n")
-	(map (lambda (el) (printf "~s~n" el))(hash->list *label-table*))
+	;(printf "==================================================~n")
+ 	;(printf "Dumping label table...~n")
+	;(map (lambda (el) (printf "~s~n" el))(hash->list *label-table*))
 )
 
 ; start of program
@@ -213,7 +217,7 @@
 		; program = commands in sbir file
 		(program (readlist-from-inputfile sbprogfile)))
 		; print filename and commands in sbir file
-		(write-program-by-line sbprogfile program)
+;		(write-program-by-line sbprogfile program)
 		; get labels of program 
 		(label-hash program)
 		; read commands

@@ -1,0 +1,35 @@
+8: init
+    (9 init (let (sieve i) 1))
+15: primes
+    (16 primes (if (= (sieve prime) 0) next))
+19: loop
+    (20 loop (let (sieve i) 0))
+21: punch
+    (22 punch (if (<= i n) loop))
+23: next
+    (24 next (let prime (+ prime 1)))
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
