@@ -107,16 +107,19 @@
 ; dim creates an arr[] given by the var name & insert it into the Symbol table
 ; the dimension of the arr[] is given by the expression
 (define (basic_dim expr)
-	(variable-put! (caar expr) (make-vector (value (cadar expr))) )
+	(variable-put! (caar expr) (make-vector (type-check (cadar expr))) )
 	(hash-set! *function-table* (caar expr) 
       	(lambda(x) (vector-ref (hash-ref *variable-table* (caar expr)) (sub1 x))))
 )
 
-(define (value lenl)
-  (if (pair? lenl)
-    (apply (hash-ref *function-table* (car lenl)) (map value (cdr lenl)))     
-      (cond ((number? lenl) lenl)               
-          (else (hash-ref *variable-table* lenl)))))
+; checks the type of expr
+; depending which type expr is, perform appropriate action
+(define (type-check expr)
+  (cond 
+    [(pair? expr)
+    (apply (hash-ref *function-table* (car expr)) (map type-check (cdr expr)))]     
+    [(number? expr) expr]               
+    [(hash-ref *variable-table* expr)]))
 
 ; let makes an assignment to a variable
 ; value of Variable is stored into the Symbol table
@@ -125,10 +128,10 @@
 	  (if (pair? (car expr))
     (begin
      (vector-set! (hash-ref *variable-table* (caar expr)) 
-	(- (value (cadar expr))1) (value (cadr expr)))
+	(- (type-check (cadar expr))1) (type-check (cadr expr)))
     )
     (begin
-    (let ((result (value (cadr expr))))
+    (let ((result (type-check (cadr expr))))
        (variable-put! (car expr) result)
      )))
 )
