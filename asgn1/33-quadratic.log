@@ -1,7 +1,3 @@
-6: loop
-    (7 loop (print "Input a, b, c"))
-14: stop
-    (15 stop)
 Quadratic Equation solver.
 Input a, b, c
 Equation: 1 * x ^ 2 +0 * x +0

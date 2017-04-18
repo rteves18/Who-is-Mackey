@@ -1,7 +1,1 @@
-13: while
-    (14 while (if (<= n 1) done))
-19: odd
-    (20 odd (let n (+ (* n 3) 1)))
-21: done
-    (22 done (print N1 " loops " i " times."))
 4269 loops 64 times.

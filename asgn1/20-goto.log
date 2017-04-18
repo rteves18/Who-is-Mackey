@@ -1,15 +1,3 @@
-3: four
-    (4 four (print "four"))
-5: one
-    (6 one (print "one"))
-7: three
-    (8 three (print "three"))
-9: two
-    (10 two (print "two"))
-11: zero
-    (12 zero (print "zero"))
-13: done
-    (14 done)
 zero
 one
 two

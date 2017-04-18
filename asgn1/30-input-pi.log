@@ -1,5 +1,3 @@
-11: prt
-    (12 prt (print "pi = " pi))
 RE: House Bill 246, Indiana State Legislature, 1897
 Enter 1 if it has passed and 0 if not.
 pi = 3.141592653589793
@@ -7,8 +5,6 @@ pi = 3.141592653589793
 
 0.333333333333333
 6.02e+23
-11: prt
-    (12 prt (print "pi = " pi))
 RE: House Bill 246, Indiana State Legislature, 1897
 Enter 1 if it has passed and 0 if not.
 pi = 3

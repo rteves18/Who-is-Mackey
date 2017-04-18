@@ -1,15 +1,3 @@
-4: read
-    (5 read (print "Factorial of:"))
-11: error
-    (12 error (print "Invalid input."))
-18: letfac
-    (19 letfac (let factorial 1))
-20: loop
-    (21 loop (if (> itor x) prt))
-24: prt
-    (25 prt (print "factorial(" x ") = " factorial))
-31: stop
-    (32 stop (print "Program stopping."))
 Factorial of:
 factorial(1) = 1
 Factorial of:

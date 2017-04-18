@@ -1,5 +1,3 @@
-11: loop
-    (12 loop (let fib (+ fib0 fib1)))
 fib(0)=0
 fib(1)=1
 fib(2)=1
