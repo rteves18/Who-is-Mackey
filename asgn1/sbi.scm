@@ -209,8 +209,6 @@
 ; Label hash table holding the addresses of each line
 ; Initilized by scanning the list retured by (read) at start of prog
 (define (label-hash program)
-    ;(printf "Hashing labels:~n")
-    ;(printf "==================================================~n")
     (map (lambda (line)
         (when (not (null? line))
             (when (or (= 3 (length line))
@@ -220,9 +218,6 @@
             ;(printf "    ~s~n" (list-ref program (sub1 (car line))))
             (hash-set! *label-table* (cadr line) (sub1 (car line)))
             ))) program)
-    ;(printf "==================================================~n")
-    ;(printf "Dumping label table...~n")
-    ;(map (lambda (el) (printf "~s~n" el))(hash->list *label-table*))
 )
 
 ; Variable hash table containing the initialized values e and pi
