@@ -10,7 +10,7 @@ SOURCE    = bigint.mli bigint.ml maindc.ml scanner.mll
 ALLSRC    = ${SOURCE} dc.ml ${MKFILE}
 OBJCMO    = bigint.cmo scanner.cmo maindc.cmo
 OBJCMI    = ${patsubst %.cmo, %.cmi, ${OBJCMO}}
-CAMLRUN   = ocamldc
+CAMLRUN   = ocamldc 
 LISTING   = Listing.ps
 
 all : ${CAMLRUN}
