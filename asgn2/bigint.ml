@@ -45,7 +45,19 @@ module Bigint = struct
                    in  strcat ""
                        ((if sign = Pos then "" else "-") ::
                         (map string_of_int reversed))
-
+
+    (* Compares 2 list of digits
+       if list 1 > list 2 return 1
+       if list 2 > list 1 return -1
+       if list 1 == list2 return 0 *)                 
+    let rec cmp list1 list2 = match (reverse(list1), reverse(list2)) with
+        | [], [] -> 0
+        | _, [] -> 1
+        | [], _ -> -1
+        | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
+                                    else if car1 > car2 then 1
+                                    else -1
+
     let rec add' list1 list2 carry = match (list1, list2, carry) with
         | list1, [], 0       -> list1
         | [], list2, 0       -> list2

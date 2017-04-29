@@ -13,6 +13,9 @@
 *    ocaml dc.ml
 *
 * which will run the program without need for compilation.
+
+This code is not useful for production but running it as 
+suggested above will load the below modules into Ocaml
 *)
 
 #use "bigint.ml";;
