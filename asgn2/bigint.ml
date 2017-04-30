@@ -46,14 +46,14 @@ module Bigint = struct
                        ((if sign = Pos then "" else "-") ::
                         (map string_of_int reversed))
 
-    (* Compares 2 list of digits
+    (* Compares 2 lists of digits
        if list 1 > list 2 return 1
-       if list 2 > list 1 return -1
-       if list 1 == list2 return 0 *)                 
+       if list 1 < list 2 return -1
+       if list 1 = list2 return 0 *)                 
     let rec cmp list1 list2 = match (reverse(list1), reverse(list2)) with
         | [], [] -> 0
-        | _, [] -> 1
-        | [], _ -> -1
+        | _ , [] -> 1
+        | [], _  -> -1
         | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
                                     else if car1 > car2 then 1
                                     else -1
@@ -69,10 +69,25 @@ module Bigint = struct
 
     let add (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         if neg1 = neg2
-        then Bigint (neg1, add' value1 value2 0)
+            then Bigint (neg1, add' value1 value2 0)
         else zero
 
-    let sub = add
+    let rec sub' list1 list2 carry = match (list1, list2, carry) with
+        | list1, [], 0      -> list1
+        | [], list2, 0      -> list2
+        | list1, [], carry  -> sub' list1 [carry] 0
+        | [], list2, carry  -> sub' [carry] list2 0
+        | car1::cdr1, car2::cdr2, carry ->
+          if (cmp car1 car2) = -1 
+            then let diff = car1 + radix - car2 
+                  in diff :: sub' cdr1 cdr2 1
+          else (let diff = car1 - car2 - carry
+                in diff mod radix :: sub' cdr1 cdr2 (diff / radix))
+
+    let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
+        if neg1 = neg2
+            then Bigint (neg1, sub' value1 value2 0)
+        else zero
 
     let mul = add
 
