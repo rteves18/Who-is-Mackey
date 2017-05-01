@@ -91,8 +91,11 @@ module Bigint = struct
         | list1, [], carry  -> sub' list1 [carry] 0
         | [], list2, carry  -> sub' [carry] list2 0
         | car1::cdr1, car2::cdr2, carry ->
-          let diff = car1 - car2 - carry
-          in  diff mod radix :: sub' cdr1 cdr2 (diff / radix)
+          let diff = car1 - car2 in
+            if carry = 0 then sub' ((car1 - 1)::cdr1) list2 0
+        else if diff < 0 then (diff + 10)::(sub' cdr1 cdr2 1)
+    else diff::(sub' cdr1 cdr2 0)
+          (* in  diff mod radix :: sub' cdr1 cdr2 (diff / radix) *)
           (*if cmp car1 car2 = -1 
             then let diff = car1 + radix - car2 
                   in diff :: sub' cdr1 cdr2 1
