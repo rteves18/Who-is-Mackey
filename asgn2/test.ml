@@ -23,3 +23,11 @@
           if (cmp car1 car2) = -1
           then sub' cdr1 cdr2 1
         else sub' cdr1 cdr2 0*)
+
+let rec trim_zero value = 
+  let rvalue = List.rev value in
+  match rvalue with
+    | [] -> []
+    | car1::cdr1 ->
+      if car1 = 0 then trim_zero (List.rev cdr1)
+      else value

@@ -61,6 +61,15 @@ module Bigint = struct
         | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
                                     else if car1 > car2 then 1
                                     else -1
+    
+    (* trims any leading 0 for absolute subtraction *)
+    let rec trim_zero value = 
+        let rvalue = reverse value in
+        match rvalue with
+        | [] -> []
+        | car1::cdr1 ->
+          if car1 = 0 then trim_zero (reverse cdr1)
+          else value
 
     let rec add' list1 list2 carry = match (list1, list2, carry) with
         | list1, [], 0       -> list1
@@ -90,12 +99,33 @@ module Bigint = struct
           else let diff = car1 - car2 - carry
                 in diff mod radix :: sub' cdr1 cdr2 (diff / radix)*)
 
-    let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
+    (* let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         if neg1 = neg2
             then (if (cmp value1 value2) = 1
                   then Bigint (neg1, sub' value1 value2 0)
                   else Bigint (Neg, sub' value2 value1 0))
-        else zero
+        else zero *)
+
+    let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
+        (* if the sign of both values are the same *)
+        if neg1 = neg2
+            then let strcmp = cmp value1 value2 in
+            (* if value1 > value2 *)
+            if strcmp > 0
+                then Bigint (neg1, add' value1 value2 0)
+            (* if value1 < value2 *)
+            else if strcmp < 0 then
+                (* if both values are positive *)
+                if neg1 = Pos 
+                    then Bigint (neg1, add' value1 value2 0)
+                (* if both values are negative *)
+                else if neg1 = Neg
+                    (* perform regular addition & add - sign in front *)
+                    then Bigint (neg1, add' value1 value2 0)
+                else zero
+            else zero
+        (* if both values have different sign *)
+        else Bigint (neg1, add' value1 value2 0)
 
     let mul = add
 
