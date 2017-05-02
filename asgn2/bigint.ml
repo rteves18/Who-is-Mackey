@@ -110,6 +110,11 @@ module Bigint = struct
         else add' (mul_helper list1 (car list2) 0)
                     (0::(mul' list1 (cdr list2))) 0
 
+    let rec pow' list1 list2 list1cp =
+        let counter = (trim_zero (sub' list2 [1] 0)) in
+            if counter = [] then list1
+            else pow' (mul' list1 list1cp) counter list1cp
+
     let add (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         if neg1 = neg2
             then Bigint (neg1, add' value1 value2 0)
@@ -140,20 +145,21 @@ module Bigint = struct
         else Bigint (neg1, add' value1 value2 0)
 
     let mul (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
-	if neg1 = neg2 then Bigint (Pos, trim_zero(mul' value1 value2))
+	if neg1 = neg2 then Bigint (Pos, trim_zero (mul' value1 value2))
 	else Bigint(Neg, trim_zero(mul' value1 value2))
 
     let div = add
 
     let rem = add
-    let pow = add
-    (*let pow (Bigint (neg1, value1)) (Bigin (neg1, value2)) = 
-	if neg2 = Neg then zero
-	else match (value1, value2) with
-	| [], value2	-> zero
-	| value1
-	|*)
- 
+
+    let pow (Bigint (neg1, value1)) (Bigint (neg2, value2)) = 
+        if neg2 = Neg then zero
+        else match (value1, value2) with
+            | [], value2        -> zero (* 0^anything=0 *)
+            | value1, []        -> Bigint (Pos, [1]) (* anything^0=1 *)
+            | value1, value2    -> 
+                Bigint (neg1, (trim_zero (pow' value1 value2 value1)))
+     
 
 end
 
