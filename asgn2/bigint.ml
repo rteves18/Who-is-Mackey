@@ -122,13 +122,26 @@ module Bigint = struct
         (* if both values have different sign *)
         else Bigint (neg1, add' value1 value2 0)
 
-    let mul = add
+    let rec mul' list1 list2 =
+        if (list1 = [] || list2 = []) then []
+        else add' (mul_add list1 (car list2) 0)
+                    (0::(mul' list1 (cdr list2))) 0
+
+    let mul (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
+	if neg1 = neg2 then Bigint (neg1, trim_zero(mul' value1 value2))
+	else Bigint(Neg, trim_zero(mul' value1 value2))
 
     let div = add
 
     let rem = add
 
-    let pow = add
+    let pow (Bigint (neg1, value1)) (Bigin (neg1, value2)) = 
+	if neg2 = Neg then zero
+	else match (value1, value2) with
+	| [], value2	-> zero
+	| value1
+	|
+ 
 
 end
 
