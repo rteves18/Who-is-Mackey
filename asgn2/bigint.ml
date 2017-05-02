@@ -93,6 +93,23 @@ module Bigint = struct
              let diff = car1 - car2 - carry
              in diff mod radix :: sub' cdr1 cdr2 (diff / radix)
 
+    (* Multiply helper function
+       takes in a list of digits, a number and a carry
+       multiplies the number to the list of digits
+       returns the new list of digits
+     *)
+    let rec mul_helper list1 num carry = 
+        match (list1, num, carry) with
+        | [], num, carry -> [carry]
+        | car1::cdr1, num, carry ->
+          let prod = car1 * num + carry in
+          prod mod radix :: mul_helper cdr1 num (prod / radix)
+
+    let rec mul' list1 list2 =
+        if (list1 = [] || list2 = []) then []
+        else add' (mul_helper list1 (car list2) 0)
+                    (0::(mul' list1 (cdr list2))) 0
+
     let add (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         if neg1 = neg2
             then Bigint (neg1, add' value1 value2 0)
@@ -122,25 +139,20 @@ module Bigint = struct
         (* if both values have different sign *)
         else Bigint (neg1, add' value1 value2 0)
 
-    let rec mul' list1 list2 =
-        if (list1 = [] || list2 = []) then []
-        else add' (mul_add list1 (car list2) 0)
-                    (0::(mul' list1 (cdr list2))) 0
-
     let mul (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
-	if neg1 = neg2 then Bigint (neg1, trim_zero(mul' value1 value2))
+	if neg1 = neg2 then Bigint (Pos, trim_zero(mul' value1 value2))
 	else Bigint(Neg, trim_zero(mul' value1 value2))
 
     let div = add
 
     let rem = add
-
-    let pow (Bigint (neg1, value1)) (Bigin (neg1, value2)) = 
+    let pow = add
+    (*let pow (Bigint (neg1, value1)) (Bigin (neg1, value2)) = 
 	if neg2 = Neg then zero
 	else match (value1, value2) with
 	| [], value2	-> zero
 	| value1
-	|
+	|*)
  
 
 end

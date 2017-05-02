@@ -31,3 +31,15 @@ let rec trim_zero value =
     | car1::cdr1 ->
       if car1 = 0 then trim_zero (List.rev cdr1)
       else value
+
+let rec mul_helper list1 num carry = 
+    match (list1, num, carry) with
+    | [], num, carry -> [carry]
+    | car1::cdr1, num, carry ->
+      let prod = car1 * num + carry in
+      prod mod 10 :: mul_helper cdr1 num (prod / 10)
+
+let rec mul_help list1 num carry = 
+    if list1 = [] then [carry]
+    else let prd = (List.hd list1) * num + carry in
+        (prd mod 10)::(mul_help (List.tl list1) num (prd / 10))
