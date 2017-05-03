@@ -110,10 +110,26 @@ module Bigint = struct
         else add' (mul_helper list1 (car list2) 0)
                     (0::(mul' list1 (cdr list2))) 0
 
-    let rec pow' list1 list2 list1cp =
-        let counter = (trim_zero (sub' list2 [1] 0)) in
-            if counter = [] then list1
-            else pow' (mul' list1 list1cp) counter list1cp
+    let double number = add' number number 0
+
+    let rec divrem' dividend powof2 divisor = 
+        (*match (dividend, powof2, divisor) with
+        | dividend, powof2, []      -> ([], [])
+        | [], powof2, divisor       -> ([], [])
+        | dividend, powof2, divisor ->*)
+           if cmp divisor dividend > 0 then [0], dividend
+           else let quotient, remainder = 
+            divrem' dividend (double powof2) (double divisor) in 
+                if cmp remainder divisor < 0 then quotient, remainder
+                else (add' quotient powof2 0, 
+                      trim_zero (sub' remainder divisor 0))
+
+    let divrem dividend divisor = divrem' dividend [1] divisor
+
+    let rec pow' list1 list2 list1' =
+        let list2' = (trim_zero (sub' list2 [1] 0)) in
+            if list2' = [] then list1
+            else pow' (mul' list1 list1') list2' list1'
 
     let add (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         if neg1 = neg2
@@ -148,9 +164,17 @@ module Bigint = struct
 	if neg1 = neg2 then Bigint (Pos, trim_zero (mul' value1 value2))
 	else Bigint(Neg, trim_zero(mul' value1 value2))
 
-    let div = add
+    let div (Bigint (neg1, value1)) (Bigint (neg2, value2)) = 
+    (* If same sign, quotient is positive else negative *)
+        let sign = if neg1 = neg2 then Pos else Neg in
+            let quotient, _ = 
+            divrem value1 value2 in Bigint (sign, quotient)
 
-    let rem = add
+    let rem (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
+        (* If same sign, quotient is positive else negative *)
+        let sign = if neg1 = neg2 then Pos else Neg in
+            let _, remainder = divrem value1 value2 
+                in Bigint (sign, remainder)
 
     let pow (Bigint (neg1, value1)) (Bigint (neg2, value2)) = 
         if neg2 = Neg then zero
@@ -159,7 +183,5 @@ module Bigint = struct
             | value1, []        -> Bigint (Pos, [1]) (* anything^0=1 *)
             | value1, value2    -> 
                 Bigint (neg1, (trim_zero (pow' value1 value2 value1)))
-     
 
 end
-

@@ -43,3 +43,24 @@ let rec mul_help list1 num carry =
     if list1 = [] then [carry]
     else let prd = (List.hd list1) * num + carry in
         (prd mod 10)::(mul_help (List.tl list1) num (prd / 10))
+
+let double number = number + number
+
+let rec divrem' (dividend, powerof2, divisor') =
+    if divisor' > dividend
+    then 0, dividend
+    else let quotient, remainder =
+             divrem' (dividend, double powerof2, double divisor')
+         in  if remainder < divisor'
+             then quotient, remainder
+             else quotient + powerof2, remainder - divisor'
+
+let divrem (dividend, divisor') = divrem' (dividend, 1, divisor')
+
+let div (dividend, divisor) =
+    let quotient, _ = divrem (dividend, divisor)
+    in quotient
+
+let rem (dividend, divisor) =
+    let _, remainder = divrem (dividend, divisor)
+    in remainder

@@ -10,20 +10,36 @@ open Scanner
 type stack_t = Bigint.bigint Stack.t
 let push = Stack.push
 let pop = Stack.pop
+let regs = Hashtbl.create 10
 
 let ord thechar = int_of_char thechar
 type binop_t = bigint -> bigint -> bigint
 
 let print_number number = printf "%s\n%!" (string_of_bigint number)
 
+let rec print_number number =
+    (* dc prints a '|' and a newline character after every 69 chars *) 
+    let fnumber = string_of_bigint number in 
+        let length = String.length fnumber in 
+            if length > 68 
+                then (printf "%s\\\n" (String.sub fnumber 0 69);
+                        print_number (bigint_of_string 
+                        (String.sub fnumber 69 (length - 69)))) 
+            else printf "%s\n%!" (string_of_bigint number)
+
 let print_stackempty () = printf "stack empty\n%!"
 
 let executereg (thestack: stack_t) (oper: char) (reg: int) =
-    try match oper with
-        | 'l' -> printf "operator l reg 0%o is unimplemented\n%!" reg
-        | 's' -> printf "operator s reg 0%o is unimplemented\n%!" reg
-        | _   -> printf "0%o 0%o is unimplemented\n%!" (ord oper) reg
-    with Stack.Empty -> print_stackempty()
+  try match oper with
+    | 'l' -> 
+      if (Hashtbl.mem regs reg)
+      then push (Hashtbl.find regs reg) thestack
+      else printf "ocamldc: register '%c' (0%o) is empty\n%!"
+        (char_of_int reg) reg
+    | 's' ->
+      Hashtbl.replace regs reg (pop thestack)
+    | _   -> printf "0%o 0%o is unimplemented\n%!" (ord oper) reg
+      with Stack.Empty -> print_stackempty()
 
 let executebinop (thestack: stack_t) (oper: binop_t) =
     try let right = pop thestack
