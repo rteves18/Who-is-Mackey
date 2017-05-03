@@ -28,10 +28,10 @@ ${CAMLRUN} : ${OBJCMO} ${OBJCMI}
 	ocamllex $<
 
 clean :
-	- rm ${OBJCMO} ${OBJCMI} ${DEPSFILE} scanner.ml
+	- rm ${OBJCMO} ${OBJCMI} ${DEPSFILE} scanner.ml *.dcout *.ocamldcout
 
 spotless : clean
-	- rm ${CAMLRUN} ${LISTING} ${LISTING:.ps=.pdf}
+	- rm ${CAMLRUN} ${LISTING} ${LISTING:.ps=.pdf} 
 
 ci : ${RCSFILES}
 	cid + ${ALLSRC}
