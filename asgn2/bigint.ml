@@ -45,23 +45,7 @@ module Bigint = struct
                    in  strcat ""
                        ((if sign = Pos then "" else "-") ::
                         (map string_of_int reversed))
-
-    (* Compares 2 lists of digits
-       First, compare length of 2 lists, then
-       if list 1 > list 2 return 1
-       if list 1 < list 2 return -1
-       if list 1 = list2 return 0 *)                 
-    let rec cmp list1 list2 = 
-        if (List.length list1) > (List.length list2) then 1
-        else if (List.length list1) < (List.length list2) then -1
-        else match (reverse(list1), reverse(list2)) with
-        | [], [] -> 0
-        | _ , [] -> 1
-        | [], _  -> -1
-        | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
-                                    else if car1 > car2 then 1
-                                    else -1
-    
+   
     (* trims any leading 0 for absolute subtraction *)
     let rec trim_zero value = 
         let rvalue = reverse value in
@@ -70,6 +54,24 @@ module Bigint = struct
         | car1::cdr1 ->
           if car1 = 0 then trim_zero (reverse cdr1)
           else value
+
+    (* Compares 2 lists of digits
+       First, compare length of 2 lists, then
+       if list 1 > list 2 return 1
+       if list 1 < list 2 return -1
+       if list 1 = list2 return 0 *)
+    let rec cmp list1 list2 = 
+        let list1_rev = reverse(trim_zero list1) in 
+        let list2_rev = reverse(trim_zero list2) in
+        if (List.length list1_rev) > (List.length list2_rev) then 1
+        else if (List.length list1_rev) < (List.length list2_rev) then -1
+        else match (list1_rev, list2_rev) with
+        | [], [] -> 0
+        | _ , [] -> 1
+        | [], _  -> -1
+        | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
+                                    else if car1 > car2 then 1
+                                    else -1
 
     let rec add' list1 list2 carry = match (list1, list2, carry) with
         | list1, [], 0       -> list1
