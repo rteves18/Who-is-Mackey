@@ -27,7 +27,7 @@ let rec print_number number =
                         (String.sub fnumber 69 (length - 69)))) 
             else printf "%s\n%!" (string_of_bigint number)
 
-let print_stackempty () = printf "stack empty\n%!"
+let print_stackempty () = printf "dc: stack empty\n%!"
 
 let executereg (thestack: stack_t) (oper: char) (reg: int) =
   try match oper with
