@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+# $Id: testsubmit,v 1.14 2010-11-18 14:43:28-08 - - $
+#
+# NAME
+#    testsubmit - copy files to a private directory to verify function
+#
+# SYNOPSIS
+#    testsubmit class project filename...
+#
+# DESCRIPTION
+#    Since submitted files are no longer visible to the student,
+#    and have been renamed with digit prefixes, this script will
+#    copy files into a privaate directory so that the student can
+#    run gmake and test the build.
+#
+#    class - name of the class, e.g., cmps999-xx.w09
+#    project - name of the project, e.g., asg1
+#    filename... - names of the files to be submitted
+#
+#    This script creates a directory named with the date and time
+#    $HOME/private/Verify/$CLASS/$PROJECT/$DATETIME
+#    This wastes a lot of disk space, so deletion of the junk
+#    directories after verification is recommended.
+#
+
+use strict;
+use warnings;
+use POSIX qw (strftime);
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$2|;
+$SIG{__DIE__} = sub {print STDERR @_; exit 1};
+
+die "Usage: $0 class project filename...\n" unless @ARGV >= 3;
+
+sub do_or_die ($) {
+   my ($cmd) = @_;
+   system $cmd;
+   die "$0: $cmd: $!\n" unless $? == 0;
+}
+
+my ($class, $project) = splice @ARGV, 0, 2;
+my $user = getpwuid $< or die "$0: Tu non est!\n";
+
+my $subroot = "/afs/cats.ucsc.edu/class";
+my $subdir = "$subroot/$class/$project/$user";
+die "$0: $subdir:\n",
+    "does not exist.\n",
+    "You have not submitted any files\n" unless -d $subdir;
+
+print "You have submitted the following files:\n$subdir\n";
+do_or_die "ls -la $subdir";
+print "\n";
+
+#my @unreadable = grep {! -r $_} @ARGV;
+#die "$0: @unreadable:\nfiles are not readable\n" if @unreadable;
+
+do_or_die "checksource @ARGV";
+die "$0: checksource failed your files\n" unless $? == 0;
+
+my $datetime = strftime "%y%m%d.%H%M%S", localtime $^T;
+my $verifydir = "\$HOME/private/Verify/$class/$project/$datetime";
+do_or_die "mkdir -p $verifydir";
+do_or_die "fs sa $verifydir $user all -clear";
+do_or_die "fs la $verifydir";
+do_or_die "cp @ARGV $verifydir";
+print "$verifydir\ncontains the following files:\n";
+do_or_die "ls -lao $verifydir";
+print <<__END__
+
+cd $verifydir
+
+Then gmake and test the results to verify that there are no
+missing files.
+
+Compare the filenames in your privately created directory with
+the most recent names of those you submitted.  If in doubt,
+submit again.
+
+Look in the .score subdirectory of the assignment specifications
+for instructions to the graders.
+
+__END__
+

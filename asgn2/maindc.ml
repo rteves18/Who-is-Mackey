@@ -62,7 +62,7 @@ let execute (thestack: stack_t) (oper: char) =
         | 'f'  -> Stack.iter print_number thestack
         | 'l'  -> failwith "operator l scanned with no register"
         | 'p'  -> print_number (Stack.top thestack)
-        | 'q'  -> raise End_of_file
+        | 'q'  -> raise End_of_file 
         | 's'  -> failwith "operator s scanned with no register"
         | '\n' -> ()
         | ' '  -> ()
@@ -81,7 +81,7 @@ let toploop (thestack: stack_t) inputchannel =
              toploop ()
         with End_of_file -> printf "End_of_file\n%!";
     in  toploop () (*this call calls toploop() and not the top
-		    toploop(args1, args2)*)
+            toploop(args1, args2)*)
 
 let readfiles () =
     let thestack : bigint Stack.t = Stack.create ()

@@ -64,7 +64,8 @@ module Bigint = struct
         let list1_rev = reverse(trim_zero list1) in 
         let list2_rev = reverse(trim_zero list2) in
         if (List.length list1_rev) > (List.length list2_rev) then 1
-        else if (List.length list1_rev) < (List.length list2_rev) then -1
+        else if 
+    (List.length list1_rev) < (List.length list2_rev) then -1
         else match (list1_rev, list2_rev) with
         | [], [] -> 0
         | _ , [] -> 1
@@ -137,9 +138,11 @@ module Bigint = struct
         if neg1 = neg2
             then Bigint (neg1, add' value1 value2 0)
         else let strcmp = cmp value1 value2 in
-		if strcmp < 0 then Bigint(neg2, trim_zero(sub' value2 value1 0))
-		else if strcmp > 0 then Bigint(neg1, trim_zero(sub' value1 value2 0))
-		else zero
+        if strcmp < 0 then 
+        Bigint(neg2, trim_zero(sub' value2 value1 0))
+        else if strcmp > 0 then 
+        Bigint(neg1, trim_zero(sub' value1 value2 0))
+        else zero
 
     let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
         (* if the sign of both values are the same *)
@@ -163,8 +166,8 @@ module Bigint = struct
         else Bigint (neg1, add' value1 value2 0)
 
     let mul (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
-	if neg1 = neg2 then Bigint (Pos, trim_zero (mul' value1 value2))
-	else Bigint(Neg, trim_zero(mul' value1 value2))
+    if neg1 = neg2 then Bigint (Pos, trim_zero (mul' value1 value2))
+    else Bigint(Neg, trim_zero(mul' value1 value2))
 
     let div (Bigint (neg1, value1)) (Bigint (neg2, value2)) = 
     (* If same sign, quotient is positive else negative *)

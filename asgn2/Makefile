@@ -9,6 +9,7 @@ SUBMAKE   = ${MAKE} --no-print-directory
 SOURCE    = bigint.mli bigint.ml maindc.ml scanner.mll
 ALLSRC    = ${SOURCE} dc.ml ${MKFILE}
 OBJCMO    = bigint.cmo scanner.cmo maindc.cmo
+OUT       = *.dcout *.ocamldcout
 OBJCMI    = ${patsubst %.cmo, %.cmi, ${OBJCMO}}
 CAMLRUN   = ocamldc 
 LISTING   = Listing.ps
@@ -28,7 +29,7 @@ ${CAMLRUN} : ${OBJCMO} ${OBJCMI}
 	ocamllex $<
 
 clean :
-	- rm ${OBJCMO} ${OBJCMI} ${DEPSFILE} scanner.ml *.dcout *.ocamldcout
+	- rm ${OBJCMO} ${OBJCMI} ${DEPSFILE} ${OUT} scanner.ml
 
 spotless : clean
 	- rm ${CAMLRUN} ${LISTING} ${LISTING:.ps=.pdf} 
