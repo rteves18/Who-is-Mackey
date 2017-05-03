@@ -1,2 +1,1 @@
-166665
-End_of_file
+./mk.test: line 8: ocamldc: command not found

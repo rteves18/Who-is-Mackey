@@ -1,2 +1,0 @@
-ocamlc -c maindc.ml
-ocamlc bigint.cmo scanner.cmo maindc.cmo -o ocamldc 
