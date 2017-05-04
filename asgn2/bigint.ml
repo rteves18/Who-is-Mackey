@@ -116,16 +116,12 @@ module Bigint = struct
     let double number = add' number number 0
 
     let rec divrem' dividend powof2 divisor = 
-        (*match (dividend, powof2, divisor) with
-        | dividend, powof2, []      -> ([], [])
-        | [], powof2, divisor       -> ([], [])
-        | dividend, powof2, divisor ->*)
-           if cmp divisor dividend > 0 then [0], dividend
-           else let quotient, remainder = 
-            divrem' dividend (double powof2) (double divisor) in 
-                if cmp remainder divisor < 0 then quotient, remainder
-                else (add' quotient powof2 0, 
-                      trim_zero (sub' remainder divisor 0))
+       if cmp divisor dividend > 0 then [0], dividend
+       else let quotient, remainder = 
+        divrem' dividend (double powof2) (double divisor) in 
+            if cmp remainder divisor < 0 then quotient, remainder
+            else (add' quotient powof2 0, 
+                 (sub' remainder divisor 0))
 
     let divrem dividend divisor = divrem' dividend [1] divisor
 
@@ -166,8 +162,9 @@ module Bigint = struct
         else Bigint (neg1, add' value1 value2 0)
 
     let mul (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
-    if neg1 = neg2 then Bigint (Pos, trim_zero (mul' value1 value2))
-    else Bigint(Neg, trim_zero(mul' value1 value2))
+        if neg1 = neg2 
+            then Bigint (Pos, trim_zero (mul' value1 value2))
+        else Bigint(Neg, trim_zero(mul' value1 value2))
 
     let div (Bigint (neg1, value1)) (Bigint (neg2, value2)) = 
     (* If same sign, quotient is positive else negative *)

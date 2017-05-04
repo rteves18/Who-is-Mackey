@@ -13,6 +13,8 @@ OUT       = *.dcout *.ocamldcout
 OBJCMI    = ${patsubst %.cmo, %.cmi, ${OBJCMO}}
 CAMLRUN   = ocamldc 
 LISTING   = Listing.ps
+OTHER     = PARTNER README
+SUBMIT    = submit cmps112-wm.s17 asg2
 
 all : ${CAMLRUN}
 
@@ -52,6 +54,12 @@ again :
 	${SUBMAKE} spotless ci deps
 	${SUBMAKE} all lis
 
+submit: $(SOURCE) $(OTHER) $(MKFILE)
+	$(SUBMIT) $(SOURCE) $(OTHER) $(MKFILE)
+
+submitpartner: $(OTHER)
+	$(SUBMIT) $(OTHER)
+	
 ifeq (${NEEDINCL}, )
 include ${DEPSFILE}
 endif
