@@ -59,20 +59,36 @@ module Bigint = struct
        First, compare length of 2 lists, then
        if list 1 > list 2 return 1
        if list 1 < list 2 return -1
-       if list 1 = list2 return 0 *)
+       if list 1 = list2 reverse 2 list and compare hi order digits *)
+    let cmp list1 list2 = 
+        if (List.length list1) > (List.length list2) then 1
+        else if (List.length list1) < (List.length list2) then -1
+        else if (List.length list1) = (List.length list2) then 
+            (let rev1 = reverse list1 in let rev2 = reverse list2 in
+                let rec cmp_rec value1 value2 =
+                    if value1 = [] && value2 = [] then 0
+                    else if car value1 < car value2 then -1
+                    else if car value1 > car value2 then 1
+                    else cmp_rec (cdr value1) (cdr value2) in
+                        cmp_rec rev1 rev2
+            )
+        else 0
+
+    (* OLD_BROKEN
     let rec cmp list1 list2 = 
         let list1_rev = reverse(trim_zero list1) in 
         let list2_rev = reverse(trim_zero list2) in
-        if (List.length list1_rev) > (List.length list2_rev) then 1
-        else if 
-    (List.length list1_rev) < (List.length list2_rev) then -1
+        if (List.length list1_rev) > (List.length list2_rev) 
+            then 1
+        else if (List.length list1_rev) < (List.length list2_rev) 
+            then -1
         else match (list1_rev, list2_rev) with
         | [], [] -> 0
         | _ , [] -> 1
         | [], _  -> -1
         | car1::cdr1, car2::cdr2 -> if car1 = car2 then cmp cdr1 cdr2
                                     else if car1 > car2 then 1
-                                    else -1
+                                    else -1*)
 
     let rec add' list1 list2 carry = match (list1, list2, carry) with
         | list1, [], 0       -> list1
@@ -121,7 +137,7 @@ module Bigint = struct
         divrem' dividend (double powof2) (double divisor) in 
             if cmp remainder divisor < 0 then quotient, remainder
             else (add' quotient powof2 0, 
-                 (sub' remainder divisor 0))
+                 trim_zero (sub' remainder divisor 0))
 
     let divrem dividend divisor = divrem' dividend [1] divisor
 
@@ -134,10 +150,10 @@ module Bigint = struct
         if neg1 = neg2
             then Bigint (neg1, add' value1 value2 0)
         else let strcmp = cmp value1 value2 in
-        if strcmp < 0 then 
-        Bigint(neg2, trim_zero(sub' value2 value1 0))
-        else if strcmp > 0 then 
-        Bigint(neg1, trim_zero(sub' value1 value2 0))
+        if strcmp < 0 
+            then Bigint(neg2, trim_zero(sub' value2 value1 0))
+        else if strcmp > 0 
+            then Bigint(neg1, trim_zero(sub' value1 value2 0))
         else zero
 
     let sub (Bigint (neg1, value1)) (Bigint (neg2, value2)) =
