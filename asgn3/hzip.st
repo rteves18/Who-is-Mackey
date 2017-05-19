@@ -17,7 +17,9 @@ queue := SortedCollection new.
 
 "-------------------Object Classes-------------------"
 
-"FileStream taken from catfile.st provided in examples folder"
+"----------------------------------------------------------------
+FileStream taken from catfile.st provided in the /examples directory
+----------------------------------------------------------------"
 FileStream extend [
    nl := Character nl.
    catFile [
@@ -32,7 +34,9 @@ FileStream extend [
    ]
 ]
 
-"ZeroArray taken from charfreq.st provided in examples folder"
+"----------------------------------------------------------------
+ZeroArray taken from charfreq.st provided in the /examples directory
+----------------------------------------------------------------"
 Object subclass: ZeroArray [
    |theArray|
 
@@ -79,8 +83,9 @@ Object subclass: ZeroArray [
 freqtable := ZeroArray new: 257.
 freqtable at:256 put:1.
 
-
-"Leaf taken from tree.st provided in examples directory"
+"--------------------------------------------------------
+Leaf taken from tree.st provided in the /examples directory
+--------------------------------------------------------"
 Object subclass: Leaf [
    |char count isLeaf|
    char [ ^ char ]
@@ -165,9 +170,9 @@ Leaf subclass: Tree [
    ]
 ]
 
-"--------------------------------------------------------------------
+"------------------------------------------------------------------
 BitStream taken from bitstream.st provided in the /examples directory
---------------------------------------------------------------------"
+------------------------------------------------------------------"
 Object subclass: BitStream [
    |bitIndex byte myStream|
    BitStream class >> new: fileStream [
