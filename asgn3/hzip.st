@@ -13,7 +13,7 @@ flagT := false.
 flagU := false.
 
 nl := Character nl.
-queue := SortedCollection new.
+priority := SortedCollection new.
 
 "===============[Object Classes]=================="
 
@@ -299,28 +299,28 @@ flagU ifFalse:[
     encodeTable := ZeroArray new: 257.
 
 [infile atEnd not] whileTrue: [
-   |refChar|
-   refChar := infile next asInteger.
-   freqtable incr: refChar.
+   |ordChar|
+   ordChar := infile next asInteger.
+   freqtable incr: ordChar.
 ].
 
-freqtable keysAndValuesDo: [:key :count |
-   (count notNil and: [count > 0]) ifTrue: [
-      queue add: (Leaf new: key count: count).
+freqtable keysAndValuesDo: [:key :value |
+   (value notNil and: [value > 0]) ifTrue: [
+      priority add: (Leaf new: key count: value).
    ]
 ].
 
-[queue size >1 ] whileTrue: [
+[priority size >1 ] whileTrue: [
    |leftchild rightchild|
 
-   leftchild := queue removeFirst.
-   rightchild := queue removeFirst.
+   leftchild := priority removeFirst.
+   rightchild := priority removeFirst.
    newtree := ( Tree new: (leftchild char)
                       count: (leftchild count) +  (rightchild count)
                       left: leftchild right: rightchild).
-   queue add: newtree.
+   priority add: newtree.
 ].
-tree:=queue removeFirst.
+tree:=priority removeFirst.
 
 
 tree inorder: [:char :string |
@@ -346,7 +346,7 @@ tree postorder: [:char :isLeaf |
                  ].
                  binarytree:=(binarytree,'0',bin).
               ].
-].
+    ].
 ]. "end of flagU ifFalse wasn't here before but was complaining
       ./hzip.st:277: parse error, expected ']'
    "
@@ -354,12 +354,12 @@ tree postorder: [:char :isLeaf |
 "=================[-t PRINT DECODE TREE FLAG]==================="
 
 flagT ifTrue:[
-     stdout <<nl<< 'DECODE TREE:' << nl.
+     stdout <<nl<< 'Decode Tree:' << nl.
      stdout << tree << nl<<nl.
-     stdout <<'BINARY DECODE TREE:'<<nl<<binarytree << nl.
+     stdout <<'Decode Tree Binary:'<<nl<<binarytree << nl.
 
-     stdout <<nl<< 'ENCODE TABLE' << nl.
-     stdout <<nl<< 'Character   Count      Binary' << nl.
+     stdout <<nl<< 'Huffman Decoding Tree' << nl.
+     stdout <<'Character   Count      Location' << nl.
      encodeTable keysAndValuesDo: [:key :count |
      (count notNil and: [count > 0]) ifTrue: [
         stdout <<  key asCharacter visible << ' .......... '
