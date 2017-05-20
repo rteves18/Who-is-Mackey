@@ -33,6 +33,16 @@ FileStream extend [
 ]
 
 "ZeroArray taken from charfreq.st provided in the /examples directory"
+Character extend [
+   isPrint [
+      ^ (Character space <= self) & (self <= $~)
+   ]
+   visible [
+      self isPrint ifTrue: [^  self asString]
+                   ifFalse: [^ self asInteger printStringRadix: 8]
+   ]
+]
+
 Object subclass: ZeroArray [
    |theArray|
 
@@ -226,35 +236,27 @@ Object subclass: OutBits [
    ]
 ]
 
-Character extend [
-   isPrint [
-      ^ (Character space <= self) & (self <= $~)
-   ]
-   visible [
-      self isPrint ifTrue: [^  self asString]
-                   ifFalse: [^ self asInteger printStringRadix: 8]
-   ]
-]
+
 
 "=================[Main start of program]==============="
 
-|inputfile readfile outputfile dcpfile outfilename argc|
+|infile readfile outputfile dcpfile outfilename argc|
 
 argc:=0.
 Smalltalk arguments: '-d -t -c -u'
 
-do: [:opt :arg |
+do: [:flag :arg |
 
-   (opt = $d) ifTrue: [ 
+   (flag = $d) ifTrue: [ 
 	flagD := true. 
 	].
-   (opt = $t) ifTrue: [ 
+   (flag = $t) ifTrue: [ 
 	flagT := true. 
 	].
-   (opt = $c) ifTrue: [ 
+   (flag = $c) ifTrue: [ 
 	flagC := true. 
 	].
-   (opt = $u) ifTrue: [ 
+   (flag = $u) ifTrue: [ 
 	flagU := true. 
 	].
 
@@ -268,19 +270,20 @@ do: [:opt :arg |
         ifTrue:[
           "and if flag -d is turned on"
           flagD ifTrue:[
-          stdout <<'input filename: ' << arg <<nl.].
+          stdout <<'Input File: ' << arg <<nl.].
 
-          inputfile := FileStream open: arg
+          infile := FileStream open: arg
                     mode: FileStream read.
           readfile := FileStream open: arg
-                    mode: FileStream read.
+                      mode: FileStream read.
          ]
         "argument count is greater than 0"
         ifFalse:[
            flagD ifTrue:[
-           stdout <<'output filename: ' << arg <<nl.].
-            outputfile := FileStream open: arg
-                       mode: FileStream write.].
+           stdout <<'Output File: ' << arg <<nl.].
+           outputfile := FileStream open: arg
+                         mode: FileStream write.
+        ].
      argc := argc + 1.
    ].
 ].
@@ -295,9 +298,9 @@ ExitStatus:=0.
 flagU ifFalse:[
     encodeTable := ZeroArray new: 257.
 
-[inputfile atEnd not] whileTrue: [
+[infile atEnd not] whileTrue: [
    |refChar|
-   refChar := inputfile next asInteger.
+   refChar := infile next asInteger.
    freqtable incr: refChar.
 ].
 
