@@ -15,11 +15,9 @@ flagU := false.
 nl := Character nl.
 queue := SortedCollection new.
 
-"-------------------Object Classes-------------------"
+"===============[Object Classes]=================="
 
-"----------------------------------------------------------------
-FileStream taken from catfile.st provided in the /examples directory
-----------------------------------------------------------------"
+"FileStream taken from catfile.st provided in the /examples directory"
 FileStream extend [
    nl := Character nl.
    catFile [
@@ -34,9 +32,7 @@ FileStream extend [
    ]
 ]
 
-"----------------------------------------------------------------
-ZeroArray taken from charfreq.st provided in the /examples directory
-----------------------------------------------------------------"
+"ZeroArray taken from charfreq.st provided in the /examples directory"
 Object subclass: ZeroArray [
    |theArray|
 
@@ -83,9 +79,7 @@ Object subclass: ZeroArray [
 freqtable := ZeroArray new: 257.
 freqtable at:256 put:1.
 
-"--------------------------------------------------------
-Leaf taken from tree.st provided in the /examples directory
---------------------------------------------------------"
+"Leaf taken from tree.st provided in the /examples directory"
 Object subclass: Leaf [
    |char count isLeaf|
    char [ ^ char ]
@@ -170,9 +164,7 @@ Leaf subclass: Tree [
    ]
 ]
 
-"------------------------------------------------------------------
-BitStream taken from bitstream.st provided in the /examples directory
-------------------------------------------------------------------"
+"BitStream taken from bitstream.st provided in the /examples directory"
 Object subclass: BitStream [
    |bitIndex byte myStream|
    BitStream class >> new: fileStream [
@@ -201,9 +193,7 @@ Object subclass: BitStream [
    ]
 ]
 
-"--------------------------------------------------------------
-OutBits taken from outbits.st provided in the /examples directory
---------------------------------------------------------------"
+"OutBits taken from outbits.st provided in the /examples directory"
 Object subclass: OutBits [
    |bitIndex currentByte myStream|
    OutBits class >> new [
@@ -236,24 +226,47 @@ Object subclass: OutBits [
    ]
 ]
 
-"-------------------Main start of program-------------------"
+Character extend [
+   isPrint [
+      ^ (Character space <= self) & (self <= $~)
+   ]
+   visible [
+      self isPrint ifTrue: [^  self asString]
+                   ifFalse: [^ self asInteger printStringRadix: 8]
+   ]
+]
+
+"=================[Main start of program]==============="
 
 |inputfile readfile outputfile dcpfile outfilename argc|
-argc:=0.
 
+argc:=0.
 Smalltalk arguments: '-d -t -c -u'
 
 do: [:opt :arg |
 
-   (opt = $d) ifTrue: [ flagD := true. ].
-   (opt = $t) ifTrue: [ flagT := true. ].
-   (opt = $c) ifTrue: [ flagC := true. ].
-   (opt = $u) ifTrue: [ flagU := true. ].
+   (opt = $d) ifTrue: [ 
+	flagD := true. 
+	].
+   (opt = $t) ifTrue: [ 
+	flagT := true. 
+	].
+   (opt = $c) ifTrue: [ 
+	flagC := true. 
+	].
+   (opt = $u) ifTrue: [ 
+	flagU := true. 
+	].
 
+  "if arg is not nil or null"
   (arg ~= nil) ifTrue: [
 
+"=================[-d DEGUB FLAG]==================="
+
+     "if argument count is 0"
      argc = 0
         ifTrue:[
+          "and if flag -d is turned on"
           flagD ifTrue:[
           stdout <<'input filename: ' << arg <<nl.].
 
@@ -262,21 +275,23 @@ do: [:opt :arg |
           readfile := FileStream open: arg
                     mode: FileStream read.
          ]
-
+        "argument count is greater than 0"
         ifFalse:[
            flagD ifTrue:[
            stdout <<'output filename: ' << arg <<nl.].
             outputfile := FileStream open: arg
                        mode: FileStream write.].
-
      argc := argc + 1.
    ].
 ].
 
 
-"Creates encode table"
+
+"=================[ENCODE TABLE]==================="
 |tree ExitStatus|
 ExitStatus:=0.
+
+"if flag -u is turned off, do not encode into table"
 flagU ifFalse:[
     encodeTable := ZeroArray new: 257.
 
@@ -332,17 +347,24 @@ tree postorder: [:char :isLeaf |
 ]. "end of flagU ifFalse wasn't here before but was complaining
       ./hzip.st:277: parse error, expected ']'
    "
-flagT ifTrue:[
-     stdout <<nl<< 'Decode tree' << nl.
-     stdout << tree << nl<<nl.
-     stdout <<'Binary decode tree: '<<nl<<binarytree << nl.
 
-     stdout <<nl<< 'Encode table' << nl.
+"=================[-t PRINT DECODE TREE FLAG]==================="
+
+flagT ifTrue:[
+     stdout <<nl<< 'DECODE TREE:' << nl.
+     stdout << tree << nl<<nl.
+     stdout <<'BINARY DECODE TREE:'<<nl<<binarytree << nl.
+
+     stdout <<nl<< 'ENCODE TABLE' << nl.
+     stdout <<nl<< 'Character   Count      Binary' << nl.
      encodeTable keysAndValuesDo: [:key :count |
      (count notNil and: [count > 0]) ifTrue: [
-        stdout <<  key asCharacter visible << '     '
-               << (freqtable at: key) <<'    '<<count
+        stdout <<  key asCharacter visible << ' .......... '
+               << (freqtable at: key) <<' ....... '<<count
                << nl.
      ].
     ].
 ].
+
+"=================[-t COMPRESS FLAG]==================="
+
