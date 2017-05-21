@@ -357,61 +357,62 @@ flagU ifFalse:[
 "=================[-t PRINT DECODE TREE FLAG]==================="
 
 flagT ifTrue:[
-     stdout <<nl<< 'Decode Tree:' << nl.
-     stdout << tree <<nl<<nl.
-     stdout <<'Decode Tree Binary:'<<nl<<binarytree << nl.
+   stdout <<nl<< 'Decode Tree:' << nl.
+   stdout << tree <<nl<<nl.
+   stdout <<'Decode Tree Binary:'<<nl<<binarytree << nl.
 
-     stdout <<nl<< 'Huffman Decoding Tree:' << nl.
-     stdout <<'Character    Count    Location' << nl.
-     encodeTable keysAndValuesDo: [:key :count |
-     (count notNil and: [count > 0]) ifTrue: [
-        stdout <<  key asCharacter visible << ' .......... '
-               << (freqtable at: key) <<' ....... '<<count
-               << nl.
-     ].
-    ].
+   stdout <<nl<< 'Huffman Decoding Tree:' << nl.
+   stdout <<'Character    Count    Location' << nl.
+   encodeTable keysAndValuesDo: [:key :count |
+      (count notNil and: [count > 0]) ifTrue: [
+         stdout <<  key asCharacter visible << ' .......... '
+         << (freqtable at: key) <<' ....... '<<count
+         << nl.
+      ].
+   ].
 ].
 
-"=================[-t COMPRESS FLAG]==================="
+"=================[-c COMPRESS FLAG]==================="
 flagC ifTrue: [
 
-"if outputfile is specified, write to file"
-outputfile~=nil ifTrue:[
+   "if outputfile is specified, write to file"
+   outputfile~=nil ifTrue:[
 
-  flagD ifTrue: [
-    stdout << 'Debug Compress' << nl.
-  ].
+      flagD ifTrue: [
+         stdout << 'Debug Compress' << nl.
+      ].
 
-  bitBybit :=OutBits new: outputfile.
-  1 to: (binarytree size) by: 1 
-  do: [:index | bit:= ((binarytree at: index) asInteger).
-  bitBybit writeBit: bit.
-  ].
+      bitBybit := OutBits new: outputfile.
+      1 to: (binarytree size) by: 1 
+      do: [:index | 
+         bit:= ((binarytree at: index) asInteger).
+         bitBybit writeBit: bit.
+      ].
 
-  bitBybit writeBit: 1.
-  [readfile atEnd not] whileTrue: [
-  |ordChar|
-  ordChar := readfile next asInteger.
-  run := (encodeTable at: ordChar).
-  1 to: (run size) by: 1
-  do: [:index | bit := ((run at: index) asInteger).
-  bitBybit writeBit: bit.
-  ].
-  ].
+      bitBybit writeBit: 1.
+      [readfile atEnd not] whileTrue: [
+         |ordChar|
+         ordChar := readfile next asInteger.
+         run := (encodeTable at: ordChar).
+         1 to: (run size) by: 1
+         do: [:index | bit := ((run at: index) asInteger).
+            bitBybit writeBit: bit.
+         ].
+      ].
 
-  endFile := (encodeTable at: 256).
-  1 to: (endFile size) by: 1
-  do: [:index | bit:= ((endFile at: index)asInteger).
-  ].
-  bitBybit flushByte.
+      endFile := (encodeTable at: 256).
+      1 to: (endFile size) by: 1
+      do: [:index | 
+         bit:= ( (endFile at: index) asInteger ).
+      ].
+      bitBybit flushByte.
 
-]
-
+   ]
 
   "if outputfile is not specified"
-  ifFalse:[
-    flagD ifTrue: [
-      stdout << 'No outputfile specified' << nl.]
-  ]
+   ifFalse:[
+      flagD ifTrue: [
+         stdout << 'No outputfile specified' << nl.]
+   ]
 ].
 
