@@ -297,61 +297,61 @@ ExitStatus:=0.
 "if flag -u is turned off, do not encode into table"
 "used charfreq.st as reference"
 flagU ifFalse:[
-    encodeTable := ZeroArray new: 257.
+   encodeTable := ZeroArray new: 257.
 
-[infile atEnd not] whileTrue: [
-   |ordChar|
-   ordChar := infile next asInteger.
-   freqtable incr: ordChar.
-].
+   [infile atEnd not] whileTrue: [
+      |ordChar|
+      ordChar := infile next asInteger.
+      freqtable incr: ordChar.
+   ].
 
-freqtable keysAndValuesDo: [:key :value |
-   (value notNil and: [value > 0]) ifTrue: [
-      priority add: (Leaf new: key count: value).
-   ]
-].
+   freqtable keysAndValuesDo: [:key :value |
+      (value notNil and: [value > 0]) ifTrue: [
+         priority add: (Leaf new: key count: value).
+      ]
+   ].
 
-"used tree.st as reference"
-[priority size >1 ] whileTrue: [
-   |leftchild rightchild|
+   "Repeatedly removes the two smallest elements from priority queue
+   until there is only one tree left and the priority queue is empty"
+   [priority size > 1] whileTrue: [
+      |leftchild rightchild|
 
-   leftchild := priority removeFirst.
-   rightchild := priority removeFirst.
-   newtree := ( Tree new: (leftchild char)
-                      count: (leftchild count) +  (rightchild count)
-                      left: leftchild right: rightchild).
-   priority add: newtree.
-].
-tree:=priority removeFirst.
+      leftchild := priority removeFirst.
+      rightchild := priority removeFirst.
+      newtree := ( Tree new: (leftchild char)
+                        count: (leftchild count) +  (rightchild count)
+                        left: leftchild 
+                        right: rightchild ).
+      priority add: newtree.
+   ].
+   tree := priority removeFirst.
 
 
-tree inorder: [:char :string |
-   encodeTable at: char put: string.
-] prefix: ''.
+   tree inorder: [:char :string |
+      encodeTable at: char put: string.
+   ] prefix: ''.
 
-binarytree:=''.
-tree postorder: [:char :isLeaf |
-
-   isLeaf ifFalse:[
-            binarytree:=binarytree,'1'.]
-            ifTrue:[
-              bin:=''.
-              char = 256
-              ifTrue:[bin:='000000001']
-                ifFalse:[
-                  char=0 
-                  ifTrue:[
-                    bin:='000000000']
-                    ifFalse:[
-                      8 to:1 by: -1
-                      do:[:i| bin:=bin,((char bitAt:i)
-                      printString).
-                      ]
-                    ].
-                 ].
-            binarytree:=(binarytree,'0',bin).
+   binarytree := ''.
+   tree postorder: [:char :isLeaf |
+      isLeaf ifFalse:[ binarytree := binarytree,'1'. ]
+      ifTrue:[
+         bin := ''.
+         char = 256
+         ifTrue:[ bin := '000000001' ]
+         ifFalse:[
+            char = 0 
+            ifTrue:[ bin := '000000000' ]
+            ifFalse:[
+               8 to:1 by: -1
+               do:[:i | 
+                  bin := bin, ( (char bitAt:i)
+                  printString ).
+               ]
             ].
-  ].
+         ].
+         binarytree := (binarytree, '0', bin).
+      ].
+   ].
 ]. 
 
 "=================[-t PRINT DECODE TREE FLAG]==================="
