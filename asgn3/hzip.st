@@ -412,7 +412,19 @@ flagC ifTrue: [
   "if outputfile is not specified"
    ifFalse:[
       flagD ifTrue: [
-         stdout << 'No outputfile specified' << nl.]
-   ]
-].
+         stdout << 'No outputfile specified' << nl.].
+      stdout <<nl<< 'Decode Tree Binary:' << nl.
+      stdout <<binarytree<<nl.
+       stdout <<nl<< 'Compression to stdout:' << nl.
+      [readfile atEnd not] whileTrue: [
+      |ordChar|
+      ordChar := readfile next asInteger.
+      run := (encodeTable at: ordChar).
+     
+      stdout << run.
+      ].
+      endFile := (encodeTable at: 256).
+      stdout <<endFile<<nl.
+      ].
+   ].
 
