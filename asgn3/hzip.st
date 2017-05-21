@@ -373,4 +373,45 @@ flagT ifTrue:[
 ].
 
 "=================[-t COMPRESS FLAG]==================="
+flagC ifTrue: [
+
+"if outputfile is specified, write to file"
+outputfile~=nil ifTrue:[
+
+  flagD ifTrue: [
+    stdout << 'Debug Compress' << nl.
+  ].
+
+  bitBybit :=OutBits new: outputfile.
+  1 to: (binarytree size) by: 1 
+  do: [:index | bit:= ((binarytree at: index) asInteger).
+  bitBybit writeBit: bit.
+  ].
+
+  bitBybit writeBit: 1.
+  [readfile atEnd not] whileTrue: [
+  |ordChar|
+  ordChar := readfile next asInteger.
+  run := (encodeTable at: ordChar).
+  1 to: (run size) by: 1
+  do: [:index | bit := ((run at: index) asInteger).
+  bitBybit writeBit: bit.
+  ].
+  ].
+
+  endFile := (encodeTable at: 256).
+  1 to: (endFile size) by: 1
+  do: [:index | bit:= ((endFile at: index)asInteger).
+  ].
+  bitBybit flushByte.
+
+]
+
+
+  "if outputfile is not specified"
+  ifFalse:[
+    flagD ifTrue: [
+      stdout << 'No outputfile specified' << nl.]
+  ]
+].
 
