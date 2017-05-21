@@ -416,3 +416,120 @@ flagC ifTrue: [
    ]
 ].
 
+"=================[-u DECOMPRESS FLAG]==================="
+flagU ifTrue: [
+   |isEOF outBytes stack|
+   flagD ifTrue: [
+      stdout << 'Debug Decompress' << nl.
+   ].
+
+   outBytes := OutBits new: outputfile.
+   stack := OrderedCollection new.
+   fileBits := BitStream new: inputfile.
+   isTreeBuilt := false.
+   treeRecon := ''.
+   node := ''.
+
+   "Read input bit by bit"
+   [ (fileBits atEnd not) & (isEOF not) ] whileTrue:[
+      treenode := fileBits nextBit.
+      learchar := 0.
+
+      "if tree is not built"
+      isTreeBuilt ifFalse:[
+         "Insert input to leaf"
+         treenode = 0 ifTrue:[
+            8 to: 1 by: -1 do:[:i |
+               bit := fileBits nextBit.
+               leafchar := leafchar bitAt: i put: bit.
+            ].
+
+            learchar = 0 isTrue:[
+               specialbit := fileBits nextBit.
+               specialbit = 1 ifTrue:[
+                  learchar := learchar bitAt: 9 put: 1.
+               ].
+            ].
+
+            stack add: (Leaf new: learchar count: '').
+         ].
+
+         treenode = 1 ifTrue:[
+            
+            stack size > 1 ifTrue:[
+               rightchild := stack removeLast.
+               leftchild := stack removeLast.
+               newtree := (Tree new: -1 count: ''
+                           left: leftchild right: rightchild).
+               stack add: newtree.   
+            ] ifFalse:[
+               isTreeBuilt := true.
+               treeRecon := stack removeLast.
+               node := treeRecon.
+            ].
+         
+         ].
+      ] ifTrue:[ "if tree is built, decode the data"
+         
+         node isLeaf ifTrue:[
+            
+            ( (node char) = 256 ) ifTrue:[
+               isEOF := true.
+            ] ifFalse:[
+               stdout nextPut: (Character value: (node char)).
+               node := treeRecon.
+            ].
+         
+         ] ifFalse:[
+
+            treenode = 0 ifTrue:[
+
+               node := node left.
+               node isLeaf isTrue:[
+                  isEOF not isTrue:[
+                     ( (node char) = 256 ) ifTrue:[
+                        isEOF := true.
+                     ] ifFalse:[
+                        outputfile = nil ifTrue:[
+                           stdout nextPut: (Character value: (node char)).
+                        ] ifFalse:[
+                           8 to: 1 by: -1 do: [:index |
+                              bit := (node char) bitAt: index.
+                              outBytes writeBit: bit.
+                           ].
+                        ].
+                        node := treeRecon.
+
+                     ].
+                  ].
+               ]
+
+            ] ifFalse:[
+
+               node := node right.
+               node isLeaf isTrue:[
+                  isEOF not isTrue:[
+                     ( (node char) = 256 ) ifTrue:[
+                        isEOF := true.
+                     ] ifFalse:[
+                        outputfile = nil ifTrue:[
+                           stdout nextPut: (Character value: (node char)).
+                        ] ifFalse:[
+                           8 to: 1 by: -1 do: [:index |
+                              bit := (node char) bitAt: index.
+                              outBytes writeBit: bit.
+                           ].
+                        ].
+                        node := treeRecon.
+
+                     ].
+                  ].
+               ]
+
+            ].
+
+         ].
+      ].
+   ].
+
+].
