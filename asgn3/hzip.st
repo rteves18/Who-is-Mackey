@@ -248,16 +248,16 @@ Smalltalk arguments: '-d -t -c -u'
 do: [:flag :arg |
 
    (flag = $d) ifTrue: [ 
-	flagD := true. 
+      flagD := true. 
 	].
    (flag = $t) ifTrue: [ 
-	flagT := true. 
+      flagT := true. 
 	].
    (flag = $c) ifTrue: [ 
-	flagC := true. 
+      flagC := true. 
 	].
    (flag = $u) ifTrue: [ 
-	flagU := true. 
+      flagU := true. 
 	].
 
   "if arg is not nil or null"
@@ -425,19 +425,21 @@ flagC ifTrue: [
       ].
       endFile := (encodeTable at: 256).
       stdout <<endFile<<nl.
-      ].
    ].
+].
 
 "=================[-u DECOMPRESS FLAG]==================="
-flagU ifTrue: [
-   |isEOF outBytes stack|
-   flagD ifTrue: [
+flagU ifTrue:[
+   |isEOF bitBybit stack|
+   isEOF := false.
+
+   flagD ifTrue:[
       stdout << 'Debug Decompress' << nl.
    ].
 
-   outBytes := OutBits new: outputfile.
+   bitBybit := OutBits new: outputfile.
    stack := OrderedCollection new.
-   fileBits := BitStream new: inputfile.
+   fileBits := BitStream new: infile.
    isTreeBuilt := false.
    treeRecon := ''.
    node := ''.
@@ -453,13 +455,13 @@ flagU ifTrue: [
          treenode = 0 ifTrue:[
             8 to: 1 by: -1 do:[:i |
                bit := fileBits nextBit.
-               leafchar := leafchar bitAt: i put: bit.
+               leafchar := leafchar bitAt:i put:bit.
             ].
 
             learchar = 0 isTrue:[
                specialbit := fileBits nextBit.
                specialbit = 1 ifTrue:[
-                  learchar := learchar bitAt: 9 put: 1.
+                  learchar := learchar bitAt:9 put:1.
                ].
             ].
 
@@ -507,7 +509,7 @@ flagU ifTrue: [
                         ] ifFalse:[
                            8 to: 1 by: -1 do: [:index |
                               bit := (node char) bitAt: index.
-                              outBytes writeBit: bit.
+                              bitBybit writeBit: bit.
                            ].
                         ].
                         node := treeRecon.
@@ -529,7 +531,7 @@ flagU ifTrue: [
                         ] ifFalse:[
                            8 to: 1 by: -1 do: [:index |
                               bit := (node char) bitAt: index.
-                              outBytes writeBit: bit.
+                              bitBybit writeBit: bit.
                            ].
                         ].
                         node := treeRecon.
