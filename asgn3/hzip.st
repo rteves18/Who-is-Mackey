@@ -266,25 +266,25 @@ do: [:flag :arg |
 "=================[-d DEGUB FLAG]==================="
 
      "if argument count is 0"
-     argc = 0
-        ifTrue:[
-          "and if flag -d is turned on"
-          flagD ifTrue:[
-          stdout <<'Input File: ' << arg <<nl.].
+      argc = 0
+      ifTrue:[
+         "and if flag -d is turned on"
+         flagD ifTrue:[
+            stdout <<'Input File: ' << arg <<nl.].
 
-          infile := FileStream open: arg
+         infile := FileStream open: arg
                     mode: FileStream read.
-          readfile := FileStream open: arg
+         readfile := FileStream open: arg
                       mode: FileStream read.
-         ]
-        "argument count is greater than 0"
-        ifFalse:[
-           flagD ifTrue:[
-           stdout <<'Output File: ' << arg <<nl.].
-           outputfile := FileStream open: arg
+      ]
+      "argument count is greater than 0"
+      ifFalse:[
+         flagD ifTrue:[
+            stdout <<'Output File: ' << arg <<nl.].
+        outputfile := FileStream open: arg
                          mode: FileStream write.
-        ].
-     argc := argc + 1.
+      ].
+      argc := argc + 1.
    ].
 ].
 
@@ -352,7 +352,7 @@ flagU ifFalse:[
          binarytree := (binarytree, '0', bin).
       ].
    ].
-]. 
+ 
 
 "=================[-t PRINT DECODE TREE FLAG]==================="
 
@@ -427,6 +427,7 @@ flagC ifTrue: [
       stdout <<endFile<<nl.
    ].
 ].
+]. "this bracket starts on line 299"
 
 "=================[-u DECOMPRESS FLAG]==================="
 flagU ifTrue:[
@@ -546,4 +547,9 @@ flagU ifTrue:[
       ].
    ].
 
+].
+
+infile close.
+outputfile~=nil ifTrue:[
+outputfile close.
 ].
