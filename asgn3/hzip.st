@@ -7,13 +7,8 @@ CS 112 Spring 2017 - Assignment 3 - Smalltalk
 
 execname := '$RCSfile: hzip.st,v $' =~ '.*: (.*),v.*' at: 1.
 
-flagD := false.
-flagC := false.
-flagT := false.
-flagU := false.
 
-nl := Character nl.
-priority := SortedCollection new.
+
 
 "===============[Object Classes]=================="
 
@@ -241,7 +236,12 @@ Object subclass: OutBits [
 "=================[Main start of program]==============="
 
 |infile readfile outfile dcpfile outfilename argc|
-
+flagD := false.
+flagC := false.
+flagT := false.
+flagU := false.
+nl := Character nl.
+priority := SortedCollection new.
 argc:=0.
 Smalltalk arguments: '-d -t -c -u'
 
@@ -439,7 +439,7 @@ flagU ifTrue:[
 
       "Build tree if it is not built already"
       isTreeBuilt ifFalse:[
-         "Insert input to leaf"
+         "Insert into leaf"
          nodeT = 0 
          ifTrue:[ 8 to: 1 by: -1 do:[:i |
                   bit := btStream nextBit.
