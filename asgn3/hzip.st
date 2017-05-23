@@ -7,11 +7,6 @@ CS 112 Spring 2017 - Assignment 3 - Smalltalk
 
 execname := '$RCSfile: hzip.st,v $' =~ '.*: (.*),v.*' at: 1.
 
-
-
-
-"===============[Object Classes]=================="
-
 "FileStream taken from catfile.st provided in the /examples directory"
 FileStream extend [
    nl := Character nl.
@@ -80,9 +75,6 @@ Object subclass: ZeroArray [
       ]
    ]
 ]
-
-freqtable := ZeroArray new: 257.
-freqtable at:256 put:1.
 
 "Leaf taken from tree.st provided in the /examples directory"
 Object subclass: Leaf [
@@ -231,18 +223,14 @@ Object subclass: OutBits [
    ]
 ]
 
-
-
 "=================[Main start of program]==============="
-
-|infile readfile outfile dcpfile outfilename argc|
 flagD := false.
 flagC := false.
 flagT := false.
 flagU := false.
 nl := Character nl.
 priority := SortedCollection new.
-argc:=0.
+argc := 0.
 Smalltalk arguments: '-d -t -c -u'
 
 do: [:flag :arg |
@@ -264,28 +252,23 @@ do: [:flag :arg |
   (arg ~= nil) ifTrue: [
 
    "=================[-d DEGUB FLAG]==================="
-     "if argument count is 0"
-      argc = 0
-      ifTrue:[
-         "and if flag -d is turned on"
-         flagD ifTrue:[ stdout <<'Input File: ' << arg <<nl. ].
+     "if args count is 0"
+      argc = 0 ifTrue:[
+         "if only -d flag is on"
+         flagD ifTrue:[ stdout <<'Input File: ' << arg << nl. ].
          infile := FileStream open: arg mode: FileStream read.
          readfile := FileStream open: arg mode: FileStream read.
-      ]
-      "argument count is greater than 0"
-      ifFalse:[
-         flagD ifTrue:[ stdout <<'Output File: ' << arg <<nl. ].
+      ] ifFalse:[
+         flagD ifTrue:[ stdout <<'Output File: ' << arg << nl. ].
          outfile := FileStream open: arg mode: FileStream write.
       ].
       argc := argc + 1.
    ].
 ].
 
-
-
 "=================[ENCODE TABLE]==================="
-|tree ExitStatus|
-ExitStatus:=0.
+frequencyTable := ZeroArray new: 257.
+frequencyTable at: 256 put: 1.
 
 "if flag -u is turned off, do not encode into table"
 "used charfreq.st as reference"
@@ -293,137 +276,121 @@ flagU ifFalse:[
    encodeTable := ZeroArray new: 257.
 
    [infile atEnd] whileFalse: [
-      |ordChar|
       ordChar := infile next asInteger.
-      freqtable incr: ordChar.
+      frequencyTable incr: ordChar.
    ].
 
-   freqtable keysAndValuesDo: [:key :value |
+   frequencyTable keysAndValuesDo: [:key :value |
       (value notNil and: [value > 0]) ifTrue: [
          priority add: (Leaf new: key count: value).
       ]
    ].
 
-   "Repeatedly removes the two smallest elements from priority queue
-   until there is only one tree left and the priority queue is empty"
+   "Removes 2 smallest elements from priority queue.
+   Create new tree and store in priority queue"
    [priority size > 1] whileTrue: [
-      |leftchild rightchild|
-
-      leftchild := priority removeFirst.
-      rightchild := priority removeFirst.
-      priority add: ( Tree new: (leftchild char)
-                        count: (leftchild count) +  (rightchild count)
-                        left: leftchild 
-                        right: rightchild ).
+      least := priority removeFirst.
+      secondLeast := priority removeFirst.
+      treeChar := least char.
+      treeCount := least count + secondLeast count.
+      priority add: (   Tree new: treeChar
+                        count: treeCount
+                        left: least 
+                        right: secondLeast   ).
    ].
-   tree := priority removeFirst.
 
+   tree := priority removeFirst.
    tree inorder: [:char :string |
-      encodeTable at: char put: string.
+      index := char asInteger.
+      encodeTable at: index put: string.
    ] prefix: ''.
 
    binarytree := ''.
    tree postorder: [:char :isLeaf |
-      isLeaf ifFalse:[ binarytree := binarytree,'1'. ]
-      ifTrue:[
+      isLeaf ifFalse:[ 
+         binarytree := binarytree, '1'. 
+      ] ifTrue:[
          bin := ''.
          char = 256
-         ifTrue:[ bin := '000000001' ]
-         ifFalse:[
+         ifTrue:[ 
+            bin := '000000001' 
+         ] ifFalse:[
             char = 0 
-            ifTrue:[ bin := '000000000' ]
-            ifFalse:[
+            ifTrue:[ 
+               bin := '000000000' 
+            ] ifFalse:[
                8 to:1 by: -1
                do:[:i | 
-                  bin := bin, ( (char bitAt:i)
-                  printString ).
+                  bin := bin, ( (char bitAt:i) printString ).
                ]
             ].
          ].
          binarytree := (binarytree, '0', bin).
       ].
    ].
- 
+]. 
 
-   "=================[-t PRINT DECODE TREE FLAG]==================="
+"=================[-t PRINT DECODE TREE FLAG]==================="
 
-   flagT ifTrue:[
-      stdout <<nl<< 'Decode Tree:' << nl.
-      stdout << tree <<nl<<nl.
-      stdout <<'Decode Tree Binary:'<<nl<<binarytree << nl.
+flagT ifTrue:[
+   stdout << nl << 'Decode Tree:' << nl.
+   stdout << tree << nl << nl.
+   stdout <<'Decode Tree Binary:'<< nl << binarytree << nl.
 
-      stdout <<nl<< 'Huffman Decoding Tree:' << nl.
-      stdout <<'Character    Count    Location' << nl.
-      encodeTable keysAndValuesDo: [:key :count |
-         (count notNil and: [count > 0]) ifTrue: [
-            stdout <<  key asCharacter visible << ' .......... '
-            << (freqtable at: key) <<' ....... '<<count
-            << nl.
-         ].
+   stdout << nl << 'Huffman Decoding Tree:' << nl.
+   stdout <<'Character    Count    Location' << nl.
+   encodeTable keysAndValuesDo: [:key :count |
+      (count notNil and: [count > 0]) ifTrue: [
+         stdout << key asCharacter visible << ' .......... '
+         << (frequencyTable at: key) << ' ....... ' << count << nl.
       ].
    ].
+].
 
-   "=================[-c COMPRESS FLAG]==================="
-   flagC ifTrue: [
+"=================[-c COMPRESS FLAG]==================="
+flagC ifTrue: [
 
-      "if outfile is specified, write to file"
-      outfile~=nil ifTrue:[
+   "if outfile is specified, write to file"
+   outfile~=nil ifTrue:[
 
-         flagD ifTrue: [
-            stdout << 'Debug Compress' << nl.
-         ].
+      bitBybit := OutBits new: outfile.
+      1 to: (binarytree size) by: 1 do: [:index | 
+         bit := ((binarytree at: index) asInteger).
+         bitBybit writeBit: bit.
+      ].
 
-         bitBybit := OutBits new: outfile.
-         1 to: (binarytree size) by: 1 
-         do: [:index | 
-            bit:= ((binarytree at: index) asInteger).
-            bitBybit writeBit: bit.
-         ].
-
-         bitBybit writeBit: 1.
-         [readfile atEnd not] whileTrue: [
-            |ordChar|
-            ordChar := readfile next asInteger.
-            run := (encodeTable at: ordChar).
-            1 to: (run size) by: 1
-            do: [:index | bit := ((run at: index) asInteger).
-               bitBybit writeBit: bit.
-            ].
-         ].
-
-         endFile := (encodeTable at: 256).
-         1 to: (endFile size) by: 1
-         do: [:index | 
-            bit:= ( (endFile at: index) asInteger ).
-         ].
-         bitBybit flushByte.
-
-      ]
-
-     "if outfile is not specified"
-      ifFalse:[
-         flagD ifTrue: [
-            stdout << 'No outfile specified' << nl.].
-         stdout <<nl<< 'Decode Tree Binary:' << nl.
-         stdout <<binarytree<<1.
-          stdout <<nl<< 'Compression to stdout:' << nl.
-         [readfile atEnd not] whileTrue: [
-         |ordChar|
+      bitBybit writeBit: 1.
+      [readfile atEnd] whileFalse: [
          ordChar := readfile next asInteger.
          run := (encodeTable at: ordChar).
-        
-         stdout << run.
+         1 to: (run size) by: 1
+         do: [:index | bit := ((run at: index) asInteger).
+            bitBybit writeBit: bit.
          ].
-         endFile := (encodeTable at: 256).
-         stdout <<endFile<<nl.
+      ].
+
+      endFile := (encodeTable at: 256).
+      1 to: (endFile size) by: 1 do: [:index | 
+         bit:= ( (endFile at: index) asInteger ).
+      ].
+      bitBybit flushByte.
+
+   ] ifFalse:[ "if outfile is not specified"
+      flagD ifTrue: [ "check for -d flag"
+         stdout << 'No outfile specified' << nl.
+      ].
+      [readfile atEnd] whileFalse: [
+         ordChar := readfile next asInteger.
+         run := (encodeTable at: ordChar).
+         stdout << run.
       ].
    ].
-]. "this bracket starts on line 299"
+].
 
 "=================[-u DECOMPRESS FLAG]==================="
 flagU ifTrue:[
-   |endFile bitBybit stack|
-   flagD ifTrue:[ stdout << 'Decompressing inputfile'<<nl.].
+   |endFile|
+   flagD ifTrue:[ stdout << 'Decompressing inputfile' << nl. ].
 
    treeRecon := ''. node := ''.
    endFile := false.
@@ -432,82 +399,72 @@ flagU ifTrue:[
    btStream := BitStream new: infile.
    stack := OrderedCollection new.
 
-
    "Read input bit by bit"
    [ (btStream atEnd not) & (endFile not) ] whileTrue:[
-      nodeT := btStream nextBit. leafchar := 0.
+      bitIn := btStream nextBit. leafchar := 0.
 
       "Build tree if it is not built already"
       isTreeBuilt ifFalse:[
-         "Insert into leaf"
-         nodeT = 0 
+         "Reconstruct Huffman decoding tree, read one bit"
+
+         "If bit read in is 0, read the next 9 bits, and
+         reconstruct the byte"
+         bitIn = 0 
          ifTrue:[ 8 to: 1 by: -1 do:[:i |
                   bit := btStream nextBit.
                   leafchar := leafchar bitAt:i put:bit.].
 
-         leafchar = 0 
-         ifTrue:[ specialbit := btStream nextBit.
-                  specialbit = 1 
-                  ifTrue:[ leafchar := leafchar bitAt:9 put:1. ].
+            leafchar = 0 
+            ifTrue:[ specialbit := btStream nextBit.
+                     specialbit = 1 
+                     ifTrue:[ leafchar := leafchar bitAt:9 put:1. ].
+            ].
+
+            stack add: (Leaf new: leafchar count: '').
          ].
 
-         stack add: (Leaf new: leafchar count: '').
-         ].
-
-         nodeT = 1 
-         ifTrue:[ stack size > 1 ifTrue:[
-            rightchild := stack removeLast.
-            leftchild := stack removeLast.
-            stack add: (Tree new: -1 count: ''
-            left: leftchild right: rightchild).
+         "If bit read in is 1, pop from stack, and
+         create new tree with both of those children"
+         bitIn = 1 
+         ifTrue:[ stack size > 1 
+            ifTrue:[
+               oneSubtree := stack removeLast.
+               zeroSubtree := stack removeLast.
+               stack add: (   Tree new: -1 
+                              count: ''
+                              left: zeroSubtree 
+                              right: oneSubtree   ).
             ] ifFalse:[ 
-            isTreeBuilt := true.
-            treeRecon := stack removeLast.
-            node := treeRecon. ].
+               isTreeBuilt := true.
+               treeRecon := stack removeLast.
+               node := treeRecon. 
+            ].
          ].
-      ] 
-      "Else decode the data in the tree"
-      ifTrue:[ 
-         node isLeaf ifTrue:[
+      ] ifTrue:[ "Decode the data in tree if already built"
+         node isLeaf not ifTrue:[
+            bitIn = 0 ifTrue:[ node := node left. ] 
+            ifFalse:[ node := node right. ].
+            ((node isLeaf) & (endFile not)) ifTrue:[
+               ((node char) ~= 256) ifTrue:[
+                  outfile ~= nil ifTrue:[
+                     8 to: 1 by: -1 do: [:index |
+                        bit := (node char) bitAt: index.
+                        bitBybit writeBit: bit.].
+                  ] ifFalse:[ 
+                     stdout nextPut: 
+                        (Character value: (node char)). 
+                  ].
+                  node := treeRecon.
+               ] ifFalse:[ 
+                  endFile := true.
+               ].
+            ].
+         ] ifFalse:[ "if node is a leaf"
+            "write corresponding byte and reset pntr to root"
             ( (node char) ~= 256 ) ifTrue:[ 
                stdout nextPut: (Character value: (node char)).
                node := treeRecon. 
-            ] ifFalse:[ endFile := true. ].
-         ] ifFalse:[ 
-            nodeT = 0 ifTrue:[
-               node := node left.
-               ( (node isLeaf) & (endFile not) ) ifTrue:[
-                  ( (node char) ~= 256 ) ifTrue:[
-                     outfile ~= nil ifTrue:[
-                        8 to: 1 by: -1 do: [:index |
-                           bit := (node char) bitAt: index.
-                           bitBybit writeBit: bit.].
-                     ] ifFalse:[ 
-                        stdout nextPut: 
-                           (Character value: (node char)).  
-                     ].
-                     node := treeRecon.
-                  ] ifFalse:[ 
-                     endFile := true.
-                  ].
-               ].  
-            ] ifFalse:[ 
-               node := node right.
-               ( (node isLeaf) & (endFile not) ) ifTrue:[
-                  ( (node char) = 256 ) ifTrue:[
-                     endFile := true.
-                  ] ifFalse:[ 
-                     outfile = nil ifTrue:[
-                        stdout nextPut: 
-                           (Character value: (node char)).
-                     ] ifFalse:[ 
-                        8 to: 1 by: -1 do: [:index |
-                           bit := (node char) bitAt: index.
-                           bitBybit writeBit: bit.].
-                     ].
-                  node := treeRecon.].
-               ].
-            ].
+            ] ifFalse:[ endFile := true. ].      
          ].
       ].
    ]. "end of whiletrue"
