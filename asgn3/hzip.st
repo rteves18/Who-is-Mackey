@@ -7,13 +7,7 @@ CS 112 Spring 2017 - Assignment 3 - Smalltalk
 
 execname := '$RCSfile: cmdline.st,v $' =~ '.*: (.*),v.*' at: 1.
 
-flagD := false.
-flagC := false.
-flagT := false.
-flagU := false.
 
-nl := Character nl.
-priority := SortedCollection new.
 
 "===============[Object Classes]=================="
 
@@ -241,9 +235,15 @@ Object subclass: OutBits [
 "=================[Main start of program]==============="
 
 |infile readfile outfile dcpfile outfilename argc|
-
+flagD := false.
+flagC := false.
+flagT := false.
+flagU := false.
+nl := Character nl.
+priority := SortedCollection new.
 argc:=0.
 Smalltalk arguments: '-d -t -c -u'
+
 
 do: [:flag :arg |
 
@@ -430,7 +430,7 @@ flagC ifTrue: [
 ]. "this bracket starts on line 299"
 
 "=================[-u DECOMPRESS FLAG]==================="
-flagU ifTrue:[
+(flagU) ifTrue:[
    |endFile bitBybit stack|
    flagD ifTrue:[ stdout << 'Decompressing inputfile'<<nl.].
 
