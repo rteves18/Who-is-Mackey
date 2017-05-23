@@ -249,16 +249,16 @@ do: [:flag :arg |
 
    (flag = $d) ifTrue: [ 
       flagD := true. 
-	].
+   ].
    (flag = $t) ifTrue: [ 
       flagT := true. 
-	].
+   ].
    (flag = $c) ifTrue: [ 
       flagC := true. 
-	].
+   ].
    (flag = $u) ifTrue: [ 
       flagU := true. 
-	].
+   ].
 
   "if arg is not nil or null"
   (arg ~= nil) ifTrue: [
