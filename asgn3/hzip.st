@@ -385,7 +385,7 @@ flagC ifTrue: [
       bitBybit := OutBits new: outputfile.
       1 to: (binarytree size) by: 1 
       do: [:index | 
-         bit:= ((binarytree at: index) asInteger).
+         bit:= ((binarytree at: index) asInteger) -48.
          bitBybit writeBit: bit.
       ].
 
@@ -395,7 +395,7 @@ flagC ifTrue: [
          ordChar := readfile next asInteger.
          run := (encodeTable at: ordChar).
          1 to: (run size) by: 1
-         do: [:index | bit := ((run at: index) asInteger).
+         do: [:index | bit := ((run at: index) asInteger) - 48.
             bitBybit writeBit: bit.
          ].
       ].
@@ -403,7 +403,7 @@ flagC ifTrue: [
       endFile := (encodeTable at: 256).
       1 to: (endFile size) by: 1
       do: [:index | 
-         bit:= ( (endFile at: index) asInteger ).
+         bit:= ( (endFile at: index) asInteger ) - 48.
       ].
       bitBybit flushByte.
 
@@ -414,7 +414,7 @@ flagC ifTrue: [
       flagD ifTrue: [
          stdout << 'No outputfile specified' << nl.].
       stdout <<nl<< 'Decode Tree Binary:' << nl.
-      stdout <<binarytree<<nl.
+      stdout <<binarytree<<1.
        stdout <<nl<< 'Compression to stdout:' << nl.
       [readfile atEnd not] whileTrue: [
       |ordChar|
@@ -430,7 +430,7 @@ flagC ifTrue: [
 ]. "this bracket starts on line 299"
 
 "=================[-u DECOMPRESS FLAG]==================="
-flagU ifTrue:[
+(flagU) ifTrue:[
    |isEOF bitBybit stack|
    isEOF := false.
 
@@ -448,7 +448,7 @@ flagU ifTrue:[
    "Read input bit by bit"
    [ (fileBits atEnd not) & (isEOF not) ] whileTrue:[
       treenode := fileBits nextBit.
-      learchar := 0.
+      leafchar := 0.
 
       "if tree is not built"
       isTreeBuilt ifFalse:[
@@ -459,14 +459,14 @@ flagU ifTrue:[
                leafchar := leafchar bitAt:i put:bit.
             ].
 
-            learchar = 0 isTrue:[
+            leafchar = 0 ifTrue:[
                specialbit := fileBits nextBit.
                specialbit = 1 ifTrue:[
-                  learchar := learchar bitAt:9 put:1.
+                  leafchar := leafchar bitAt:9 put:1.
                ].
             ].
 
-            stack add: (Leaf new: learchar count: '').
+            stack add: (Leaf new: leafchar count: '').
          ].
 
          treenode = 1 ifTrue:[
@@ -500,8 +500,8 @@ flagU ifTrue:[
             treenode = 0 ifTrue:[
 
                node := node left.
-               node isLeaf isTrue:[
-                  isEOF not isTrue:[
+               node isLeaf ifTrue:[
+                  isEOF not ifTrue:[
                      ( (node char) = 256 ) ifTrue:[
                         isEOF := true.
                      ] ifFalse:[
@@ -522,8 +522,8 @@ flagU ifTrue:[
             ] ifFalse:[
 
                node := node right.
-               node isLeaf isTrue:[
-                  isEOF not isTrue:[
+               node isLeaf ifTrue:[
+                  isEOF not ifTrue:[
                      ( (node char) = 256 ) ifTrue:[
                         isEOF := true.
                      ] ifFalse:[
