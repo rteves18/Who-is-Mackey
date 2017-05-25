@@ -12,7 +12,7 @@ $0 =~ s|.*/||;
 my $PI = 3.141592653589793238462643383279502884;
 my $EARTH_RADIUS_MILES = 3961;
 
-my $database_name = ".score/database.pl";
+my $database_name = "database.pl";
 
 my %database;
 open DATABASE, "<$database_name" or die "$0: $database_name: $!";
