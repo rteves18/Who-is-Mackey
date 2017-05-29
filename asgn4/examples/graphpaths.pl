@@ -42,7 +42,7 @@ ispath( L, M ) :- ispath2( L, M, [] ).
 ispath2( L, L, _ ).
 ispath2( L, M, Path ) :-
    link( L, X ),
-   not( member( X, Path )),
+   not( member( X, Path )), % HERE: making sure that we don't visit a node twice
    ispath2( X, M, [L|Path] ).
 
 %
