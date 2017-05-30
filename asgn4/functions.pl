@@ -104,6 +104,25 @@ degmin_to_radians(degmin(Degrees, Minutes), Radians) :-
    Degs is Degrees + Minutes / 60,
    Radians is Degs * pi / 180.
 
+% Calculates the distance between 2 airports
+distance(From, To, Distance) :-
+   % Get degmin from the 2 airports
+   airport(From, _, Lat1, Lon1),
+   airport(To, _, Lat2, Lon2),
+   % Convert to radians
+   degmin_to_radians(Lat1, Lat1R),
+   degmin_to_radians(Lat2, Lat2R),
+   degmin_to_radians(Lon1, Lon1R),
+   degmin_to_radians(Lon2, Lon2R),
+   % Use haversine formula to compute distance
+   haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
+
+is_connected(From, To) :- flight(From, To, _), 
+   format('~w -----> ~w', [From, To]).
+is_connected(From, To) :- 
+   flight(From, Buffer, _), 
+   is_connected(Buffer, To).
+
 fly(From, To) :-
    airport(From, X, _, _),
    format('Flight from: ~w ~n', [X]),
@@ -111,14 +130,3 @@ fly(From, To) :-
    format('Flight to: ~w ~n', [Y]),
    distance(From, To, Z),
    format('Distance between ~w and ~w is ~w miles', [From, To, Z]).
-
-% Calculates the distance between 2 airports
-distance(From, To, Distance) :-
-   airport(From, _, Lat1, Lon1),
-   airport(To, _, Lat2, Lon2),
-   degmin_to_radians(Lat1, Lat1R),
-   degmin_to_radians(Lat2, Lat2R),
-   degmin_to_radians(Lon1, Lon1R),
-   degmin_to_radians(Lon2, Lon2R),
-   haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
-
