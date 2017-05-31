@@ -117,8 +117,6 @@ distance(From, To, Distance) :-
    degmin_to_radians(Lon2, Lon2R),
    haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
 
-<<<<<<< HEAD
-=======
 % Computes the flight time from point A to B
 flight_time(From, To, FlightTime) :-
    distance(From, To, Distance),
@@ -160,15 +158,3 @@ fly(From, To) :-
    format('Arrival time is ~w', [ArrivalTime]).
 
 
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 5da7690ca6e573c510ab72ee8ec8dc9bb2d1abeb
