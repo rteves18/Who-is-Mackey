@@ -107,6 +107,20 @@ fly( Depart, Depart ) :-
     nl,
     !, fail.
 
+fly( Depart, Arrive ) :-
+    airport( Depart, _, _, _ ),
+    airport( Arrive, _, _, _ ),
+    write( 'Woops! Looks like a flight from ' ), 
+    write(Depart),
+    write( ' to '), 
+    write(Arrive), 
+    write( ' is not available.'),
+    !, fail.
+
+fly( _, _) :-
+    write( 'Woops, invalid entry.' ), nl,
+!, fail.
+
 % Calculates the distance between 2 airports
 distance(From, To, Distance) :-
    airport(From, _, Lat1, Lon1),
