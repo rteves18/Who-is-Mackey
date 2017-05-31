@@ -1,0 +1,3 @@
+checksource: line length > 72 characters
+   file "functions_4y.pl": 2 errors: lines 66, 99
+checksource: TOTAL COMPLAINTS: 2

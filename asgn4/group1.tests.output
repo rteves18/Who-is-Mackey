@@ -6,19 +6,31 @@ Copyright (C) 1999-2013 Daniel Diaz
 
 yes
 | ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl compiled, 75 lines read - 11193 bytes written, 8 ms
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl compiled, 75 lines read - 11193 bytes written, 9 ms
 
 (1 ms) yes
 | ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 25 lines read - 3883 bytes written, 6 ms
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 156 lines read - 15511 bytes written, 9 ms
 
-(1 ms) yes
+(3 ms) yes
 | ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
+     depart  lax  Los Angeles     12:00
+     arrive  atl  Atlanta         15:53
+     depart  atl  Atlanta         18:30
+     arrive  mia  Miami           19:41
+
+yes
+| ?- Error: flight from: sea to bos is not possible.
+
+no
 | ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
-| ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
-| ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
+     depart  bos  Boston-Logan    07:30
+     arrive  nyc  New York City   07:52
+     depart  nyc  New York City   11:00
+     arrive  chi  Chicago         12:27
+
+yes
+| ?- Error: flight from: sjc to dfw is not possible.
+
+no
 | ?- 

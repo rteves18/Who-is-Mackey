@@ -4,7 +4,7 @@
 # Test program to run gprolog on each set of test cases.
 #
 
-checksource functions.pl 2>&1 | tee checksource.log
+checksource functions_4y.pl 2>&1 | tee checksource.log
 for test in group*.tests
 do
    gprolog <$test 2>&1 | tee $test.output

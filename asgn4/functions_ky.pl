@@ -76,6 +76,20 @@ flight( lax, sjc, time( 19,30 ) ).
 flight( lax, sfo, time( 20, 0 ) ).
 flight( lax, sea, time( 22,30 ) ).
 
+mathfns( X, List ) :-
+   S is sin( X ),
+   C is cos( X ),
+   Q is sqrt( X ),
+   List = [S, C, Q].
+
+constants( List ) :-
+   Pi is pi,
+   E is e,
+   Epsilon is epsilon,
+   List = [Pi, E, Epsilon].
+
+sincos( X, Y ) :-
+   Y is sin( X ) ** 2 + cos( X ) ** 2.
 
 haversine_radians(Lat1, Lon1, Lat2, Lon2, Distance ) :-
    Dlon is Lon2 - Lon1,
@@ -90,6 +104,25 @@ degmin_to_radians(degmin(Degrees, Minutes), Radians) :-
    Degs is Degrees + Minutes / 60,
    Radians is Degs * pi / 180.
 
+% Calculates the distance between 2 airports
+distance(From, To, Distance) :-
+   % Get degmin from the 2 airports
+   airport(From, _, Lat1, Lon1),
+   airport(To, _, Lat2, Lon2),
+   % Convert to radians
+   degmin_to_radians(Lat1, Lat1R),
+   degmin_to_radians(Lat2, Lat2R),
+   degmin_to_radians(Lon1, Lon1R),
+   degmin_to_radians(Lon2, Lon2R),
+   % Use haversine formula to compute distance
+   haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
+
+is_connected(From, To) :- flight(From, To, _), 
+   format('~w -----> ~w', [From, To]).
+is_connected(From, To) :- 
+   flight(From, Buffer, _), 
+   is_connected(Buffer, To).
+
 fly(From, To) :-
    airport(From, X, _, _),
    format('Flight from: ~w ~n', [X]),
@@ -97,23 +130,3 @@ fly(From, To) :-
    format('Flight to: ~w ~n', [Y]),
    distance(From, To, Z),
    format('Distance between ~w and ~w is ~w miles', [From, To, Z]).
-
-fly( Depart, Depart ) :-
-    write( 'Woops! Departing from ' ), 
-    write(Depart),
-    write( ' and arriving to '), 
-    write(Depart), 
-    write( ' would be silly now would it.' ),
-    nl,
-    !, fail.
-
-% Calculates the distance between 2 airports
-distance(From, To, Distance) :-
-   airport(From, _, Lat1, Lon1),
-   airport(To, _, Lat2, Lon2),
-   degmin_to_radians(Lat1, Lat1R),
-   degmin_to_radians(Lat2, Lat2R),
-   degmin_to_radians(Lon1, Lon1R),
-   degmin_to_radians(Lon2, Lon2R),
-   haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
-

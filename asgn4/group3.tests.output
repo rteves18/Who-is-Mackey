@@ -6,15 +6,17 @@ Copyright (C) 1999-2013 Daniel Diaz
 
 yes
 | ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl compiled, 75 lines read - 11193 bytes written, 7 ms
-
-(2 ms) yes
-| ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 25 lines read - 3883 bytes written, 6 ms
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl compiled, 75 lines read - 11193 bytes written, 8 ms
 
 (1 ms) yes
-| ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
-| ?- 
-uncaught exception: error(existence_error(procedure,fly/2),top_level/0)
+| ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 156 lines read - 15511 bytes written, 9 ms
+
+(2 ms) yes
+| ?- Error: the departure and arrival of: sjc to sjc are the same.
+
+no
+| ?- Error: the departure and arrival of: dfw to dfw are the same.
+
+no
 | ?- 
