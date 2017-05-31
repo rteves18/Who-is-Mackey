@@ -117,3 +117,58 @@ distance(From, To, Distance) :-
    degmin_to_radians(Lon2, Lon2R),
    haversine_radians(Lat1R, Lon1R, Lat2R, Lon2R, Distance).
 
+<<<<<<< HEAD
+=======
+% Computes the flight time from point A to B
+flight_time(From, To, FlightTime) :-
+   distance(From, To, Distance),
+   FlightTime is Distance / 500.
+
+% Convert 00:00 time format to hours
+to_hours( time(Hours, Mins), Ret) :-
+   Ret is Hours + Mins / 60.
+
+% Convert hours back to 00:00 time format
+print_time(Hours) :-
+   HoursDecimal is Hours - floor(Hours),
+   ReturnHours is floor(Hours),
+   MinsDigits is HoursDecimal * 60,
+   format('~w:~w', [ReturnHours, MinsDigits]).
+
+% Compute arrival time in 00:00 format
+arrival_time(DepartureTime, FlightTime, ArrivalTime) :-
+   DTime is to_hours(DepartureTime, Ret),
+   ATime is DTime + FlighTime,
+   ArrivalTime is print_time(ATime).
+
+is_connected(From, To) :- flight(From, To, _).
+is_connected(From, To) :- 
+   flight(From, Buffer, _), 
+   is_connected(Buffer, To).
+
+fly(From, To) :-
+   airport(From, X, _, _),
+   format('Flight from: ~w ~n', [X]),
+   airport(To, Y, _, _),
+   format('Flight to: ~w ~n', [Y]),
+   distance(From, To, Z),
+   format('Distance between ~w and ~w is ~w miles ~n', [From, To, Z]),
+   flight_time(From, To, FlightTime),
+   format('Flight time between these 2 Airports is ~w ~n', [FlightTime]),
+   flight(From, To, DepartureTime),
+   arrival_time(DepartureTime, FlighTime, ArrivalTime),
+   format('Arrival time is ~w', [ArrivalTime]).
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 5da7690ca6e573c510ab72ee8ec8dc9bb2d1abeb
