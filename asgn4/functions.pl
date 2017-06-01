@@ -90,7 +90,6 @@ degmin_to_radians(degmin(Degrees, Minutes), Radians) :-
    Degs is Degrees + Minutes / 60,
    Radians is Degs * pi / 180.
 
-
 % Calculates the distance between 2 airports
 distance(From, To, Distance) :-
    airport(From, _, Lat1, Lon1),
@@ -130,6 +129,41 @@ arrival_time(DepartureTime, FlightTime, ArrivalTime) :-
    ArrivalTime is Ret + FlightTime,
    print_time(ArrivalTime).
 
+% Prolog version of not.
+not( X ) :- X, !, fail.
+not( _ ).
+
+list_path(Airport, End, Outlist) :- 
+   list_path(Airport, End, [Airport], Outlist).
+list_path(Airport, Airport, _, [Airport]).
+list_path(Airport, End, Tried, [Airport|List]) :-
+   flight(Airport, Next, _),
+   not( member(Next, Tried)),
+   list_path(Next, End, [Next|Tried], List).
+
+% Find a path from one node to another.
+writeallpaths( Node, Node ) :-
+   write( Node ), write( ' is ' ), write( Node ), nl.
+writeallpaths( Airport, Next ) :-
+   list_path( Airport, Next, [Airport], List ),
+   write( Airport ), write( ' to ' ), write( Next ), write( ' is -->' ),
+   !, writepath( List ),
+   fail.
+
+writepath( [] ) :-
+   nl.
+writepath( [Head|Tail] ) :-
+   write( 'depart: ' ), write( Head ), nl,
+   writepath( Tail ).
+
+% Fail if departure and arrival location are the same
+fly(From, From) :-
+    write('Woops! Departing from *'), 
+    write(From),
+    write('* and arriving to *'), 
+    write(From), 
+    write('* would be silly now would it.'),
+    nl, !, fail.
 
 fly(From, To) :-
    airport(From, X, _, _),
@@ -142,36 +176,26 @@ fly(From, To) :-
    format('Flight time between these 2 Airports is ~w ~n', [FlightTime]),
    flight(From, To, DepartureTime),
    arrival_time(DepartureTime, FlightTime, ArrivalTime),
-   format('Arrival time is ~w ~n', [ArrivalTime]).
+   format('Arrival time is ~w ~n', [ArrivalTime]),
+   !, nl.
 
-fly( Depart, Depart ) :-
-    write( 'Woops! Departing from ' ), 
-    write(Depart),
-    write( ' and arriving to '), 
-    write(Depart), 
-    write( ' would be silly now would it.' ),
-    nl,
-    !, fail.
+% Fail if a flight path cannot be found
+fly(From, To) :-
+    airport(From, _, _, _),
+    airport(To, _, _, _),
+    write('Woops! Looks like a flight from *'), 
+    write(From),
+    write('* to *'), 
+    write(To), 
+    write('* is not available.'), !, fail.
 
-fly( Depart, Arrive ) :-
-    airport( Depart, _, _, _ ),
-    airport( Arrive, _, _, _ ),
-    write( 'Woops! Looks like a flight from ' ), 
-    write(Depart),
-    write( ' to '), 
-    write(Arrive), 
-    write( ' is not available.'),
-    !, fail.
-
-fly( _, _) :-
-    write( 'Woops, invalid entry.' ), nl,
-!, fail.
+% Fail if airport cannot be found in db
+fly(_, _) :-
+    write('Woops, invalid entry. Airport not found!'), nl, !, fail.
 
 
-/*
-is_connected(From, To) :- flight(From, To, _).
-is_connected(From, To) :- 
-   flight(From, Buffer, _), 
-   is_connected(Buffer, To).
-*/
+
+
+
+
 
