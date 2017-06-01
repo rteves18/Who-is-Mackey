@@ -72,5 +72,5 @@ listpath( Node, End, Tried, [Node|List] ) :-
    listpath( Next, End, [Next|Tried], List ).
 
 
-% TEST: writeallpaths(a,e).
-% TEST: writeallpaths(a,j).
+writeallpaths(a,e).
+writeallpaths(a,j).
