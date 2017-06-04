@@ -90,37 +90,6 @@ degmin_to_radians(degmin(Degrees, Minutes), Radians) :-
    Degs is Degrees + Minutes / 60,
    Radians is Degs * pi / 180.
 
-fly(From, To) :-
-   airport(From, X, _, _),
-   format('Flight from: ~w ~n', [X]),
-   airport(To, Y, _, _),
-   format('Flight to: ~w ~n', [Y]),
-   distance(From, To, Z),
-   format('Distance between ~w and ~w is ~w miles', [From, To, Z]).
-
-fly( Depart, Depart ) :-
-    write( 'Woops! Departing from ' ), 
-    write(Depart),
-    write( ' and arriving to '), 
-    write(Depart), 
-    write( ' would be silly now would it.' ),
-    nl,
-    !, fail.
-
-fly( Depart, Arrive ) :-
-    airport( Depart, _, _, _ ),
-    airport( Arrive, _, _, _ ),
-    write( 'Woops! Looks like a flight from ' ), 
-    write(Depart),
-    write( ' to '), 
-    write(Arrive), 
-    write( ' is not available.'),
-    !, fail.
-
-fly( _, _) :-
-    write( 'Woops, invalid entry.' ), nl,
-!, fail.
-
 % Calculates the distance between 2 airports
 distance(From, To, Distance) :-
    airport(From, _, Lat1, Lon1),
@@ -140,35 +109,93 @@ flight_time(From, To, FlightTime) :-
 to_hours( time(Hours, Mins), Ret) :-
    Ret is Hours + Mins / 60.
 
+/*print_time_format(Time) :-
+   Time < 10, print(0), print(Time).
+print_time_format(Time) :-
+   Time >= 10, print(Time).*/
+
 % Convert hours back to 00:00 time format
 print_time(Hours) :-
    HoursDecimal is Hours - floor(Hours),
    ReturnHours is floor(Hours),
    MinsDigits is HoursDecimal * 60,
-   format('~w:~w', [ReturnHours, MinsDigits]).
+   format('~w:~0f', [ReturnHours, MinsDigits]).
+   %print_time_format(ReturnHours), print(':'), 
+   %print_time_format(MinsDigits).
 
 % Compute arrival time in 00:00 format
 arrival_time(DepartureTime, FlightTime, ArrivalTime) :-
-   DTime is to_hours(DepartureTime, Ret),
-   ATime is DTime + FlighTime,
-   ArrivalTime is print_time(ATime).
+   to_hours(DepartureTime, Ret),
+   ArrivalTime is Ret + FlightTime,
+   print_time(ArrivalTime).
 
-is_connected(From, To) :- flight(From, To, _).
-is_connected(From, To) :- 
-   flight(From, Buffer, _), 
-   is_connected(Buffer, To).
+% Prolog version of not.
+not( X ) :- X, !, fail.
+not( _ ).
+
+list_path(Airport, End, Outlist) :- 
+   list_path(Airport, End, [Airport], Outlist).
+list_path(Airport, Airport, _, [Airport]).
+list_path(Airport, End, Tried, [Airport|List]) :-
+   flight(Airport, Next, _),
+   not( member(Next, Tried)),
+   list_path(Next, End, [Next|Tried], List).
+
+% Find a path from one node to another.
+writeallpaths( Node, Node ) :-
+   write( Node ), write( ' is ' ), write( Node ), nl.
+writeallpaths( Airport, Next ) :-
+   list_path( Airport, Next, [Airport], List ),
+   write( Airport ), write( ' to ' ), write( Next ), write( ' is -->' ),
+   !, writepath( List ),
+   fail.
+
+writepath( [] ) :-
+   nl.
+writepath( [Head|Tail] ) :-
+   write( 'depart: ' ), write( Head ), nl,
+   writepath( Tail ).
+
+% Fail if departure and arrival location are the same
+fly(From, From) :-
+    write('Woops! Departing from *'), 
+    write(From),
+    write('* and arriving to *'), 
+    write(From), 
+    write('* would be silly now would it.'),
+    nl, !, fail.
 
 fly(From, To) :-
    airport(From, X, _, _),
    format('Flight from: ~w ~n', [X]),
    airport(To, Y, _, _),
    format('Flight to: ~w ~n', [Y]),
-   distance(From, To, Z),
-   format('Distance between ~w and ~w is ~w miles ~n', [From, To, Z]),
+   distance(From, To, Distance),
+   format('Distance between ~w & ~w is ~w miles ~n', [From, To, Distance]),
    flight_time(From, To, FlightTime),
    format('Flight time between these 2 Airports is ~w ~n', [FlightTime]),
    flight(From, To, DepartureTime),
-   arrival_time(DepartureTime, FlighTime, ArrivalTime),
-   format('Arrival time is ~w', [ArrivalTime]).
+   arrival_time(DepartureTime, FlightTime, ArrivalTime),
+   format('Arrival time is ~w ~n', [ArrivalTime]),
+   !, nl.
+
+% Fail if a flight path cannot be found
+fly(From, To) :-
+    airport(From, _, _, _),
+    airport(To, _, _, _),
+    write('Woops! Looks like a flight from *'), 
+    write(From),
+    write('* to *'), 
+    write(To), 
+    write('* is not available.'), !, fail.
+
+% Fail if airport cannot be found in db
+fly(_, _) :-
+    write('Woops, invalid entry. Airport not found!'), nl, !, fail.
+
+
+
+
+
 
 
