@@ -1,0 +1,231 @@
+[32m[K1[m[K[36m[K:[m[K[01;31m[KCMPS[m[K-[01;31m[K112[m[K · [01;31m[KProgramming[m[K [01;31m[KLanguages[m[K · Fall 2016 · Midterm Test     [01;31m[K1[m[K [01;31m[Kof[m[K [01;31m[K1[m[K
+[32m[K2[m[K[36m[K:[m[K$[01;31m[KId[m[K: [01;31m[Kcmps112[m[K-2016q4-exam1.[01;31m[Kmm[m[K,[01;31m[Kv[m[K [01;31m[K1[m[K.71 2016-[01;31m[K10[m[K-21 [01;31m[K15[m[K:42:40-[01;31m[K07[m[K - - $
+[32m[K4[m[K[36m[K:[m[K.[01;31m[KPS[m[K
+[32m[K5[m[K[36m[K:[m[K[01;31m[Kexamboxes[m[K([01;31m[K5[m[K)
+[32m[K6[m[K[36m[K:[m[K.[01;31m[KPE[m[K
+[32m[K8[m[K[36m[K:[m[K[01;31m[KNo[m[K [01;31m[Kbooks[m[K;  [01;31m[KNo[m[K [01;31m[Kcalculator[m[K;  [01;31m[KNo[m[K [01;31m[Kcomputer[m[K;  [01;31m[KNo[m[K [01;31m[Kemail[m[K;  [01;31m[KNo[m[K [01;31m[Kinternet[m[K;  [01;31m[KNo[m[K
+[32m[K9[m[K[36m[K:[m[K[01;31m[Knotes[m[K;  [01;31m[KNo[m[K [01;31m[Kphone[m[K.  [01;31m[KDo[m[K [01;31m[Kyour[m[K [01;31m[Kscratch[m[K [01;31m[Kwork[m[K [01;31m[Kelsewhere[m[K [01;31m[Kand[m[K [01;31m[Kenter[m[K [01;31m[Konly[m[K [01;31m[Kyour[m[K
+[32m[K10[m[K[36m[K:[m[K[01;31m[Kfinal[m[K [01;31m[Kanswer[m[K [01;31m[Kinto[m[K [01;31m[Kthe[m[K [01;31m[Kspaces[m[K [01;31m[Kprovided[m[K.  [01;31m[KPoints[m[K [01;31m[Kwill[m[K [01;31m[Kbe[m[K [01;31m[Kdeducted[m[K [01;31m[Kfor[m[K
+[32m[K11[m[K[36m[K:[m[K[01;31m[Kmessy[m[K [01;31m[Kanswers[m[K.  [01;31m[KUnreadable[m[K [01;31m[Kanswers[m[K [01;31m[Kwill[m[K [01;31m[Kbe[m[K [01;31m[Kpresumed[m[K [01;31m[Kincorrect[m[K.
+[32m[K13[m[K[36m[K:[m[K.[01;31m[KEQ[m[K
+[32m[K14[m[K[36m[K:[m[K[01;31m[Kdelim[m[K $$
+[32m[K15[m[K[36m[K:[m[K.[01;31m[KEN[m[K
+[32m[K17[m[K[36m[K:[m[K[01;31m[K1[m[K. [01;31m[KOcaml[m[K.  [01;31m[KDefine[m[K [01;31m[Ka[m[K [01;31m[Ktail[m[K-recursive [01;31m[Kfunction[m[K evenlen [01;31m[Kwhich[m[K [01;31m[Kreturns[m[K [01;31m[Ktrue[m[K
+[32m[K18[m[K[36m[K:[m[K   [01;31m[Kif[m[K [01;31m[Kits[m[K [01;31m[Kargument[m[K [01;31m[Kis[m[K [01;31m[Ka[m[K [01;31m[Klist[m[K [01;31m[Kof[m[K [01;31m[Keven[m[K [01;31m[Klength[m[K [01;31m[Kand[m[K [01;31m[Kfalse[m[K [01;31m[Kif[m[K there [01;31m[Kare[m[K [01;31m[Kan[m[K
+[32m[K19[m[K[36m[K:[m[K   [01;31m[Kodd[m[K [01;31m[Knumber[m[K [01;31m[Kof[m[K [01;31m[Kelements[m[K [01;31m[Kin[m[K [01;31m[Kthe[m[K [01;31m[Klist[m[K.  [01;31m[KDo[m[K [01;31m[Knot[m[K [01;31m[Kuse[m[K [01;31m[Ka[m[K [01;31m[Khigher[m[K-[01;31m[Korder[m[K
+[32m[K20[m[K[36m[K:[m[K   [01;31m[Kfunction[m[K.  [[01;31m[K2pt[m[K]
+[32m[K22[m[K[36m[K:[m[K   - : [01;31m[Kbool[m[K = [01;31m[Ktrue[m[K
+[32m[K23[m[K[36m[K:[m[K   # evenlen [[01;31m[K1[m[K];;
+[32m[K24[m[K[36m[K:[m[K   - : [01;31m[Kbool[m[K = [01;31m[Kfalse[m[K
+[32m[K25[m[K[36m[K:[m[K   # evenlen [[01;31m[K1[m[K;[01;31m[K2[m[K];;
+[32m[K26[m[K[36m[K:[m[K   - : [01;31m[Kbool[m[K = [01;31m[Ktrue[m[K
+[32m[K28[m[K[36m[K:[m[K[01;31m[K2[m[K. [01;31m[KScheme[m[K.  [01;31m[KDefine[m[K [01;31m[Ka[m[K [01;31m[Ktail[m[K-recursive [01;31m[Kfunction[m[K [01;31m[Koddlen[m[K [01;31m[Kwhich[m[K [01;31m[Kreturns[m[K #[01;31m[Kt[m[K
+[32m[K29[m[K[36m[K:[m[K   [01;31m[Kif[m[K [01;31m[Kthe[m[K [01;31m[Klist[m[K [01;31m[Khas[m[K [01;31m[Kan[m[K [01;31m[Kodd[m[K [01;31m[Knumber[m[K [01;31m[Kof[m[K [01;31m[Kelements[m[K, [01;31m[Kand[m[K #[01;31m[Kf[m[K [01;31m[Kif[m[K [01;31m[Knot[m[K.  [01;31m[KDo[m[K [01;31m[Knot[m[K
+[32m[K30[m[K[36m[K:[m[K   [01;31m[Kuse[m[K [01;31m[Ka[m[K [01;31m[Khigher[m[K-[01;31m[Korder[m[K [01;31m[Kfunction[m[K.  [[01;31m[K2pt[m[K]
+[32m[K31[m[K[36m[K:[m[K   > ([01;31m[Koddlen[m[K '())
+[32m[K32[m[K[36m[K:[m[K   #[01;31m[Kf[m[K
+[32m[K33[m[K[36m[K:[m[K   > ([01;31m[Koddlen[m[K '([01;31m[K1[m[K))
+[32m[K34[m[K[36m[K:[m[K   #[01;31m[Kt[m[K
+[32m[K35[m[K[36m[K:[m[K   > ([01;31m[Koddlen[m[K '([01;31m[K1[m[K [01;31m[K2[m[K))
+[32m[K36[m[K[36m[K:[m[K   #[01;31m[Kf[m[K
+[32m[K38[m[K[36m[K:[m[K[01;31m[K3[m[K. [01;31m[KScheme[m[K.  [01;31m[KDefine[m[K [01;31m[Kthe[m[K [01;31m[Ktail[m[K-recursive [01;31m[Kfunction[m[K foldl so [01;31m[Kthat[m[K [01;31m[Kit[m[K may [01;31m[Kbe[m[K
+[32m[K39[m[K[36m[K:[m[K   [01;31m[Kused[m[K [01;31m[Kin[m[K [01;31m[Kthe[m[K [01;31m[Kfollowing[m[K example.  [[01;31m[K2pt[m[K]
+[32m[K40[m[K[36m[K:[m[K   > ([01;31m[Kdefine[m[K ([01;31m[Ksum[m[K [01;31m[Klist[m[K) (foldl + [01;31m[K0[m[K [01;31m[Klist[m[K))
+[32m[K41[m[K[36m[K:[m[K   > ([01;31m[Ksum[m[K '([01;31m[K1[m[K [01;31m[K2[m[K [01;31m[K3[m[K))
+[32m[K42[m[K[36m[K:[m[K   [01;31m[K6[m[K
+[32m[K44[m[K[36m[K:[m[K[01;31m[K4[m[K. [01;31m[KOcaml[m[K.  [01;31m[KDefine[m[K [01;31m[Kthe[m[K [01;31m[Kfunction[m[K [01;31m[Kreverse[m[K [01;31m[Kto[m[K [01;31m[Kreverse[m[K [01;31m[Kan[m[K arbitrary [01;31m[Klist[m[K.
+[32m[K45[m[K[36m[K:[m[K   [01;31m[KUse[m[K $ [01;31m[KO[m[K ( [01;31m[Kn[m[K ) $ time [01;31m[Kand[m[K $ [01;31m[KO[m[K ( [01;31m[K1[m[K ) $ [01;31m[Kstack[m[K.  [01;31m[KYou[m[K may code [01;31m[Ktail[m[K
+[32m[K46[m[K[36m[K:[m[K   [01;31m[Krecursion[m[K explicitly, [01;31m[Kor[m[K express [01;31m[Kthe[m[K [01;31m[Kfunction[m[K [01;31m[Kas[m[K [01;31m[Ka[m[K [01;31m[Kone[m[K-liner [01;31m[Kusing[m[K
+[32m[K47[m[K[36m[K:[m[K   [01;31m[KList[m[K.fold_left.  [[01;31m[K2pt[m[K]
+[32m[K48[m[K[36m[K:[m[K   [01;31m[Kval[m[K [01;31m[Kreverse[m[K : '[01;31m[Ka[m[K [01;31m[Klist[m[K -> '[01;31m[Ka[m[K [01;31m[Klist[m[K
+[32m[K49[m[K[36m[K:[m[K   # [01;31m[Kreverse[m[K [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K;[01;31m[K4[m[K];;
+[32m[K50[m[K[36m[K:[m[K   - : [01;31m[Kint[m[K [01;31m[Klist[m[K = [[01;31m[K4[m[K; [01;31m[K3[m[K; [01;31m[K2[m[K; [01;31m[K1[m[K]
+[32m[K52[m[K[36m[K:[m[K[01;31m[K5[m[K. [01;31m[KScheme[m[K.  [01;31m[KDraw[m[K [01;31m[Ka[m[K [01;31m[Kpicture[m[K [01;31m[Kof[m[K [01;31m[Kthe[m[K [01;31m[Kfollowing[m[K [01;31m[KScheme[m[K expression.  [01;31m[KFor[m[K
+[32m[K53[m[K[36m[K:[m[K   [01;31m[Keach[m[K [01;31m[Kcons[m[K [01;31m[Kcell[m[K, [01;31m[Kdraw[m[K [01;31m[Ka[m[K [01;31m[Ksmall[m[K box [01;31m[Kwith[m[K [01;31m[Ktwo[m[K arrows coming out [01;31m[Kof[m[K [01;31m[Kit[m[K.
+[32m[K54[m[K[36m[K:[m[K   [01;31m[KEach[m[K [01;31m[Karrow[m[K [01;31m[Kshould[m[K [01;31m[Kpoint[m[K [01;31m[Kat[m[K either another [01;31m[Kcell[m[K [01;31m[Kor[m[K [01;31m[Kan[m[K atom.  [01;31m[KWrite[m[K
+[32m[K55[m[K[36m[K:[m[K   [01;31m[Kthe[m[K [01;31m[KGreek[m[K [01;31m[Kletter[m[K [01;31m[Kphi[m[K (\[01;31m[Kphi[m[K) [01;31m[Kto[m[K indicate [01;31m[Ka[m[K [01;31m[Knull[m[K [01;31m[Kpointer[m[K.  [[01;31m[K2pt[m[K]
+[32m[K56[m[K[36m[K:[m[K   (([01;31m[Ka[m[K) ([01;31m[Kb[m[K [01;31m[Kc[m[K) (([01;31m[Kd[m[K [01;31m[Ke[m[K)))
+[32m[K58[m[K[36m[K:[m[K[01;31m[K6[m[K. [01;31m[KOcaml[m[K.  [01;31m[KDefine[m[K [01;31m[Klength[m[K [01;31m[Kand[m[K [01;31m[Ksum[m[K [01;31m[Kfor[m[K [01;31m[Ka[m[K [01;31m[Klist[m[K [01;31m[Kusing[m[K [01;31m[Ka[m[K \beta-reduced
+[32m[K59[m[K[36m[K:[m[K   version [01;31m[Kof[m[K [01;31m[Kthe[m[K definitions.  [01;31m[KFill[m[K [01;31m[Kin[m[K [01;31m[Kthe[m[K [01;31m[Kspace[m[K [01;31m[Kwith[m[K [01;31m[Kan[m[K appropriate
+[32m[K60[m[K[36m[K:[m[K   [01;31m[Kfun[m[K [01;31m[Kand[m[K another [01;31m[Kargument[m[K.  [[01;31m[K2pt[m[K]
+[32m[K61[m[K[36m[K:[m[K   # [01;31m[Klet[m[K foldl = [01;31m[KList[m[K.fold_left;;
+[32m[K62[m[K[36m[K:[m[K   [01;31m[Kval[m[K foldl : ('[01;31m[Ka[m[K -> '[01;31m[Kb[m[K -> '[01;31m[Ka[m[K) -> '[01;31m[Ka[m[K -> '[01;31m[Kb[m[K [01;31m[Klist[m[K -> '[01;31m[Ka[m[K
+[32m[K64[m[K[36m[K:[m[K   # [01;31m[Klet[m[K [01;31m[Klength[m[K = foldl
+[32m[K66[m[K[36m[K:[m[K   [01;31m[Kval[m[K [01;31m[Klength[m[K : '_a [01;31m[Klist[m[K -> [01;31m[Kint[m[K
+[32m[K68[m[K[36m[K:[m[K   # [01;31m[Klet[m[K [01;31m[Ksum[m[K = foldl _____________________________________________;;
+[32m[K69[m[K[36m[K:[m[K   [01;31m[Kval[m[K [01;31m[Ksum[m[K : [01;31m[Kint[m[K [01;31m[Klist[m[K -> [01;31m[Kint[m[K
+[32m[K71[m[K[36m[K:[m[K[01;31m[K7[m[K. [01;31m[KOcaml[m[K.  [01;31m[KDefine[m[K [01;31m[Kthe[m[K [01;31m[Kfunction[m[K zipwith [01;31m[Kthat[m[K takes [01;31m[Ka[m[K [01;31m[Kfunction[m[K [01;31m[Kand[m[K [01;31m[Ktwo[m[K
+[32m[K72[m[K[36m[K:[m[K   lists [01;31m[Kand[m[K [01;31m[Kreturns[m[K [01;31m[Ka[m[K [01;31m[Knew[m[K [01;31m[Klist[m[K [01;31m[Kwith[m[K [01;31m[Kthe[m[K [01;31m[Kelements[m[K combined.  [01;31m[KUse[m[K
+[32m[K73[m[K[36m[K:[m[K   [01;31m[Kfailwith[m[K [01;31m[Kif[m[K [01;31m[Kthe[m[K lists [01;31m[Kare[m[K [01;31m[Knot[m[K [01;31m[Kof[m[K [01;31m[Kthe[m[K [01;31m[Ksame[m[K [01;31m[Klength[m[K.  [[01;31m[K2pt[m[K]
+[32m[K74[m[K[36m[K:[m[K   [01;31m[Kval[m[K zipwith : ('[01;31m[Ka[m[K -> '[01;31m[Kb[m[K -> '[01;31m[Kc[m[K) -> '[01;31m[Ka[m[K [01;31m[Klist[m[K -> '[01;31m[Kb[m[K [01;31m[Klist[m[K -> '[01;31m[Kc[m[K [01;31m[Klist[m[K
+[32m[K75[m[K[36m[K:[m[K   # zipwith (+) [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K;[01;31m[K4[m[K] [[01;31m[K5[m[K;[01;31m[K6[m[K;[01;31m[K7[m[K;[01;31m[K8[m[K];;
+[32m[K76[m[K[36m[K:[m[K   - : [01;31m[Kint[m[K [01;31m[Klist[m[K = [[01;31m[K6[m[K; [01;31m[K8[m[K; [01;31m[K10[m[K; [01;31m[K12[m[K]
+[32m[K77[m[K[36m[K:[m[K   # zipwith (+) [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K;[01;31m[K4[m[K] [[01;31m[K5[m[K;[01;31m[K6[m[K;[01;31m[K7[m[K;[01;31m[K8[m[K;[01;31m[K9[m[K];;
+[32m[K79[m[K[36m[K:[m[K   # zipwith ([01;31m[Kfun[m[K [01;31m[Ka[m[K [01;31m[Kb[m[K -> [01;31m[Ka[m[K,[01;31m[Kb[m[K) [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K] ['[01;31m[Ka[m[K';'[01;31m[Kb[m[K';'[01;31m[Kc[m[K'];;
+[32m[K80[m[K[36m[K:[m[K   - : ([01;31m[Kint[m[K * char) [01;31m[Klist[m[K = [([01;31m[K1[m[K, '[01;31m[Ka[m[K'); ([01;31m[K2[m[K, '[01;31m[Kb[m[K'); ([01;31m[K3[m[K, '[01;31m[Kc[m[K')]
+[32m[K81[m[K[36m[K:[m[K   # zipwith [01;31m[Kmax[m[K [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K;[01;31m[K4[m[K] [[01;31m[K4[m[K;[01;31m[K3[m[K;[01;31m[K2[m[K;[01;31m[K1[m[K];;
+[32m[K82[m[K[36m[K:[m[K   - : [01;31m[Kint[m[K [01;31m[Klist[m[K = [[01;31m[K4[m[K; [01;31m[K3[m[K; [01;31m[K3[m[K; [01;31m[K4[m[K]
+[32m[K84[m[K[36m[K:[m[K[01;31m[K8[m[K. [01;31m[KOcaml[m[K.  [01;31m[KIn[m[K [01;31m[Ka[m[K strongly typed [01;31m[Klanguage[m[K:
+[32m[K85[m[K[36m[K:[m[K   ([01;31m[Ka[m[K) Every expression [01;31m[Khas[m[K exactly [01;31m[Kone[m[K [01;31m[Ktype[m[K.
+[32m[K86[m[K[36m[K:[m[K   ([01;31m[Kb[m[K) [01;31m[KWhen[m[K [01;31m[Kan[m[K expression [01;31m[Kis[m[K evaluated, exactly [01;31m[Kone[m[K [01;31m[Kof[m[K [01;31m[Kthe[m[K [01;31m[Kfollowing[m[K
+[32m[K87[m[K[36m[K:[m[K       general things [01;31m[Kmight[m[K happen:  [[01;31m[K2pt[m[K]
+[32m[K89[m[K[36m[K:[m[K       ([01;31m[Ki[m[K)
+[32m[K97[m[K[36m[K:[m[K[01;31m[K9[m[K. [01;31m[KScheme[m[K.  [01;31m[KThe[m[K Collatz conjectures states [01;31m[Kthat[m[K [01;31m[Kfor[m[K [01;31m[Kany[m[K positive
+[32m[K98[m[K[36m[K:[m[K   integer $[01;31m[Kn[m[K$, [01;31m[Kif[m[K [01;31m[Kit[m[K [01;31m[Kis[m[K repeatedly replaced [01;31m[Kby[m[K $ [01;31m[Kn[m[K / [01;31m[K2[m[K $ [01;31m[Kwhen[m[K [01;31m[Keven[m[K
+[32m[K99[m[K[36m[K:[m[K   [01;31m[Kand[m[K $ [01;31m[K3[m[K [01;31m[Kn[m[K + [01;31m[K1[m[K $ [01;31m[Kwhen[m[K [01;31m[Kodd[m[K, [01;31m[Kit[m[K eventually converges [01;31m[Kon[m[K [01;31m[Kthe[m[K integer
+[32m[K100[m[K[36m[K:[m[K   $[01;31m[K1[m[K$.  [01;31m[KWrite[m[K [01;31m[Ka[m[K [01;31m[Kfunction[m[K [01;31m[Kthat[m[K uses [01;31m[Ka[m[K [01;31m[Ktail[m[K-recursive [01;31m[Kinner[m[K [01;31m[Kfunction[m[K [01;31m[Kto[m[K
+[32m[K101[m[K[36m[K:[m[K   [01;31m[Kreturn[m[K [01;31m[Ka[m[K [01;31m[Klist[m[K [01;31m[Kof[m[K [01;31m[Kall[m[K integers starting [01;31m[Kfrom[m[K [01;31m[Kthe[m[K [01;31m[Kargument[m[K [01;31m[Kand[m[K ending
+[32m[K102[m[K[36m[K:[m[K   [01;31m[Kwith[m[K [01;31m[K1[m[K.  [01;31m[KThe[m[K [01;31m[Kinner[m[K [01;31m[Kfunction[m[K produces [01;31m[Kthe[m[K [01;31m[Klist[m[K [01;31m[Kin[m[K [01;31m[Kthe[m[K [01;31m[Kreverse[m[K [01;31m[Korder[m[K,
+[32m[K103[m[K[36m[K:[m[K   [01;31m[Kbut[m[K [01;31m[Kthe[m[K [01;31m[Kouter[m[K [01;31m[Kfunction[m[K reverses [01;31m[Kthe[m[K [01;31m[Klist[m[K.  [01;31m[KSome[m[K [01;31m[KScheme[m[K [01;31m[Kfunctions[m[K [01;31m[Kto[m[K
+[32m[K104[m[K[36m[K:[m[K   [01;31m[Kuse[m[K:  remainder, quotient, [01;31m[Kreverse[m[K, etc.  [[01;31m[K4pt[m[K]
+[32m[K105[m[K[36m[K:[m[K   > (collatz [01;31m[K4[m[K)
+[32m[K106[m[K[36m[K:[m[K   ([01;31m[K4[m[K [01;31m[K2[m[K [01;31m[K1[m[K)
+[32m[K107[m[K[36m[K:[m[K   > (collatz [01;31m[K10[m[K)
+[32m[K108[m[K[36m[K:[m[K   ([01;31m[K10[m[K [01;31m[K5[m[K 16 [01;31m[K8[m[K [01;31m[K4[m[K [01;31m[K2[m[K [01;31m[K1[m[K)
+[32m[K109[m[K[36m[K:[m[K   > (collatz [01;31m[K20[m[K)
+[32m[K110[m[K[36m[K:[m[K   ([01;31m[K20[m[K [01;31m[K10[m[K [01;31m[K5[m[K 16 [01;31m[K8[m[K [01;31m[K4[m[K [01;31m[K2[m[K [01;31m[K1[m[K)
+[32m[K112[m[K[36m[K:[m[K   (16 [01;31m[K8[m[K [01;31m[K4[m[K [01;31m[K2[m[K [01;31m[K1[m[K)
+[32m[K113[m[K[36m[K:[m[K   > (collatz [01;31m[K17[m[K)
+[32m[K114[m[K[36m[K:[m[K   ([01;31m[K17[m[K 52 26 [01;31m[K13[m[K 40 [01;31m[K20[m[K [01;31m[K10[m[K [01;31m[K5[m[K 16 [01;31m[K8[m[K [01;31m[K4[m[K [01;31m[K2[m[K [01;31m[K1[m[K)
+[32m[K116[m[K[36m[K:[m[K[01;31m[K10[m[K. [01;31m[KC[m[K [01;31m[Kor[m[K [01;31m[KC[m[K++.  Code [01;31m[Ka[m[K [01;31m[Kfunction[m[K [01;31m[Kto[m[K [01;31m[Kreverse[m[K [01;31m[Ka[m[K [01;31m[Klist[m[K.  [01;31m[KDo[m[K [01;31m[Knot[m[K allocate [01;31m[Kor[m[K
+[32m[K117[m[K[36m[K:[m[K   free [01;31m[Kany[m[K memory.  [01;31m[KDo[m[K [01;31m[Knot[m[K [01;31m[Kcause[m[K memory leak [01;31m[Kor[m[K [01;31m[Kuse[m[K uninitialized
+[32m[K118[m[K[36m[K:[m[K   memory.  [01;31m[KDo[m[K [01;31m[Knot[m[K [01;31m[Kuse[m[K [01;31m[Krecursion[m[K.  [01;31m[KWrite[m[K [01;31m[Ka[m[K loop [01;31m[Kwhich[m[K [01;31m[Kdoes[m[K nothing [01;31m[Kbut[m[K
+[32m[K119[m[K[36m[K:[m[K   manipulate pointers.  [01;31m[KReturn[m[K [01;31m[Ka[m[K [01;31m[Kpointer[m[K [01;31m[Kto[m[K [01;31m[Kthe[m[K [01;31m[Kfirst[m[K node [01;31m[Kin[m[K [01;31m[Kthe[m[K
+[32m[K120[m[K[36m[K:[m[K   reversed [01;31m[Klist[m[K.  [[01;31m[K2pt[m[K]
+[32m[K122[m[K[36m[K:[m[K   typedef struct node node; | node* [01;31m[Kreverse[m[K (node* head) {
+[32m[K124[m[K[36m[K:[m[K      [01;31m[Kint[m[K [01;31m[Kvalue[m[K;             |
+[32m[K130[m[K[36m[K:[m[K[01;31m[K11[m[K. [01;31m[KScheme[m[K.  [01;31m[KDefine[m[K [01;31m[Kthe[m[K [01;31m[Kfunctions[m[K [01;31m[Kmap[m[K [01;31m[Kand[m[K filter.  [01;31m[KDo[m[K [01;31m[Knot[m[K [01;31m[Kuse[m[K [01;31m[Khigher[m[K-
+[32m[K131[m[K[36m[K:[m[K   [01;31m[Korder[m[K [01;31m[Kfunctions[m[K.
+[32m[K133[m[K[36m[K:[m[K   ([01;31m[Ka[m[K) [01;31m[Kmap[m[K [[01;31m[K1pt[m[K]
+[32m[K134[m[K[36m[K:[m[K       > ([01;31m[Kmap[m[K ([01;31m[Klambda[m[K ([01;31m[Kn[m[K) (+ [01;31m[K1[m[K [01;31m[Kn[m[K)) '([01;31m[K3[m[K [01;31m[K6[m[K [01;31m[K9[m[K))
+[32m[K135[m[K[36m[K:[m[K       ([01;31m[K4[m[K [01;31m[K7[m[K [01;31m[K10[m[K)
+[32m[K137[m[K[36m[K:[m[K   ([01;31m[Kb[m[K) filter [[01;31m[K2pt[m[K]
+[32m[K138[m[K[36m[K:[m[K       > (filter ([01;31m[Klambda[m[K ([01;31m[Kn[m[K) (< [01;31m[Kn[m[K [01;31m[K4[m[K)) '([01;31m[K1[m[K [01;31m[K2[m[K [01;31m[K3[m[K [01;31m[K4[m[K [01;31m[K5[m[K [01;31m[K6[m[K [01;31m[K7[m[K))
+[32m[K139[m[K[36m[K:[m[K       ([01;31m[K1[m[K [01;31m[K2[m[K [01;31m[K3[m[K)
+[32m[K141[m[K[36m[K:[m[K[01;31m[KMultiple[m[K [01;31m[Kchoice[m[K.  [01;31m[KTo[m[K [01;31m[Kthe[m[K [01;31m[Kleft[m[K [01;31m[Kof[m[K [01;31m[Keach[m[K [01;31m[Kquestion[m[K, [01;31m[Kwrite[m[K [01;31m[Kthe[m[K [01;31m[Kletter[m[K [01;31m[Kthat[m[K
+[32m[K142[m[K[36m[K:[m[K[01;31m[Kindicates[m[K [01;31m[Kyour[m[K [01;31m[Kanswer[m[K.  [01;31m[KWrite[m[K [01;31m[KZ[m[K [01;31m[Kif[m[K [01;31m[Kyou[m[K [01;31m[Kdon[m[K'[01;31m[Kt[m[K [01;31m[Kwant[m[K [01;31m[Kto[m[K [01;31m[Krisk[m[K [01;31m[Ka[m[K [01;31m[Kwrong[m[K
+[32m[K143[m[K[36m[K:[m[K[01;31m[Kanswer[m[K.  [01;31m[KWrong[m[K [01;31m[Kanswers[m[K [01;31m[Kare[m[K [01;31m[Kworth[m[K [01;31m[Knegative[m[K [01;31m[Kpoints[m[K.  [6pt]
+[32m[K146[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× [01;31m[K1[m[K = |      $= [01;31m[Ka[m[K$ |
+[32m[K147[m[K[36m[K:[m[K|[01;31m[Kcorrect[m[K [01;31m[Kanswers[m[K           |      |      |            |
+[32m[K149[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× ½ = |      $= [01;31m[Kb[m[K$ |
+[32m[K150[m[K[36m[K:[m[K|[01;31m[Kwrong[m[K [01;31m[Kanswers[m[K             |      |      |            |
+[32m[K152[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× [01;31m[K0[m[K = |  [01;31m[K0[m[K         |
+[32m[K153[m[K[36m[K:[m[K|[01;31m[Kmissing[m[K [01;31m[Kanswers[m[K           |      |      |            |
+[32m[K155[m[K[36m[K:[m[K|[01;31m[Kcolumn[m[K [01;31m[Ktotal[m[K              |    [01;31m[K6[m[K |      |      $= [01;31m[Kc[m[K$ |
+[32m[K156[m[K[36m[K:[m[K|$ [01;31m[Kc[m[K = [01;31m[Kmax[m[K ( [01;31m[Ka[m[K - [01;31m[Kb[m[K , [01;31m[K0[m[K ) $ |      |      |            |
+[32m[K159[m[K[36m[K:[m[K [01;31m[K1[m[K. ``[01;31m[KGo[m[K [01;31m[KTo[m[K [01;31m[KStatement[m[K [01;31m[KConsidered[m[K [01;31m[KHarmful[m[K'', Communications [01;31m[Kof[m[K [01;31m[Kthe[m[K ACM,
+[32m[K160[m[K[36m[K:[m[K    Vol. [01;31m[K11[m[K, [01;31m[KNo[m[K. [01;31m[K3[m[K, March 1968.
+[32m[K161[m[K[36m[K:[m[K    ([01;31m[KA[m[K) John [01;31m[KBackus[m[K
+[32m[K162[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[KEdsger[m[K [01;31m[KDijkstra[m[K
+[32m[K163[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[KDonald[m[K [01;31m[KKnuth[m[K
+[32m[K164[m[K[36m[K:[m[K    ([01;31m[KD[m[K) John McCarthy
+[32m[K166[m[K[36m[K:[m[K [01;31m[K2[m[K. [01;31m[KStatic[m[K [01;31m[Ktype[m[K inference [01;31m[Kis[m[K [01;31m[Ka[m[K major feature [01;31m[Kof[m[K:
+[32m[K167[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[KC[m[K
+[32m[K168[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[KJava[m[K
+[32m[K169[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[KOcaml[m[K
+[32m[K170[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[KScheme[m[K
+[32m[K172[m[K[36m[K:[m[K [01;31m[K3[m[K. [01;31m[KIn[m[K [01;31m[Ksmalltalk[m[K code [01;31m[Kis[m[K executed [01;31m[Kby[m[K:
+[32m[K173[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Kcalling[m[K [01;31m[Kfunctions[m[K [01;31m[Kwhich[m[K [01;31m[Kare[m[K [01;31m[Kstatic[m[K members [01;31m[Kof[m[K classes.
+[32m[K174[m[K[36m[K:[m[K    ([01;31m[KB[m[K) making [01;31m[Kuse[m[K [01;31m[Kof[m[K [01;31m[Kthe[m[K standard template library.
+[32m[K175[m[K[36m[K:[m[K    ([01;31m[KC[m[K) sending messages [01;31m[Kto[m[K objects.
+[32m[K176[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Kusing[m[K [01;31m[Khigher[m[K-[01;31m[Korder[m[K [01;31m[Kfunctions[m[K.
+[32m[K178[m[K[36m[K:[m[K [01;31m[K4[m[K. [01;31m[KIn[m[K [01;31m[Kthe[m[K expression ([01;31m[Klambda[m[K ([01;31m[Kx[m[K) (+ [01;31m[Kx[m[K y))
+[32m[K179[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Kx[m[K [01;31m[Kis[m[K bound [01;31m[Kand[m[K y [01;31m[Kis[m[K bound.
+[32m[K180[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[Kx[m[K [01;31m[Kis[m[K bound [01;31m[Kand[m[K y [01;31m[Kis[m[K free.
+[32m[K181[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[Kx[m[K [01;31m[Kis[m[K free [01;31m[Kand[m[K y [01;31m[Kis[m[K bound.
+[32m[K182[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Kx[m[K [01;31m[Kis[m[K free [01;31m[Kand[m[K y [01;31m[Kis[m[K free.
+[32m[K184[m[K[36m[K:[m[K [01;31m[K5[m[K. [01;31m[KThe[m[K make [01;31m[Klanguage[m[K [01;31m[Kcan[m[K [01;31m[Kbe[m[K referred [01;31m[Kto[m[K [01;31m[Kas[m[K:
+[32m[K185[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Ka[m[K [01;31m[Kfunctional[m[K [01;31m[Klanguage[m[K.
+[32m[K186[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[Ka[m[K ``little'' [01;31m[Klanguage[m[K.
+[32m[K187[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[Ka[m[K logic [01;31m[Klanguage[m[K.
+[32m[K188[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Kan[m[K [01;31m[Kobject[m[K-[01;31m[Koriented[m[K [01;31m[Klanguage[m[K.
+[32m[K190[m[K[36m[K:[m[K [01;31m[K6[m[K. [01;31m[KIn[m[K [01;31m[KSmalltalk[m[K, [01;31m[Kthe[m[K expression [01;31m[K3[m[K+[01;31m[K4[m[K.  means:
+[32m[K191[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[KThe[m[K [01;31m[Kmessage[m[K + [01;31m[Kis[m[K sent [01;31m[Kto[m[K [01;31m[Kthe[m[K [01;31m[Knumber[m[K [01;31m[K3[m[K, [01;31m[Kthe[m[K result [01;31m[Kof[m[K [01;31m[Kwhich[m[K [01;31m[Kis[m[K
+[32m[K192[m[K[36m[K:[m[K        [01;31m[Ka[m[K [01;31m[Kfunction[m[K [01;31m[Kthat[m[K accepts [01;31m[Kthe[m[K [01;31m[Kmessage[m[K [01;31m[K4[m[K.
+[32m[K193[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[KThe[m[K [01;31m[Kmessage[m[K +[01;31m[K4[m[K [01;31m[Kis[m[K sent [01;31m[Kto[m[K [01;31m[Kthe[m[K [01;31m[Knumber[m[K [01;31m[K3[m[K.
+[32m[K194[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[KThe[m[K [01;31m[Kmessage[m[K [01;31m[K3[m[K+ [01;31m[Kis[m[K sent [01;31m[Kto[m[K [01;31m[Kthe[m[K [01;31m[Knumber[m[K [01;31m[K4[m[K.
+[32m[K195[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[KThe[m[K messages [01;31m[K3[m[K [01;31m[Kand[m[K [01;31m[K4[m[K [01;31m[Kare[m[K sent [01;31m[Kto[m[K [01;31m[Kthe[m[K operator +.
+[32m[K197[m[K[36m[K:[m[K[01;31m[KMultiple[m[K [01;31m[Kchoice[m[K.  [01;31m[KTo[m[K [01;31m[Kthe[m[K [01;31m[Kleft[m[K [01;31m[Kof[m[K [01;31m[Keach[m[K [01;31m[Kquestion[m[K, [01;31m[Kwrite[m[K [01;31m[Kthe[m[K [01;31m[Kletter[m[K [01;31m[Kthat[m[K
+[32m[K198[m[K[36m[K:[m[K[01;31m[Kindicates[m[K [01;31m[Kyour[m[K [01;31m[Kanswer[m[K.  [01;31m[KWrite[m[K [01;31m[KZ[m[K [01;31m[Kif[m[K [01;31m[Kyou[m[K [01;31m[Kdon[m[K'[01;31m[Kt[m[K [01;31m[Kwant[m[K [01;31m[Kto[m[K [01;31m[Krisk[m[K [01;31m[Ka[m[K [01;31m[Kwrong[m[K
+[32m[K199[m[K[36m[K:[m[K[01;31m[Kanswer[m[K.  [01;31m[KWrong[m[K [01;31m[Kanswers[m[K [01;31m[Kare[m[K [01;31m[Kworth[m[K [01;31m[Knegative[m[K [01;31m[Kpoints[m[K.  [[01;31m[K12pt[m[K]
+[32m[K202[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× [01;31m[K1[m[K = |      $= [01;31m[Ka[m[K$ |
+[32m[K203[m[K[36m[K:[m[K|[01;31m[Kcorrect[m[K [01;31m[Kanswers[m[K           |      |      |            |
+[32m[K205[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× ½ = |      $= [01;31m[Kb[m[K$ |
+[32m[K206[m[K[36m[K:[m[K|[01;31m[Kwrong[m[K [01;31m[Kanswers[m[K             |      |      |            |
+[32m[K208[m[K[36m[K:[m[K|[01;31m[Knumber[m[K [01;31m[Kof[m[K                 |      |× [01;31m[K0[m[K = |  [01;31m[K0[m[K         |
+[32m[K209[m[K[36m[K:[m[K|[01;31m[Kmissing[m[K [01;31m[Kanswers[m[K           |      |      |            |
+[32m[K211[m[K[36m[K:[m[K|[01;31m[Kcolumn[m[K [01;31m[Ktotal[m[K              |   [01;31m[K12[m[K |      |      $= [01;31m[Kc[m[K$ |
+[32m[K212[m[K[36m[K:[m[K|$ [01;31m[Kc[m[K = [01;31m[Kmax[m[K ( [01;31m[Ka[m[K - [01;31m[Kb[m[K , [01;31m[K0[m[K ) $ |      |      |            |
+[32m[K215[m[K[36m[K:[m[K [01;31m[K1[m[K. [01;31m[KWhat[m[K [01;31m[Kis[m[K [01;31m[Kthe[m[K [01;31m[KScheme[m[K [01;31m[Kvalue[m[K [01;31m[Kof[m[K:
+[32m[K216[m[K[36m[K:[m[K    (caddr '([01;31m[K1[m[K [01;31m[K2[m[K [01;31m[K3[m[K [01;31m[K4[m[K [01;31m[K5[m[K))
+[32m[K217[m[K[36m[K:[m[K    ([01;31m[KA[m[K) ([01;31m[K3[m[K [01;31m[K4[m[K [01;31m[K5[m[K)
+[32m[K218[m[K[36m[K:[m[K    ([01;31m[KB[m[K) ([01;31m[K4[m[K [01;31m[K5[m[K)
+[32m[K219[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[K2[m[K
+[32m[K220[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[K3[m[K
+[32m[K222[m[K[36m[K:[m[K [01;31m[K2[m[K. [01;31m[KHow[m[K [01;31m[Kmuch[m[K [01;31m[Kstack[m[K [01;31m[Kspace[m[K [01;31m[Kdoes[m[K [01;31m[Kthe[m[K [01;31m[Kfollowing[m[K [01;31m[Kfunction[m[K [01;31m[Kuse[m[K?
+[32m[K223[m[K[36m[K:[m[K    [01;31m[Klet[m[K [01;31m[Krec[m[K [01;31m[Kf[m[K [01;31m[Kn[m[K = [01;31m[Kmatch[m[K [01;31m[Kn[m[K [01;31m[Kwith[m[K
+[32m[K224[m[K[36m[K:[m[K        | [01;31m[K0[m[K -> [01;31m[K0[m[K
+[32m[K225[m[K[36m[K:[m[K        | [01;31m[K1[m[K -> [01;31m[K1[m[K
+[32m[K226[m[K[36m[K:[m[K        | [01;31m[Kn[m[K -> [01;31m[Kf[m[K ([01;31m[Kn[m[K - [01;31m[K1[m[K) + [01;31m[Kf[m[K ([01;31m[Kn[m[K - [01;31m[K2[m[K)
+[32m[K227[m[K[36m[K:[m[K    ([01;31m[KA[m[K) $ [01;31m[KO[m[K ( [01;31m[K1[m[K ) $
+[32m[K228[m[K[36m[K:[m[K    ([01;31m[KB[m[K) $ [01;31m[KO[m[K ( [01;31m[Klog[m[K [01;31m[Kn[m[K ) $
+[32m[K229[m[K[36m[K:[m[K    ([01;31m[KC[m[K) $ [01;31m[KO[m[K ( [01;31m[Kn[m[K ) $
+[32m[K230[m[K[36m[K:[m[K    ([01;31m[KD[m[K) $ [01;31m[KO[m[K ( [01;31m[K2[m[K [01;31m[Ksup[m[K [01;31m[Kn[m[K ) $
+[32m[K232[m[K[36m[K:[m[K [01;31m[K3[m[K. [01;31m[KWhat[m[K [01;31m[Kis[m[K [01;31m[Kthe[m[K [01;31m[KOcaml[m[K [01;31m[Ktype[m[K signature [01;31m[Kof[m[K:
+[32m[K234[m[K[36m[K:[m[K    ([01;31m[KA[m[K) - : [01;31m[Kint[m[K * [01;31m[Kint[m[K * [01;31m[Kint[m[K
+[32m[K235[m[K[36m[K:[m[K    ([01;31m[KB[m[K) - : [01;31m[Kint[m[K * [01;31m[Kint[m[K -> [01;31m[Kint[m[K
+[32m[K236[m[K[36m[K:[m[K    ([01;31m[KC[m[K) - : [01;31m[Kint[m[K -> [01;31m[Kint[m[K * [01;31m[Kint[m[K
+[32m[K237[m[K[36m[K:[m[K    ([01;31m[KD[m[K) - : [01;31m[Kint[m[K -> [01;31m[Kint[m[K -> [01;31m[Kint[m[K
+[32m[K239[m[K[36m[K:[m[K [01;31m[K4[m[K. [01;31m[KWhich[m[K [01;31m[Kfunction[m[K [01;31m[Kcan[m[K [01;31m[Kbe[m[K written [01;31m[Kin[m[K [01;31m[Ka[m[K [01;31m[Ktail[m[K recursive purely
+[32m[K240[m[K[36m[K:[m[K    [01;31m[Kfunctional[m[K manner?
+[32m[K241[m[K[36m[K:[m[K    ([01;31m[KA[m[K) filter
+[32m[K242[m[K[36m[K:[m[K    ([01;31m[KB[m[K) fold_left
+[32m[K243[m[K[36m[K:[m[K    ([01;31m[KC[m[K) fold_right
+[32m[K244[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Kmap[m[K
+[32m[K246[m[K[36m[K:[m[K [01;31m[K5[m[K. [01;31m[KLisp[m[K (McCarthy) [01;31m[Kand[m[K [01;31m[KScheme[m[K (Steele [01;31m[Kand[m[K Sussman), [01;31m[Kin[m[K general form,
+[32m[K247[m[K[36m[K:[m[K    [01;31m[Kare[m[K based [01;31m[Kon[m[K [01;31m[Ka[m[K form [01;31m[Kof[m[K mathematics [01;31m[Kfirst[m[K formulated [01;31m[Kby[m[K Alonzo
+[32m[K249[m[K[36m[K:[m[K    ([01;31m[KA[m[K) \[01;31m[Klambda[m[K-calculus
+[32m[K250[m[K[36m[K:[m[K    ([01;31m[KB[m[K) \mu-calculus
+[32m[K251[m[K[36m[K:[m[K    ([01;31m[KC[m[K) \pi-calculus
+[32m[K252[m[K[36m[K:[m[K    ([01;31m[KD[m[K) \psi-calculus
+[32m[K254[m[K[36m[K:[m[K [01;31m[K6[m[K. [01;31m[KWhich[m[K [01;31m[Kline[m[K [01;31m[Kis[m[K [01;31m[Ka[m[K comment [01;31m[Kin[m[K [01;31m[KScheme[m[K?
+[32m[K255[m[K[36m[K:[m[K    ([01;31m[KA[m[K) (*...*)
+[32m[K256[m[K[36m[K:[m[K    ([01;31m[KB[m[K) /*...*/
+[32m[K257[m[K[36m[K:[m[K    ([01;31m[KC[m[K) //...
+[32m[K258[m[K[36m[K:[m[K    ([01;31m[KD[m[K) ;;...
+[32m[K260[m[K[36m[K:[m[K [01;31m[K7[m[K. [01;31m[KWhat[m[K feature [01;31m[Kof[m[K imperative [01;31m[Klanguages[m[K [01;31m[Kis[m[K typically [01;31m[Kmissing[m[K [01;31m[Kfrom[m[K
+[32m[K261[m[K[36m[K:[m[K    [01;31m[Kfunctional[m[K [01;31m[Klanguages[m[K?
+[32m[K262[m[K[36m[K:[m[K    ([01;31m[KA[m[K) conditionals
+[32m[K263[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[Kfunctions[m[K
+[32m[K264[m[K[36m[K:[m[K    ([01;31m[KC[m[K) loops
+[32m[K265[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Krecursion[m[K
+[32m[K267[m[K[36m[K:[m[K [01;31m[K8[m[K. [01;31m[KWhat[m[K [01;31m[Kis[m[K [01;31m[Kthe[m[K signature [01;31m[Kof[m[K [01;31m[Kthe[m[K [01;31m[KOcaml[m[K [01;31m[Kfunction[m[K [01;31m[KList[m[K.[01;31m[Khd[m[K (equivalent [01;31m[Kto[m[K
+[32m[K268[m[K[36m[K:[m[K    [01;31m[Kcar[m[K)?
+[32m[K269[m[K[36m[K:[m[K    ([01;31m[KA[m[K) '[01;31m[Ka[m[K -> '[01;31m[Ka[m[K [01;31m[Klist[m[K
+[32m[K270[m[K[36m[K:[m[K    ([01;31m[KB[m[K) '[01;31m[Ka[m[K -> '[01;31m[Ka[m[K
+[32m[K271[m[K[36m[K:[m[K    ([01;31m[KC[m[K) '[01;31m[Ka[m[K [01;31m[Klist[m[K -> '[01;31m[Ka[m[K [01;31m[Klist[m[K
+[32m[K272[m[K[36m[K:[m[K    ([01;31m[KD[m[K) '[01;31m[Ka[m[K [01;31m[Klist[m[K -> '[01;31m[Ka[m[K
+[32m[K274[m[K[36m[K:[m[K [01;31m[K9[m[K. [01;31m[KGiven[m[K:
+[32m[K275[m[K[36m[K:[m[K    # [01;31m[KList[m[K.[01;31m[Kmap[m[K ((+)[01;31m[K3[m[K) [[01;31m[K1[m[K;[01;31m[K2[m[K;[01;31m[K3[m[K];;
+[32m[K276[m[K[36m[K:[m[K    - : [01;31m[Kint[m[K [01;31m[Klist[m[K = [[01;31m[K4[m[K; [01;31m[K5[m[K; [01;31m[K6[m[K]
+[32m[K277[m[K[36m[K:[m[K    [01;31m[Kwhat[m[K [01;31m[Kis[m[K [01;31m[Kthe[m[K [01;31m[Ktype[m[K [01;31m[Kof[m[K [01;31m[KList[m[K.[01;31m[Kmap[m[K ((+)[01;31m[K3[m[K)?
+[32m[K278[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Kint[m[K -> [01;31m[Kint[m[K
+[32m[K279[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[Kint[m[K -> [01;31m[Kint[m[K [01;31m[Klist[m[K
+[32m[K280[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[Kint[m[K [01;31m[Klist[m[K -> [01;31m[Kint[m[K
+[32m[K281[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Kint[m[K [01;31m[Klist[m[K -> [01;31m[Kint[m[K [01;31m[Klist[m[K
+[32m[K283[m[K[36m[K:[m[K[01;31m[K10[m[K. [01;31m[KIn[m[K both [01;31m[KJava[m[K [01;31m[Kand[m[K [01;31m[KC[m[K++, [01;31m[Kwhat[m[K keyword [01;31m[Kis[m[K [01;31m[Kused[m[K [01;31m[Kto[m[K restrict access [01;31m[Kto[m[K [01;31m[Ka[m[K
+[32m[K284[m[K[36m[K:[m[K    [01;31m[Kclass[m[K itself [01;31m[Kbut[m[K allow access [01;31m[Kto[m[K classes derived [01;31m[Kfrom[m[K [01;31m[Kit[m[K?
+[32m[K285[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Kinheritance[m[K
+[32m[K286[m[K[36m[K:[m[K    ([01;31m[KB[m[K) private
+[32m[K287[m[K[36m[K:[m[K    ([01;31m[KC[m[K) protected
+[32m[K288[m[K[36m[K:[m[K    ([01;31m[KD[m[K) public
+[32m[K290[m[K[36m[K:[m[K[01;31m[K11[m[K. [01;31m[KBackus[m[K-[01;31m[KNaur[m[K [01;31m[Kformat[m[K describes [01;31m[Kwhat[m[K about [01;31m[Ka[m[K [01;31m[Klanguage[m[K?
+[32m[K291[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[Kenvironment[m[K
+[32m[K292[m[K[36m[K:[m[K    ([01;31m[KB[m[K) linkage
+[32m[K293[m[K[36m[K:[m[K    ([01;31m[KC[m[K) semantics
+[32m[K294[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[Ksyntax[m[K
+[32m[K296[m[K[36m[K:[m[K[01;31m[K12[m[K. [01;31m[KWhat[m[K [01;31m[Klanguage[m[K [01;31m[Kwas[m[K [01;31m[Kdesigned[m[K [01;31m[Kby[m[K John Kemeny [01;31m[Kand[m[K Thomas Kurtz [01;31m[Kin[m[K
+[32m[K298[m[K[36m[K:[m[K    ([01;31m[KA[m[K) [01;31m[KBASIC[m[K
+[32m[K299[m[K[36m[K:[m[K    ([01;31m[KB[m[K) [01;31m[KCOBOL[m[K
+[32m[K300[m[K[36m[K:[m[K    ([01;31m[KC[m[K) [01;31m[KFORTRAN[m[K
+[32m[K301[m[K[36m[K:[m[K    ([01;31m[KD[m[K) [01;31m[KLISP[m[K
