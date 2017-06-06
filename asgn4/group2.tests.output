@@ -10,7 +10,7 @@ yes
 
 (1 ms) yes
 | ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 259 lines read - 26741 bytes written, 11 ms
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 262 lines read - 27071 bytes written, 11 ms
 warning: /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl:16: redefining procedure airport/4
          /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl:13: previous definition
 warning: /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl:34: redefining procedure flight/3
@@ -22,7 +22,7 @@ warning: /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.
 no
 | ?- 
   depart  sfo  San Francisco   09:00
-  arrive  lax  Los Angeles     09:04
+  arrive  lax  Los Angeles     09:41
   depart  lax  Los Angeles     12:00
   arrive  sjc  San Jose        12:37
 
@@ -31,24 +31,30 @@ yes
   depart  sjc  San Jose        11:15
   arrive  lax  Los Angeles     11:52
 
-(1 ms) yes
+yes
 | ?- 
   depart  sfo  San Francisco   09:00
-  arrive  lax  Los Angeles     10:22
+  arrive  lax  Los Angeles     09:41
   depart  lax  Los Angeles     13:30
   arrive  sea  Seattle-Tacoma  15:25
+
+(1 ms) yes
+| ?- 
+  depart  mia  Miami           09:00
+  arrive  atl  Atlanta         10:11
+  depart  atl  Atlanta         11:30
+  arrive  lax  Los Angeles     15:23
 
 yes
 | ?- 
   depart  mia  Miami           09:00
-  arrive  atl  Atlanta         13:41
-  depart  atl  Atlanta         14:30
-  arrive  lax  Los Angeles     18:23
+  arrive  atl  Atlanta         10:11
+  depart  atl  Atlanta         11:30
+  arrive  lax  Los Angeles     15:23
+  depart  lax  Los Angeles     19:30
+  arrive  sjc  San Jose        20:07
 
 yes
-| ?- Woops! Looks like a flight from *mia* to *sjc* is not available.
-
-no
 | ?- 
   depart  lax  Los Angeles     14:00
   arrive  nyc  New York City   18:55
