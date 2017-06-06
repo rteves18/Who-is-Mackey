@@ -211,11 +211,8 @@ list_path( Node, End, Tried, [Node|List] ) :-
 
 % Fail if departure and arrival location are the same
 fly(From, From) :-
-   write('Woops! Departing from *'), 
-   write(From),
-   write('* and arriving to *'), 
-   write(From), 
-   write('* would be silly now would it.'),
+   write('Woops! Departing from and to the same place would'), 
+   write(' be silly now would it.'),
    nl, !, fail.
 
 fly(From, To) :-
