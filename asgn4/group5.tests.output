@@ -10,13 +10,13 @@ yes
 
 (2 ms) yes
 | ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 262 lines read - 27071 bytes written, 10 ms
+/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 264 lines read - 27071 bytes written, 20 ms
 warning: /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl:16: redefining procedure airport/4
          /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl:13: previous definition
 warning: /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl:34: redefining procedure flight/3
          /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl:31: previous definition
 
-(2 ms) yes
+(3 ms) yes
 | ?- Woops! Cannot complete flight request. Either departure and arrival is in the same location.
  Or the location specified is invalid.
 
