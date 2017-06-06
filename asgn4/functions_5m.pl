@@ -77,15 +77,14 @@ createflight( Terminal, Terminal, _, [Terminal], _ ).
 createflight( Prev, Terminal, Visited, 
     [[Prev, FlightDep, FlightArr] | List], FlightDepInHM ) :-
     flight( Prev, Terminal, FlightDepInHM ),
-    not( member( Terminal, Visited ) ),
+    %not( member( Terminal, Visited ) ),
     hours_tot( FlightDepInHM, FlightDep ),
     distance( Prev, Terminal, FDistance ),
     hours_from_miles( FDistance, TimeDiff ),
     FlightArr is FlightDep + TimeDiff,
     FlightArr < 24.0,
     createflight( Terminal, Terminal, [Terminal | Visited], List, _).
-createflight( Prev, Terminal, Visited, 
-    [[Prev, FlightDep, FlightArr] | List], FlightDepInHM ) :-
+/*    [[Prev, FlightDep, FlightArr] | List], FlightDepInHM ) :-
     flight( Prev, Next, FlightDepInHM ),
     not( member( Next, Visited ) ),
     hours_tot( FlightDepInHM, FlightDep ),
@@ -98,7 +97,7 @@ createflight( Prev, Terminal, Visited,
     AdjTime is NextFlightDep - FlightArr - 0.5,
     AdjTime >= 0,
     createflight( Next, Terminal, [Next | Visited], 
-        List, NextFlightDepInHM ).
+        List, NextFlightDepInHM ).*/
 
 
 % Write the flight list using a certain form given departs/arrives.

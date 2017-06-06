@@ -106,67 +106,120 @@ flight_time(From, To, FlightTime) :-
    FlightTime is Distance / 500.
 
 % Convert 00:00 time format to hours
-to_hours( time(Hours, Mins), Ret) :-
+hm_to_hours( time(Hours, Mins), Ret) :-
    Ret is Hours + Mins / 60.
 
-/*print_time_format(Time) :-
-   Time < 10, print(0), print(Time).
+% Append 0 to the front if Time < 10
 print_time_format(Time) :-
-   Time >= 10, print(Time).*/
+   Time < 10, print(0), print(Time).   
+print_time_format(Time) :-
+   Time >= 10, print(Time).
 
-% Convert hours back to 00:00 time format
+% Convert hours back to 00:00 time format and print it
 print_time(Hours) :-
    HoursDecimal is Hours - floor(Hours),
    ReturnHours is floor(Hours),
-   MinsDigits is HoursDecimal * 60,
-   format('~w:~0f', [ReturnHours, MinsDigits]).
-   %print_time_format(ReturnHours), print(':'), 
-   %print_time_format(MinsDigits).
+   MinsDigits is round(HoursDecimal * 60),
+   print_time_format(ReturnHours), 
+   print(':'), 
+   print_time_format(MinsDigits).
 
 % Compute arrival time in 00:00 format
-arrival_time(DepartureTime, FlightTime, ArrivalTime) :-
-   to_hours(DepartureTime, Ret),
-   ArrivalTime is Ret + FlightTime,
-   print_time(ArrivalTime).
+arrival_time(DepartureTimeInHours, FlightTime, ArrivalTime) :-
+   ArrivalTime is DepartureTimeInHours + FlightTime.
+
+% Compute the transfer time between flights
+transfer_time(ArrivalTimeH, NextDepartureTimeH, TransferTime) :-
+   TransferTime is NextDepartureTimeH - ArrivalTimeH - 0.5.
 
 % Prolog version of not.
 not( X ) :- X, !, fail.
 not( _ ).
 
-list_path(Airport, End, Outlist) :- 
-   list_path(Airport, End, [Airport], Outlist).
-list_path(Airport, Airport, _, [Airport]).
-list_path(Airport, End, Tried, [Airport|List]) :-
-   flight(Airport, Next, _),
-   not( member(Next, Tried)),
-   list_path(Next, End, [Next|Tried], List).
-
-% Find a path from one node to another.
-writeallpaths( Node, Node ) :-
-   write( Node ), write( ' is ' ), write( Node ), nl.
-writeallpaths( Airport, Next ) :-
-   list_path( Airport, Next, [Airport], List ),
-   write( Airport ), write( ' to ' ), write( Next ), write( ' is -->' ),
-   !, writepath( List ),
-   fail.
-
-writepath( [] ) :-
+/* Writes the path out in a friendly format.
+ * List passed in args has the following form:
+ *    - [[From, DepartureTimeHours, ArrivalTimeHours], To]
+ */
+write_path([]) :-
    nl.
-writepath( [Head|Tail] ) :-
-   write( 'depart: ' ), write( Head ), nl,
-   writepath( Tail ).
+
+% If there's a direct flight between the two Airports   
+write_path([[From, DTimeH, ATimeH], To | []]) :-
+   airport(From, From_Name, _, _),
+   airport(To, To_Name, _, _),
+   write('  '), write('depart  '), write(From), write('  '),
+   write(From_Name),
+   print_time(DTimeH), nl,
+
+   write('  '), write('arrive  '), write(To), write('  '),
+   write(To_Name),
+   print_time(ATimeH), nl,
+   !, true.
+
+% If there is not a direct flight between the two Airports
+write_path([[From, DTimeH, ATimeH], [To, DTimeH2, ATimeH2] | Rest]) :-
+   airport(From, From_Name, _, _),
+   airport(To, To_Name, _, _),
+   write('  '), write('depart  '), write(From), write('  '), 
+   write(From_Name),
+   print_time(DTimeH), nl,
+
+   write('  '), write('arrive  '), write(To), write('  '),
+   write(To_Name),
+   print_time(ATimeH), nl,
+   !, write_path([[To, DTimeH2, ATimeH2] | Rest]).
+
+
+/* Searches for a path from departure to arrival location.
+ * Pre-conditions:
+ *  - flights must finish within the day (< 24 hours).
+ *  - flights transfer time must be at least 0.5 hours.
+ * List returned contains:
+ *  - List of airports along with their departure & arrival times:
+ *       [[From, DepartureTimeHours, ArrivalTimeHours], To]
+ */
+list_path(To, To, _, [To], _).
+
+% If there is a directly connected path
+list_path(From, To, Visited, [[From, DTimeH, ATimeH]|List], DTimeHM) :-
+   flight(From, To, DTimeHM),
+   hm_to_hours(DTimeHM, DTimeH),
+   flight_time(From, To, FlightTime),
+   arrival_time(DTimeH, FlightTime, ATimeH),
+   ATimeH < 24.0,
+   list_path(To, To, [To | Visited], List, _).
+
+% If there is a indirectly connected path
+list_path(From, To, Visited, [[From, DTimeH, ATimeH]|List], DTimeHM) :-
+   flight(From, Next, DTimeHM),
+   not(member(Next, Visited)), % Check if Airport has been visited
+   hm_to_hours(DTimeHM, DTimeH),
+   flight_time(From, To, FlightTime),
+   arrival_time(DTimeH, FlightTime, ATimeH),
+   ATimeH < 24.0, % Check if these flights are within the day
+   flight(Next, _, NextDTimeHM),
+   hm_to_hours(NextDTimeHM, NextDTimeH),
+   transfer_time(ATimeH, NextDTimeH, TransferTime),
+   TransferTime >= 0, % Make sure transfer time is at least 0.5 hours
+   list_path(Next, To, [Next | Visited], List, NextDTimeHM).
+
+/*list_path( Node, Node, _, [Node] ).
+list_path( Node, End, Tried, [Node|List] ) :-
+   flight( Node, Next, _ ),
+   not( member( Next, Tried )),
+   list_path( Next, End, [Next|Tried], List ).*/
 
 % Fail if departure and arrival location are the same
 fly(From, From) :-
-    write('Woops! Departing from *'), 
-    write(From),
-    write('* and arriving to *'), 
-    write(From), 
-    write('* would be silly now would it.'),
-    nl, !, fail.
+   write('Woops! Departing from *'), 
+   write(From),
+   write('* and arriving to *'), 
+   write(From), 
+   write('* would be silly now would it.'),
+   nl, !, fail.
 
 fly(From, To) :-
-   airport(From, X, _, _),
+   /*airport(From, X, _, _),
    format('Flight from: ~w ~n', [X]),
    airport(To, Y, _, _),
    format('Flight to: ~w ~n', [Y]),
@@ -176,22 +229,30 @@ fly(From, To) :-
    format('Flight time between these 2 Airports is ~w ~n', [FlightTime]),
    flight(From, To, DepartureTime),
    arrival_time(DepartureTime, FlightTime, ArrivalTime),
-   format('Arrival time is ~w ~n', [ArrivalTime]),
-   !, nl.
+   format('Arrival time is ~w ~n', [ArrivalTime]), 
+   nl.*/
+   airport(From, _, _, _),
+   airport(To, _, _, _),
+
+   % Find a potential path between these 2 airports
+   list_path(From, To, [From], List, _),
+   !, nl, % Stop backtracking as soon as a path is found
+   write_path(List),
+   true.
 
 % Fail if a flight path cannot be found
 fly(From, To) :-
-    airport(From, _, _, _),
-    airport(To, _, _, _),
-    write('Woops! Looks like a flight from *'), 
-    write(From),
-    write('* to *'), 
-    write(To), 
-    write('* is not available.'), !, fail.
+   airport(From, _, _, _),
+   airport(To, _, _, _),
+   write('Woops! Looks like a flight from *'), 
+   write(From),
+   write('* to *'), 
+   write(To), 
+   write('* is not available.'), !, fail.
 
 % Fail if airport cannot be found in db
 fly(_, _) :-
-    write('Woops, invalid entry. Airport not found!'), nl, !, fail.
+   write('Woops, invalid entry. Airport not found!'), nl, !, fail.
 
 
 

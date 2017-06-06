@@ -16,6 +16,7 @@ link( f, j ).
 link( g, h ).
 link( h, i ).
 link( i, j ).
+link( z, w ).
 
 %
 % Prolog version of not.
@@ -33,8 +34,8 @@ not( _ ).
 % of facts.  It causes the message [WARNING: Out of local stack],
 % presumably due to the loop in the graph.
 %
-ispath( L, L ).
-ispath( L, M ) :- link( L,X ),ispath( X,M ).
+%ispath( L, L ).
+%ispath( L, M ) :- link( L,X ),ispath( X,M ).
 %
 
 ispath( L, M ) :- ispath2( L, M, [] ).

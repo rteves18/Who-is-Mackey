@@ -5,32 +5,36 @@ Copyright (C) 1999-2013 Daniel Diaz
 | ?- $Id: group1.tests,v 1.2 2016-11-21 14:06:16-08 - - $
 
 yes
-| ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/database.pl compiled, 75 lines read - 11193 bytes written, 9 ms
+| ?- compiling /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl for byte code...
+/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl compiled, 75 lines read - 11203 bytes written, 9 ms
 
 (1 ms) yes
-| ?- compiling /afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/s/rteves/private/cmps112/prog/asgn4/functions.pl compiled, 156 lines read - 15511 bytes written, 9 ms
+| ?- compiling /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl for byte code...
+/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl compiled, 262 lines read - 26949 bytes written, 13 ms
+warning: /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl:16: redefining procedure airport/4
+         /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl:13: previous definition
+warning: /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl:34: redefining procedure flight/3
+         /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl:31: previous definition
 
-(3 ms) yes
+(6 ms) yes
 | ?- 
-     depart  lax  Los Angeles     12:00
-     arrive  atl  Atlanta         15:53
-     depart  atl  Atlanta         18:30
-     arrive  mia  Miami           19:41
+  depart  lax  Los Angeles     12:00
+  arrive  atl  Atlanta         16:41
+  depart  atl  Atlanta         18:30
+  arrive  mia  Miami           19:41
 
 yes
-| ?- Error: flight from: sea to bos is not possible.
+| ?- Woops! Looks like a flight from *sea* to *bos* is not available.
 
 no
 | ?- 
-     depart  bos  Boston-Logan    07:30
-     arrive  nyc  New York City   07:52
-     depart  nyc  New York City   11:00
-     arrive  chi  Chicago         12:27
+  depart  bos  Boston-Logan    07:30
+  arrive  nyc  New York City   09:13
+  depart  nyc  New York City   11:00
+  arrive  chi  Chicago         12:27
 
 yes
-| ?- Error: flight from: sjc to dfw is not possible.
+| ?- Woops! Looks like a flight from *sjc* to *dfw* is not available.
 
 no
 | ?- 
