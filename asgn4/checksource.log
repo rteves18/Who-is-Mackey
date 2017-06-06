@@ -1,1 +1,3 @@
-mk.tests: line 7: checksource: command not found
+checksource: line length > 72 characters
+   file "functions.pl": 2 errors: lines 224, 226
+checksource: TOTAL COMPLAINTS: 2
