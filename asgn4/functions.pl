@@ -183,6 +183,7 @@ list_path(To, To, _, [To], _).
 % If there is a directly connected path
 list_path(From, To, Visited, [[From, DTimeH, ATimeH]|List], DTimeHM) :-
    flight(From, To, DTimeHM),
+   not(member(To, Visited)),
    hm_to_hours(DTimeHM, DTimeH),
    flight_time(From, To, FlightTime),
    arrival_time(DTimeH, FlightTime, ATimeH),
@@ -194,7 +195,7 @@ list_path(From, To, Visited, [[From, DTimeH, ATimeH]|List], DTimeHM) :-
    flight(From, Next, DTimeHM),
    not(member(Next, Visited)), % Check if Airport has been visited
    hm_to_hours(DTimeHM, DTimeH),
-   flight_time(From, To, FlightTime),
+   flight_time(From, Next, FlightTime),
    arrival_time(DTimeH, FlightTime, ATimeH),
    ATimeH < 24.0, % Check if these flights are within the day
    flight(Next, _, NextDTimeHM),
