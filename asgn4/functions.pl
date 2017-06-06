@@ -210,11 +210,18 @@ list_path( Node, End, Tried, [Node|List] ) :-
 
 % Fail if departure and arrival location are the same
 fly(From, From) :-
+<<<<<<< HEAD
    write('Woops! Departing from *'), 
    write(From),
    write('* and arriving to *'), 
    write(From), 
    write('* would be silly now would it.'),
+=======
+   write('Woops! Cannot complete flight request.'), 
+   write(' Either departure and arrival is in the same location.'),
+   nl,
+   write(' Or the location specified is invalid.'),
+>>>>>>> 414b4f6daa41536bef8a4306ca7cf468529eb4ed
    nl, !, fail.
 
 fly(From, To) :-
@@ -223,9 +230,11 @@ fly(From, To) :-
    airport(To, Y, _, _),
    format('Flight to: ~w ~n', [Y]),
    distance(From, To, Distance),
-   format('Distance between ~w & ~w is ~w miles ~n', [From, To, Distance]),
+   format('Distance between ~w & ~w is ~w miles ~n', 
+   [From, To, Distance]),
    flight_time(From, To, FlightTime),
-   format('Flight time between these 2 Airports is ~w ~n', [FlightTime]),
+   format('Flight time between these 2 Airports is ~w ~n', 
+   [FlightTime]),
    flight(From, To, DepartureTime),
    arrival_time(DepartureTime, FlightTime, ArrivalTime),
    format('Arrival time is ~w ~n', [ArrivalTime]), 
