@@ -144,7 +144,7 @@ write_path([]) :-
    nl.
 
 % If there's a direct flight between the two Airports   
-write_path([[From, DTimeH, ATimeH], To | []]) :-
+write_path([[From, DTimeH, ATimeH], To]) :-
    airport(From, From_Name, _, _),
    airport(To, To_Name, _, _),
    write('  '), write('depart  '), write(From), write('  '),

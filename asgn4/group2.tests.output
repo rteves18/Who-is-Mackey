@@ -6,11 +6,11 @@ Copyright (C) 1999-2013 Daniel Diaz
 
 yes
 | ?- compiling /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl for byte code...
-/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl compiled, 75 lines read - 11203 bytes written, 8 ms
+/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl compiled, 75 lines read - 11203 bytes written, 9 ms
 
 (1 ms) yes
 | ?- compiling /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl for byte code...
-/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl compiled, 260 lines read - 26883 bytes written, 12 ms
+/afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl compiled, 260 lines read - 26851 bytes written, 13 ms
 warning: /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl:16: redefining procedure airport/4
          /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/database.pl:13: previous definition
 warning: /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/functions.pl:34: redefining procedure flight/3
@@ -19,14 +19,14 @@ warning: /afs/cats.ucsc.edu/users/x/kymnguye/cs112-s17/Who-is-Mackey/asgn4/funct
 (4 ms) yes
 | ?- Woops! Looks like a flight from *sjc* to *dfw* is not available.
 
-no
+(1 ms) no
 | ?- 
   depart  sfo  San Francisco   09:00
   arrive  lax  Los Angeles     09:41
   depart  lax  Los Angeles     12:00
   arrive  sjc  San Jose        12:37
 
-(1 ms) yes
+yes
 | ?- 
   depart  sjc  San Jose        11:15
   arrive  lax  Los Angeles     11:52
