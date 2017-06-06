@@ -154,7 +154,7 @@ write_path([[From, DTimeH, ATimeH], To | []]) :-
    write('  '), write('arrive  '), write(To), write('  '),
    write(To_Name),
    print_time(ATimeH), nl,
-   !, true.
+   !.
 
 % If there is not a direct flight between the two Airports
 write_path([[From, DTimeH, ATimeH], [To, DTimeH2, ATimeH2] | Rest]) :-
@@ -183,11 +183,9 @@ list_path(To, To, _, [To], _).
 % If there is a directly connected path
 list_path(From, To, Visited, [[From, DTimeH, ATimeH]|List], DTimeHM) :-
    flight(From, To, DTimeHM),
-   not(member(To, Visited)),
    hm_to_hours(DTimeHM, DTimeH),
    flight_time(From, To, FlightTime),
    arrival_time(DTimeH, FlightTime, ATimeH),
-   ATimeH < 24.0,
    list_path(To, To, [To | Visited], List, _).
 
 % If there is a indirectly connected path
@@ -212,8 +210,11 @@ list_path( Node, End, Tried, [Node|List] ) :-
 
 % Fail if departure and arrival location are the same
 fly(From, From) :-
-   write('Woops! Departing from and to the same place would'), 
-   write(' be silly now would it.'),
+   write('Woops! Departing from *'), 
+   write(From),
+   write('* and arriving to *'), 
+   write(From), 
+   write('* would be silly now would it.'),
    nl, !, fail.
 
 fly(From, To) :-
@@ -235,8 +236,7 @@ fly(From, To) :-
    % Find a potential path between these 2 airports
    list_path(From, To, [From], List, _),
    !, nl, % Stop backtracking as soon as a path is found
-   write_path(List),
-   true.
+   write_path(List).
 
 % Fail if a flight path cannot be found
 fly(From, To) :-
